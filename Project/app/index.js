@@ -28,28 +28,21 @@ export default function App() {
 
     return () => subscription.unsubscribe();
   }, []);
-  const fetchMessage = async () => {
-    console.log("foo");
+
+  const signOut = async () => {
     try {
-      //Change index to fetch a different message
-      let temp = (await db.from("test").select()).data[1].message;
-      console.log(temp);
-      setMessage(temp);
-    } catch (error) {
-      console.log("too");
-      console.log(err);
+      const { error } = await db.auth.signOut();
+      if (error) {
+        Alert.alert(error.message);
+      } else {
+        Alert.alert("Sign out successful.");
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
-  useEffect(() => {
-    fetchMessage();
-    // signOut();
-  }, []);
   if (session) {
-    return (
-      <SafeAreaView>
-        <Text>{message}</Text>
-      </SafeAreaView>
-    );
+    return <Redirect href="/(tabs)/main" />;
   } else if (isLoading) {
     return <Loading />;
   } else {

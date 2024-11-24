@@ -45,12 +45,7 @@ export default function Login() {
     <View style={styles.container}>
       <StatusBar style="light" />
       <View style={styles.splash}>
-        <MaterialCommunityIcons
-          size={64}
-          name="bee-flower"
-          color={Theme.colors.iconHighlighted}
-        />
-        <Text style={styles.splashText}>Buzz</Text>
+        <Text style={styles.splashText}>Title TBD</Text>
       </View>
       <TextInput
         onChangeText={(text) => setEmail(text)}

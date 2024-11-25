@@ -42,6 +42,7 @@ export default function Main() {
   };
   // Cleanup on unmount
   useEffect(() => {
+    generateScramble();
     return () => clearInterval(intervalRef.current);
   }, []);
 

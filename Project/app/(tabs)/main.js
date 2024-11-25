@@ -18,7 +18,6 @@ export default function Main() {
 
   // Start the stopwatch
   const startStopwatch = () => {
-    console.log(cubeScrambler.scramble());
     if (!isRunning) {
       setIsRunning(true);
       const start = Date.now(); // Adjust for any paused time
@@ -38,7 +37,9 @@ export default function Main() {
       intervalRef.current = null;
     }
   };
-
+  const generateScramble = async () => {
+    console.log(cubeScrambler.scramble());
+  };
   // Cleanup on unmount
   useEffect(() => {
     return () => clearInterval(intervalRef.current);

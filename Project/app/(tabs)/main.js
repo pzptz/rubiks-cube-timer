@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-const scrambled = require("scrambled");
+const cubeScrambler = require("cube-scrambler")();
+
 import {
   View,
   Text,
@@ -17,7 +18,7 @@ export default function Main() {
 
   // Start the stopwatch
   const startStopwatch = () => {
-    console.log(scrambled.generateScrambleSync(30));
+    console.log(cubeScrambler.scramble());
     if (!isRunning) {
       setIsRunning(true);
       const start = Date.now(); // Adjust for any paused time

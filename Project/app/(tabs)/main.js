@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+const cubeScrambler = require("cube-scrambler")();
+
 import {
   View,
   Text,
@@ -35,9 +37,12 @@ export default function Main() {
       intervalRef.current = null;
     }
   };
-
+  const generateScramble = async () => {
+    console.log(cubeScrambler.scramble());
+  };
   // Cleanup on unmount
   useEffect(() => {
+    generateScramble();
     return () => clearInterval(intervalRef.current);
   }, []);
 

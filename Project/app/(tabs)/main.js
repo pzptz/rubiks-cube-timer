@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+const scrambled = require("scrambled");
 import {
   View,
   Text,
@@ -16,6 +17,7 @@ export default function Main() {
 
   // Start the stopwatch
   const startStopwatch = () => {
+    console.log(scrambled.generateScrambleSync(30));
     if (!isRunning) {
       setIsRunning(true);
       const start = Date.now(); // Adjust for any paused time

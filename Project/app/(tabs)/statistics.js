@@ -6,7 +6,7 @@ export default function Statistics() {
   const fetchMessage = async () => {
     try {
       //Change index to fetch a different message
-      let temp = (await db.from("test").select()).data[0].message;
+      let temp = (await db.from("test").select()).data[1].message;
       setMessage(temp);
     } catch (error) {
       console.log(err);

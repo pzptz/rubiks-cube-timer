@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "cs147l-24au-a4",
-    "slug": "cs147l-24au-a4",
+    "name": "rubiks-cube-timer",
+    "slug": "rubiks-cube-timer",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

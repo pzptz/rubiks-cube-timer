@@ -37,7 +37,7 @@ export default function Main() {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    console.log(scramble);
+    generateScramble();
   };
   const generateScramble = async () => {
     setScramble(cubeScrambler.scramble().join(" "));

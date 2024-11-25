@@ -14,6 +14,7 @@ export default function Main() {
   const [endTime, setEndTime] = useState(0); // Time in milliseconds
   const [isRunning, setIsRunning] = useState(false); // Toggle for start/stop
   const [startTime, setStartTime] = useState(0);
+  const [scramble, setScramble] = useState(null);
   const intervalRef = useRef(null); // Ref to store the interval ID
 
   // Start the stopwatch
@@ -36,9 +37,10 @@ export default function Main() {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
+    console.log(scramble);
   };
   const generateScramble = async () => {
-    console.log(cubeScrambler.scramble());
+    setScramble(cubeScrambler.scramble().join(" "));
   };
   // Cleanup on unmount
   useEffect(() => {
@@ -95,6 +97,7 @@ export default function Main() {
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.button} onPress={startStopwatch}>
+          <Text>{scramble}</Text>
           <View>
             <Text style={styles.timer}>{formatTime()}</Text>
           </View>

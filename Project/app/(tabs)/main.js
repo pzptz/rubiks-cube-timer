@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 const cubeScrambler = require("cube-scrambler")();
-
+import useSession from "@/utils/useSession";
+import db from "@/database/db";
 import {
   View,
   Text,
@@ -11,6 +12,7 @@ import {
 } from "react-native";
 
 export default function Main() {
+  const session = useSession();
   const [endTime, setEndTime] = useState(0); // Time in milliseconds
   const [isRunning, setIsRunning] = useState(false); // Toggle for start/stop
   const [startTime, setStartTime] = useState(0);
@@ -33,11 +35,29 @@ export default function Main() {
   // Stop the stopwatch
   const stopStopwatch = () => {
     if (isRunning) {
-      setEndTime(Date.now());
+      end = Date.now();
+      setEndTime(end);
       clearInterval(intervalRef.current);
       intervalRef.current = null;
+      time = end - startTime;
+      pushToDB(time, scramble);
     }
     generateScramble();
+  };
+
+  const pushToDB = async (time, scrambleText) => {
+    if (session) {
+      try {
+        const newTime = {
+          scramble: scrambleText,
+          time: time,
+          user_id: session.user.id,
+        };
+        await db.from("solve_times").insert(newTime);
+      } catch (err) {
+        console.error(err);
+      }
+    }
   };
   const generateScramble = async () => {
     setScramble(cubeScrambler.scramble().join(" "));
@@ -132,6 +152,5 @@ const styles = StyleSheet.create({
     height: "90%",
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 3,
   },
 });

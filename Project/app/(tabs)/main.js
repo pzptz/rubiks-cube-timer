@@ -97,11 +97,11 @@ export default function Main() {
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.button} onPress={startStopwatch}>
-          <Text>{scramble}</Text>
           <View>
             <Text style={styles.timer}>{formatTime()}</Text>
           </View>
         </TouchableOpacity>
+        <Text style={styles.scramble}>{scramble}</Text>
       </View>
     );
   }
@@ -110,7 +110,8 @@ export default function Main() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-between",
+    flexDirection: "column-reverse",
     alignItems: "center",
   },
   timer: {
@@ -118,11 +119,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontVariant: ["tabular-nums"],
     marginBottom: 20,
+    textAlign: "center",
+  },
+  scramble: {
+    fontSize: 24,
+    fontWeight: "bold",
+    fontVariant: ["tabular-nums"],
+    textAlign: "center",
   },
   button: {
     width: "100%",
-    height: "100%",
+    height: "90%",
     justifyContent: "center",
     alignItems: "center",
+    borderWidth: 3,
   },
 });

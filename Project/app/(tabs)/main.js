@@ -14,6 +14,7 @@ export default function Main() {
   const [endTime, setEndTime] = useState(0); // Time in milliseconds
   const [isRunning, setIsRunning] = useState(false); // Toggle for start/stop
   const [startTime, setStartTime] = useState(0);
+  const [scramble, setScramble] = useState(null);
   const intervalRef = useRef(null); // Ref to store the interval ID
 
   // Start the stopwatch
@@ -36,9 +37,10 @@ export default function Main() {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
+    generateScramble();
   };
   const generateScramble = async () => {
-    console.log(cubeScrambler.scramble());
+    setScramble(cubeScrambler.scramble().join(" "));
   };
   // Cleanup on unmount
   useEffect(() => {
@@ -99,6 +101,7 @@ export default function Main() {
             <Text style={styles.timer}>{formatTime()}</Text>
           </View>
         </TouchableOpacity>
+        <Text style={styles.scramble}>{scramble}</Text>
       </View>
     );
   }
@@ -107,7 +110,8 @@ export default function Main() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-between",
+    flexDirection: "column-reverse",
     alignItems: "center",
   },
   timer: {
@@ -115,11 +119,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontVariant: ["tabular-nums"],
     marginBottom: 20,
+    textAlign: "center",
+  },
+  scramble: {
+    fontSize: 24,
+    fontWeight: "bold",
+    fontVariant: ["tabular-nums"],
+    textAlign: "center",
   },
   button: {
     width: "100%",
-    height: "100%",
+    height: "90%",
     justifyContent: "center",
     alignItems: "center",
+    borderWidth: 3,
   },
 });

@@ -34,17 +34,16 @@ export default function Main() {
 
   // Stop the stopwatch
   const stopStopwatch = () => {
+    let end = Date.now();
     if (isRunning) {
-      end = Date.now();
-      setEndTime(end);
       clearInterval(intervalRef.current);
       intervalRef.current = null;
-      time = end - startTime;
+      let time = end - startTime;
       pushToDB(time, scramble);
     }
+    setEndTime(end);
     generateScramble();
   };
-  // Test for commit's sake
   const pushToDB = async (time, scrambleText) => {
     if (session) {
       try {
@@ -107,7 +106,7 @@ export default function Main() {
           onPressIn={stopStopwatch}
           onPressOut={() => setIsRunning(false)}
         >
-          <View>
+          <View style={styles.timerBox}>
             <Text style={styles.timer}>{formatTime()}</Text>
           </View>
         </TouchableOpacity>
@@ -117,7 +116,7 @@ export default function Main() {
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.button} onPress={startStopwatch}>
-          <View>
+          <View style={styles.timerBox}>
             <Text style={styles.timer}>{formatTime()}</Text>
           </View>
         </TouchableOpacity>
@@ -138,9 +137,14 @@ const styles = StyleSheet.create({
     fontSize: 48,
     fontWeight: "bold",
     fontVariant: ["tabular-nums"],
-    marginBottom: 20,
     textAlign: "center",
   },
+  timerBox: {
+    width: "100%",
+    position: "absolute",
+    bottom: 250,
+  },
+  scrambleBox: {},
   scramble: {
     fontSize: 24,
     fontWeight: "bold",
@@ -148,9 +152,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   button: {
-    width: "100%",
-    height: "90%",
-    justifyContent: "center",
+    flex: 1,
+    justifyContent: "flex-end",
     alignItems: "center",
+    width: "100%",
   },
 });

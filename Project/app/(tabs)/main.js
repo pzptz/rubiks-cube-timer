@@ -44,7 +44,7 @@ export default function Main() {
     }
     generateScramble();
   };
-
+  // Test for commit's sake
   const pushToDB = async (time, scrambleText) => {
     if (session) {
       try {

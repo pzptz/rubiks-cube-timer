@@ -73,7 +73,7 @@ export function generateScrambleSync(
       hasDone.push(move);
     }
 
-    let isPrime = Math.floor(seedrandom(hash + i + 1).quick() * 2);
+    let isPrime = Math.floor(seedrandom(hash + i + 1).quick() * 1.5);
     let is2 = Math.floor(seedrandom(hash + i + 2).quick() * 2);
 
     if (size > 3) {

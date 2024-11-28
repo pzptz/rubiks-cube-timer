@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-const cubeScrambler = require("cube-scrambler")();
+import { generateScrambleSync } from "@/utils/scrambled";
 import useSession from "@/utils/useSession";
 import db from "@/database/db";
 import {
@@ -62,7 +62,7 @@ export default function Main() {
     }
   };
   const generateScramble = async () => {
-    setScramble(cubeScrambler.scramble().join(" "));
+    setScramble(generateScrambleSync(25, 3).scramble);
   };
   // Cleanup on unmount
   useEffect(() => {

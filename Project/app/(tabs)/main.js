@@ -39,22 +39,25 @@ export default function Main() {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
       let time = end - startTime;
-      pushToDB(time, scramble);
+      const newTime = {
+        scramble: scramble,
+        time: time,
+        user_id: session.user.id,
+      };
+      pushToDB(newTime);
     }
     setEndTime(end);
     generateScramble();
   };
-  const pushToDB = async (time, scrambleText) => {
+  const pushToDB = async (newTime) => {
     if (session) {
       try {
-        const newTime = {
-          scramble: scrambleText,
-          time: time,
-          user_id: session.user.id,
-        };
-        await db.from("solve_times").insert(newTime);
+        const { data, error } = await db.from("solve_times").insert(newTime);
+        if (error) throw error;
+        console.log("success");
       } catch (err) {
-        console.error(err);
+        console.log("failed, retrying");
+        setTimeout(() => pushToDB(newTime), 500); // Retry after a short time
       }
     }
   };
@@ -150,6 +153,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontVariant: ["tabular-nums"],
     textAlign: "center",
+    padding: 12,
   },
   button: {
     flex: 1,

@@ -4,6 +4,8 @@ import useSession from "@/utils/useSession";
 import db from "@/database/db";
 import { useContext } from "react";
 import { averagesGetter, runningContext } from "@/assets/contexts";
+import Loading from "@/components/Loading";
+
 import {
   View,
   Text,
@@ -20,6 +22,7 @@ export default function Main() {
   const [scramble, setScramble] = useState(null);
   const intervalRef = useRef(null); // Ref to store the interval ID
   const averages = useContext(averagesGetter);
+
   const runningState = useContext(runningContext);
   // Start the stopwatch
   const startStopwatch = () => {
@@ -76,8 +79,7 @@ export default function Main() {
   }, []);
 
   // Format time into minutes, seconds, and milliseconds (mm:ss:ms)
-  const formatTime = () => {
-    let time = endTime - startTime;
+  const formatTime = (time) => {
     if (runningState.isRunning) {
       const mins = Math.floor(time / 60000); // 1 minute = 60000ms
       const secs = Math.floor((time % 60000) / 1000); // 1 second = 1000ms
@@ -105,7 +107,9 @@ export default function Main() {
       }
     }
   };
-
+  if (averages.ao5 == -1) {
+    return <Loading />;
+  }
   if (runningState.isRunning) {
     return (
       <View style={styles.container}>
@@ -115,7 +119,7 @@ export default function Main() {
           onPressOut={() => runningState.setIsRunning(false)}
         >
           <View style={styles.timerBox}>
-            <Text style={styles.timer}>{formatTime()}</Text>
+            <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -123,11 +127,17 @@ export default function Main() {
   } else {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.button} onPress={startStopwatch}>
-          <View style={styles.timerBox}>
-            <Text style={styles.timer}>{formatTime()}</Text>
-          </View>
-        </TouchableOpacity>
+        <View style={styles.statsBox}>
+          <Text style={styles.stats}>ao5: {formatTime(averages.ao5)}</Text>
+          <Text style={styles.stats}>ao12: {formatTime(averages.ao12)}</Text>
+        </View>
+        <View style={styles.timerBox}>
+          <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={startStopwatch}
+        ></TouchableOpacity>
         <Text style={styles.scramble}>{scramble}</Text>
       </View>
     );
@@ -146,11 +156,26 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontVariant: ["tabular-nums"],
     textAlign: "center",
+    position: "absolute",
+    top: 300,
   },
+
   timerBox: {
     width: "100%",
+    ...StyleSheet.absoluteFillObject,
+    alignItems: "center",
+  },
+  stats: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  statsBox: {
     position: "absolute",
-    bottom: 250,
+    top: 400,
+    flexDirection: "row",
+    width: "70%",
+    justifyContent: "space-between",
   },
   scrambleBox: {},
   scramble: {

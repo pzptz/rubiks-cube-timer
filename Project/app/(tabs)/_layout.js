@@ -13,17 +13,9 @@ import { StyleSheet, View, SafeAreaView, Text } from "react-native";
 import { useState } from "react";
 
 export default function TabLayout() {
-  const [averages, setAverages] = useState({ ao5: 5, ao12: 12 });
+  const [averages, setAverages] = useState({ ao5: -1, ao12: -1 });
   const [isRunning, setIsRunning] = useState(false);
-  const FeedHeader = ({ navigation, route, options }) => {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.text}>Timer</Text>
-        </View>
-      </SafeAreaView>
-    );
-  };
+
   const ProfileHeader = ({ navigation, route, options }) => {
     return (
       <SafeAreaView style={styles.container}>
@@ -59,11 +51,10 @@ export default function TabLayout() {
             }}
           >
             <Tabs.Screen
-              name="main"
+              name="timer"
               options={{
-                header: FeedHeader,
                 tabBarLabel: "Timer",
-
+                headerShown: false,
                 tabBarIcon: ({ size, color }) => (
                   <Entypo name="stopwatch" size={size} color={color} />
                 ),
@@ -73,6 +64,7 @@ export default function TabLayout() {
               name="statistics"
               options={{
                 header: StatsHeader,
+                lazy: false,
                 tabBarLabel: "Stats",
                 tabBarIcon: ({ size, color }) => (
                   <Ionicons name="stats-chart" size={size} color={color} />

@@ -9,7 +9,6 @@ import Loading from "@/components/Loading";
 export default function App() {
   const [session, setSession] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Default to true for initial load
-  const [message, setMessage] = useState("test");
 
   useEffect(() => {
     setIsLoading(true);
@@ -29,7 +28,7 @@ export default function App() {
     return () => subscription.unsubscribe();
   }, []);
   if (session) {
-    return <Redirect href="/(tabs)/main" />;
+    return <Redirect href="/(tabs)/timer/main" />;
   } else if (isLoading) {
     return <Loading />;
   } else {

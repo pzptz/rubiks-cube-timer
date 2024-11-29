@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { generateScrambleSync } from "@/utils/scrambled";
 import useSession from "@/utils/useSession";
 import db from "@/database/db";
+import { Link } from "expo-router";
 import { useContext } from "react";
 import { averagesGetter, runningContext } from "@/assets/contexts";
 import Loading from "@/components/Loading";
@@ -70,7 +71,7 @@ export default function Main() {
     }
   };
   const generateScramble = async () => {
-    setScramble(generateScrambleSync(25, 3).scramble);
+    setScramble(generateScrambleSync(21, 3).scramble);
   };
   // Cleanup on unmount
   useEffect(() => {
@@ -138,7 +139,27 @@ export default function Main() {
           style={styles.button}
           onPress={startStopwatch}
         ></TouchableOpacity>
-        <Text style={styles.scramble}>{scramble}</Text>
+
+        <View style={styles.scrambleBox}>
+          <Text style={styles.scramble}>{scramble}</Text>
+        </View>
+        <View style={styles.subButtonsBox}>
+          <Link
+            href="/(tabs)/timer/instructions"
+            style={styles.instructionsButtonLink}
+          >
+            <View style={styles.instructionsButton}>
+              <Text style={styles.scramble}>How to use</Text>
+            </View>
+          </Link>
+
+          <TouchableHighlight
+            style={styles.newScrambleButton}
+            onPress={() => generateScramble()}
+          >
+            <Text style={styles.scramble}>New Scramble</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }
@@ -177,7 +198,7 @@ const styles = StyleSheet.create({
     width: "70%",
     justifyContent: "space-between",
   },
-  scrambleBox: {},
+  scrambleBox: { width: "100%", borderBottomWidth: 3 },
   scramble: {
     fontSize: 24,
     fontWeight: "bold",
@@ -190,5 +211,28 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     width: "100%",
+  },
+  subButtonsBox: {
+    width: "100%",
+    flexDirection: "row",
+  },
+  newScrambleButton: {
+    width: "50%",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    borderLeftWidth: 1,
+    borderBottomWidth: 3,
+  },
+  instructionsButton: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  instructionsButtonLink: {
+    width: "50%",
+    borderRightWidth: 1,
+    borderBottomWidth: 3,
+    paddingVertical: 12,
   },
 });

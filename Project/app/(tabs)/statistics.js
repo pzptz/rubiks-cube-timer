@@ -28,6 +28,8 @@ export default function Statistics() {
       //setTimeout(() => fetchData(), 500);
     }
   };
+  // TODO: Akshar will add live listener to auto update on db changes, and also infinite scroll. All Peter must do for now is render the tableData
+  // And make it navigable. Also add a button to manually insert times.
   useEffect(() => {
     fetchData();
   }, [session]);

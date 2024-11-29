@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { generateScrambleSync } from "@/utils/scrambled";
 import useSession from "@/utils/useSession";
 import db from "@/database/db";
+import { useContext } from "react";
+import { averagesGetter, runningContext } from "@/assets/contexts";
 import {
   View,
   Text,
@@ -14,15 +16,15 @@ import {
 export default function Main() {
   const session = useSession();
   const [endTime, setEndTime] = useState(0); // Time in milliseconds
-  const [isRunning, setIsRunning] = useState(false); // Toggle for start/stop
   const [startTime, setStartTime] = useState(0);
   const [scramble, setScramble] = useState(null);
   const intervalRef = useRef(null); // Ref to store the interval ID
-
+  const averages = useContext(averagesGetter);
+  const runningState = useContext(runningContext);
   // Start the stopwatch
   const startStopwatch = () => {
-    if (!isRunning) {
-      setIsRunning(true);
+    if (!runningState.isRunning) {
+      runningState.setIsRunning(true);
       const start = Date.now(); // Adjust for any paused time
       setStartTime(start);
       setEndTime(start);
@@ -35,7 +37,7 @@ export default function Main() {
   // Stop the stopwatch
   const stopStopwatch = () => {
     let end = Date.now();
-    if (isRunning) {
+    if (runningState.isRunning) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
       let time = end - startTime;
@@ -44,7 +46,10 @@ export default function Main() {
         time: time,
         user_id: session.user.id,
       };
-      pushToDB(newTime);
+      console.log(
+        "currently not pushing db go to end of stopStopwatch in main.js"
+      );
+      //pushToDB(newTime);
     }
     setEndTime(end);
     generateScramble();
@@ -73,7 +78,7 @@ export default function Main() {
   // Format time into minutes, seconds, and milliseconds (mm:ss:ms)
   const formatTime = () => {
     let time = endTime - startTime;
-    if (isRunning) {
+    if (runningState.isRunning) {
       const mins = Math.floor(time / 60000); // 1 minute = 60000ms
       const secs = Math.floor((time % 60000) / 1000); // 1 second = 1000ms
       const millis = Math.floor((time % 1000) / 100); // Show one decimal place for milliseconds
@@ -101,13 +106,13 @@ export default function Main() {
     }
   };
 
-  if (isRunning) {
+  if (runningState.isRunning) {
     return (
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.button}
           onPressIn={stopStopwatch}
-          onPressOut={() => setIsRunning(false)}
+          onPressOut={() => runningState.setIsRunning(false)}
         >
           <View style={styles.timerBox}>
             <Text style={styles.timer}>{formatTime()}</Text>

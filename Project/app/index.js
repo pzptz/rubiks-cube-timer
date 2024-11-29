@@ -28,19 +28,6 @@ export default function App() {
 
     return () => subscription.unsubscribe();
   }, []);
-
-  const signOut = async () => {
-    try {
-      const { error } = await db.auth.signOut();
-      if (error) {
-        Alert.alert(error.message);
-      } else {
-        Alert.alert("Sign out successful.");
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
   if (session) {
     return <Redirect href="/(tabs)/main" />;
   } else if (isLoading) {

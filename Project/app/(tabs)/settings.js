@@ -1,17 +1,21 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 
 import { useRouter } from "expo-router";
-
+import { Switch } from "@rneui/themed";
 import Theme from "@/assets/theme";
 import Loading from "@/components/Loading";
 
 import db from "@/database/db";
 import useSession from "@/utils/useSession";
+import { settings } from "@/assets/contexts";
+import { useContext, useState } from "react";
 
 export default function Settings() {
   const session = useSession();
   const router = useRouter();
-
+  const setCubeType = useContext(settings).setCubeType;
+  const inspectionTime = useContext(settings).inspectionTime;
+  const setInspectionTime = useContext(settings).setInspectionTime;
   const signOut = async () => {
     try {
       const { error } = await db.auth.signOut();
@@ -40,6 +44,10 @@ export default function Settings() {
         </View>
         <Text style={styles.text}>{session.user.email}</Text>
       </View>
+      <Switch
+        value={inspectionTime}
+        onValueChange={(value) => setInspectionTime(value)}
+      />
     </View>
   );
 }

@@ -23,13 +23,27 @@ export default function Main() {
   const [scramble, setScramble] = useState(null);
   const intervalRef = useRef(null); // Ref to store the interval ID
   const averages = useContext(averagesContext).averages;
-  const inspectionTime = useContext(settings).inspectionTime;
-
+  const useInspectionTime = useContext(settings).inspectionTime;
   const runningState = useContext(runningContext);
+
+  const startCountdown = () => {
+    if (runningState.isRunning != 1) {
+      runningState.setIsRunning(1);
+      let start = Date.now(); // Adjust for any paused time
+      setStartTime(start);
+      setEndTime(start + 15000);
+      intervalRef.current = setInterval(() => {
+        start += 1000;
+        setStartTime(start);
+        console.log(start);
+      }, 1000);
+    }
+  };
   // Start the stopwatch
   const startStopwatch = () => {
-    if (!runningState.isRunning) {
-      runningState.setIsRunning(true);
+    if (runningState.isRunning != 2) {
+      clearInterval(intervalRef.current);
+      runningState.setIsRunning(2);
       const start = Date.now(); // Adjust for any paused time
       setStartTime(start);
       setEndTime(start);
@@ -42,7 +56,7 @@ export default function Main() {
   // Stop the stopwatch
   const stopStopwatch = () => {
     let end = Date.now();
-    if (runningState.isRunning) {
+    if (runningState.isRunning == 2) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
       let time = end - startTime;
@@ -79,12 +93,15 @@ export default function Main() {
     generateScramble();
     return () => clearInterval(intervalRef.current);
   }, []);
+  useEffect(() => {
+    console.log(runningState.isRunning);
+  }, [useInspectionTime]);
 
   // Format time into minutes, seconds, and milliseconds (mm:ss:ms)
   const formatTime = (time) => {
-    if (runningState.isRunning) {
-      const mins = Math.floor(time / 60000); // 1 minute = 60000ms
-      const secs = Math.floor((time % 60000) / 1000); // 1 second = 1000ms
+    const mins = Math.floor(time / 60000); // 1 minute = 60000ms
+    const secs = Math.floor((time % 60000) / 1000); // 1 second = 1000ms
+    if (runningState.isRunning == 2) {
       const millis = Math.floor((time % 1000) / 100); // Show one decimal place for milliseconds
       if (mins == 0) {
         return `${String(secs).padStart(1, "0")}.${String(millis)}`;
@@ -93,9 +110,9 @@ export default function Main() {
           millis
         )}`;
       }
-    } else {
-      const mins = Math.floor(time / 60000); // 1 minute = 60000ms
-      const secs = Math.floor((time % 60000) / 1000); // 1 second = 1000ms
+    } else if (runningState.isRunning == 1) {
+      return `${String(secs)}`;
+    } else if (runningState.isRunning == 0) {
       const millis = Math.floor(time % 1000); // Show two decimal places for milliseconds
       if (mins == 0) {
         return `${String(secs).padStart(1, "0")}.${String(millis).padStart(
@@ -108,18 +125,29 @@ export default function Main() {
         ).padStart(3, "0")}`;
       }
     }
+    return 0;
   };
   if (averages.ao5 == -1) {
     return <Loading />;
   }
-  if (runningState.isRunning) {
+  if (runningState.isRunning == 2) {
     return (
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.button}
           onPressIn={stopStopwatch}
-          onPressOut={() => runningState.setIsRunning(false)}
+          onPressOut={() => runningState.setIsRunning(0)}
         >
+          <View style={styles.timerBox}>
+            <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  } else if (runningState.isRunning == 1) {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.button} onPressOut={startStopwatch}>
           <View style={styles.timerBox}>
             <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>
           </View>
@@ -138,7 +166,7 @@ export default function Main() {
         </View>
         <TouchableOpacity
           style={styles.button}
-          onPress={startStopwatch}
+          onPress={useInspectionTime ? startCountdown : startStopwatch}
         ></TouchableOpacity>
 
         <View style={styles.scrambleBox}>

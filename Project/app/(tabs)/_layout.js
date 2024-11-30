@@ -11,7 +11,7 @@ import { useState } from "react";
 
 export default function TabLayout() {
   const [averages, setAverages] = useState({ ao5: -1, ao12: -1 });
-  const [isRunning, setIsRunning] = useState(false);
+  const [isRunning, setIsRunning] = useState(0);
   const [cubeType, setCubeType] = useState(3);
   const [inspectionTime, setInspectionTime] = useState(false);
   const ProfileHeader = ({ navigation, route, options }) => {
@@ -37,7 +37,9 @@ export default function TabLayout() {
       <averagesContext.Provider
         value={{ averages: averages, setAverages: setAverages }}
       >
-        <runningContext.Provider value={{ isRunning, setIsRunning }}>
+        <runningContext.Provider
+          value={{ isRunning: isRunning, setIsRunning: setIsRunning }}
+        >
           <settings.Provider
             value={{
               cubeType: cubeType,
@@ -53,7 +55,7 @@ export default function TabLayout() {
                 },
                 tabBarStyle: {
                   backgroundColor: Theme.colors.backgroundPrimary,
-                  display: isRunning ? "none" : "flex",
+                  display: isRunning == 0 ? "flex" : "none",
                 },
                 tabBarActiveTintColor: Theme.colors.iconHighlighted,
               }}

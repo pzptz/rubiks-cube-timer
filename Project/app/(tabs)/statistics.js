@@ -7,7 +7,6 @@ export default function Statistics() {
   const session = useSession();
   const [tableData, setTableData] = useState(null); // for this screen
   const setAverages = useContext(averagesSetter); // for the main screen
-  const [bests, setBests] = useState({ time: null, ao5: null, ao12: null });
   const fetchData = async () => {
     try {
       if (session) {
@@ -25,7 +24,8 @@ export default function Statistics() {
       }
     } catch (error) {
       console.log(error);
-      //setTimeout(() => fetchData(), 500);
+      // This is to guarantee we get the data, eventually we'll remove this log but it's to avoid internet errors
+      setTimeout(() => fetchData(), 500);
     }
   };
   // TODO: Akshar will add live listener to auto update on db changes, and also infinite scroll. All Peter must do for now is render the tableData
@@ -35,10 +35,10 @@ export default function Statistics() {
   }, [session]);
   return (
     <View>
-      {/* TODO: At the top: show best time, ao5, ao12. button to insert new time
+      {/* TODO: button to insert new time
       format data into table 3 columns = time, ao5, ao12 Flatlist and stack navigator similar to a4 you can click on a time to open up a screen.  
       New screen shows same data but now also scramble. Also, has a button to delete this time. be creative on the ui, it's up to you but we are graded on it*/}
-      <Text>There is nothing here, please make this UI</Text>
+      <Text>TODO</Text>
     </View>
   );
 }

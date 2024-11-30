@@ -34,7 +34,7 @@ export default function StackLayout() {
         options={{
           headerStyle: styles.instructions,
           headerTitleStyle: styles.text,
-          headerTitle: "Instructions",
+          headerTitle: "How to use",
           headerBackTitle: "Back",
         }}
       />

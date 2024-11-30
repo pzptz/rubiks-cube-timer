@@ -4,7 +4,7 @@ import useSession from "@/utils/useSession";
 import db from "@/database/db";
 import { Link } from "expo-router";
 import { useContext } from "react";
-import { averagesGetter, runningContext } from "@/assets/contexts";
+import { averagesContext, runningContext } from "@/assets/contexts";
 import Loading from "@/components/Loading";
 
 import {
@@ -22,7 +22,7 @@ export default function Main() {
   const [startTime, setStartTime] = useState(0);
   const [scramble, setScramble] = useState(null);
   const intervalRef = useRef(null); // Ref to store the interval ID
-  const averages = useContext(averagesGetter);
+  const averages = useContext(averagesContext).averages;
 
   const runningState = useContext(runningContext);
   // Start the stopwatch

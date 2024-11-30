@@ -1,12 +1,12 @@
 import { useEffect, useState, useContext } from "react";
 import { View, Text, Alert, SafeAreaView } from "react-native";
 import db from "@/database/db";
-import { averagesSetter } from "@/assets/contexts";
+import { averagesContext } from "@/assets/contexts";
 import useSession from "@/utils/useSession";
 export default function Statistics() {
   const session = useSession();
   const [tableData, setTableData] = useState(null); // for this screen
-  const setAverages = useContext(averagesSetter); // for the main screen
+  const setAverages = useContext(averagesContext).setAverages; // for the main screen
   const fetchData = async () => {
     try {
       if (session) {

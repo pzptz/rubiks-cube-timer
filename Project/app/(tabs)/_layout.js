@@ -3,11 +3,7 @@ import Theme from "@/assets/theme";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import {
-  averagesSetter,
-  averagesGetter,
-  runningContext,
-} from "@/assets/contexts";
+import { averagesContext, runningContext, settings } from "@/assets/contexts";
 
 import { StyleSheet, View, SafeAreaView, Text } from "react-native";
 import { useState } from "react";
@@ -15,7 +11,7 @@ import { useState } from "react";
 export default function TabLayout() {
   const [averages, setAverages] = useState({ ao5: -1, ao12: -1 });
   const [isRunning, setIsRunning] = useState(false);
-
+  const [cubeType, setCubeType] = useState(3);
   const ProfileHeader = ({ navigation, route, options }) => {
     return (
       <SafeAreaView style={styles.container}>
@@ -35,9 +31,13 @@ export default function TabLayout() {
     );
   };
   return (
-    <averagesSetter.Provider value={setAverages}>
-      <averagesGetter.Provider value={averages}>
-        <runningContext.Provider value={{ isRunning, setIsRunning }}>
+    <averagesContext.Provider
+      value={{ averages: averages, setAverages: setAverages }}
+    >
+      <runningContext.Provider value={{ isRunning, setIsRunning }}>
+        <settings.Provider
+          value={{ cubeType: cubeType, setCubeType: setCubeType }}
+        >
           <Tabs
             screenOptions={{
               headerStyle: {
@@ -82,9 +82,9 @@ export default function TabLayout() {
               }}
             />
           </Tabs>
-        </runningContext.Provider>
-      </averagesGetter.Provider>
-    </averagesSetter.Provider>
+        </settings.Provider>
+      </runningContext.Provider>
+    </averagesContext.Provider>
   );
 }
 const styles = StyleSheet.create({

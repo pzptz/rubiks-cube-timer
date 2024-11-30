@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     fontVariant: ["tabular-nums"],
     textAlign: "center",
     position: "absolute",
-    top: 300,
+    top: 350,
   },
 
   timerBox: {
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   },
   statsBox: {
     position: "absolute",
-    top: 400,
+    top: 450,
     flexDirection: "row",
     width: "70%",
     justifyContent: "space-between",

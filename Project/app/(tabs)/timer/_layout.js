@@ -11,15 +11,6 @@ export default function StackLayout() {
       </SafeAreaView>
     );
   };
-  const InstructionsHeader = ({ navigation, route, options }) => {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.text}>Instructions</Text>
-        </View>
-      </SafeAreaView>
-    );
-  };
   return (
     <Stack>
       <Stack.Screen
@@ -57,6 +48,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: Theme.colors.textPrimary,
     fontWeight: "bold",
+    padding: 5,
   },
   instructions: {
     backgroundColor: Theme.colors.backgroundPrimary,

@@ -99,5 +99,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: Theme.colors.textPrimary,
     fontWeight: "bold",
+    padding: 5,
   },
 });

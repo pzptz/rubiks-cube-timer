@@ -21,41 +21,60 @@ export default function Main() {
   const [endTime, setEndTime] = useState(0); // Time in milliseconds
   const [startTime, setStartTime] = useState(0);
   const [scramble, setScramble] = useState(null);
+  const [needReset, setNeedReset] = useState(false);
   const intervalRef = useRef(null); // Ref to store the interval ID
   const averages = useContext(averagesContext).averages;
   const useInspectionTime = useContext(settings).inspectionTime;
   const runningState = useContext(runningContext);
-
   const startCountdown = () => {
-    if (runningState.isRunning != 1) {
+    if (runningState.isRunning !== 1) {
       runningState.setIsRunning(1);
-      let start = Date.now(); // Adjust for any paused time
+
+      const start = Date.now(); // Start of the countdown
+      const end = start + 14950; // Inspection time duration (3950 ms for ~4 seconds)
+
       setStartTime(start);
-      setEndTime(start + 15000);
+      setEndTime(end);
+
       intervalRef.current = setInterval(() => {
-        start += 1000;
-        setStartTime(start);
-        console.log(start);
-      }, 1000);
+        const currentTime = Date.now();
+        const remainingTime = end - currentTime;
+
+        if (remainingTime <= 0) {
+          // Reset runningState and clear the interval when countdown ends
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+          runningState.setIsRunning(0);
+          console.log("Inspection time is over, resetting to isRunning = 0");
+
+          setStartTime(currentTime);
+          setEndTime(currentTime);
+        } else {
+          setStartTime(currentTime); // Update the timer
+        }
+      }, 100); // Update every 100ms
     }
   };
+
   // Start the stopwatch
   const startStopwatch = () => {
     if (runningState.isRunning != 2) {
       clearInterval(intervalRef.current);
       runningState.setIsRunning(2);
       const start = Date.now(); // Adjust for any paused time
+      console.log(start);
       setStartTime(start);
       setEndTime(start);
       intervalRef.current = setInterval(() => {
         setEndTime(Date.now());
-      }, 100); // Update every 10 milliseconds
+      }, 100); // Update every 100 milliseconds
     }
   };
 
   // Stop the stopwatch
   const stopStopwatch = () => {
     let end = Date.now();
+
     if (runningState.isRunning == 2) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
@@ -111,7 +130,7 @@ export default function Main() {
         )}`;
       }
     } else if (runningState.isRunning == 1) {
-      return `${String(secs)}`;
+      return `${String(secs + 1)}`;
     } else if (runningState.isRunning == 0) {
       const millis = Math.floor(time % 1000); // Show two decimal places for milliseconds
       if (mins == 0) {

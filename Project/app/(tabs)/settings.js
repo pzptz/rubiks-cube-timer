@@ -44,10 +44,19 @@ export default function Settings() {
         </View>
         <Text style={styles.text}>{session.user.email}</Text>
       </View>
-      <Switch
-        value={inspectionTime}
-        onValueChange={(value) => setInspectionTime(value)}
-      />
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          paddingVertical: 24,
+        }}
+      >
+        <Text style={[styles.text, { padding: 12 }]}>Inspection Time: </Text>
+        <Switch
+          value={inspectionTime}
+          onValueChange={(value) => setInspectionTime(value)}
+        />
+      </View>
     </View>
   );
 }

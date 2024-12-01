@@ -21,28 +21,65 @@ export default function Main() {
   const [endTime, setEndTime] = useState(0); // Time in milliseconds
   const [startTime, setStartTime] = useState(0);
   const [scramble, setScramble] = useState(null);
+  const [needReset, setNeedReset] = useState(false);
   const intervalRef = useRef(null); // Ref to store the interval ID
   const averages = useContext(averagesContext).averages;
-  const inspectionTime = useContext(settings).inspectionTime;
-
+  const useInspectionTime = useContext(settings).inspectionTime;
   const runningState = useContext(runningContext);
+  const startCountdown = () => {
+    if (runningState.isRunning !== 1) {
+      runningState.setIsRunning(1);
+
+      const start = Date.now(); // Start of the countdown
+      const end = start + 14950; // Inspection time duration (3950 ms for ~4 seconds)
+
+      setStartTime(start);
+      setEndTime(end);
+
+      intervalRef.current = setInterval(() => {
+        const currentTime = Date.now();
+        const remainingTime = end - currentTime;
+
+        if (remainingTime <= 0) {
+          // Reset runningState and clear the interval when countdown ends
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+          runningState.setIsRunning(0);
+          const newTime = {
+            scramble: scramble,
+            time: -1,
+            user_id: session.user.id,
+          };
+          console.log("Ran out of inspection time, DNF");
+          //pushToDB(newTime);
+          setStartTime(currentTime);
+          setEndTime(currentTime - 1);
+        } else {
+          setStartTime(currentTime); // Update the timer
+        }
+      }, 100); // Update every 100ms
+    }
+  };
+
   // Start the stopwatch
   const startStopwatch = () => {
-    if (!runningState.isRunning) {
-      runningState.setIsRunning(true);
+    if (runningState.isRunning != 2) {
+      clearInterval(intervalRef.current);
+      runningState.setIsRunning(2);
       const start = Date.now(); // Adjust for any paused time
       setStartTime(start);
       setEndTime(start);
       intervalRef.current = setInterval(() => {
         setEndTime(Date.now());
-      }, 100); // Update every 10 milliseconds
+      }, 100); // Update every 100 milliseconds
     }
   };
 
   // Stop the stopwatch
   const stopStopwatch = () => {
     let end = Date.now();
-    if (runningState.isRunning) {
+
+    if (runningState.isRunning == 2) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
       let time = end - startTime;
@@ -64,7 +101,6 @@ export default function Main() {
       try {
         const { data, error } = await db.from("solve_times").insert(newTime);
         if (error) throw error;
-        console.log("success");
       } catch (err) {
         console.log("failed, retrying");
         setTimeout(() => pushToDB(newTime), 500); // Retry after a short time
@@ -82,9 +118,12 @@ export default function Main() {
 
   // Format time into minutes, seconds, and milliseconds (mm:ss:ms)
   const formatTime = (time) => {
-    if (runningState.isRunning) {
-      const mins = Math.floor(time / 60000); // 1 minute = 60000ms
-      const secs = Math.floor((time % 60000) / 1000); // 1 second = 1000ms
+    if (time < 0) {
+      return "DNF";
+    }
+    const mins = Math.floor(time / 60000); // 1 minute = 60000ms
+    const secs = Math.floor((time % 60000) / 1000); // 1 second = 1000ms
+    if (runningState.isRunning == 2) {
       const millis = Math.floor((time % 1000) / 100); // Show one decimal place for milliseconds
       if (mins == 0) {
         return `${String(secs).padStart(1, "0")}.${String(millis)}`;
@@ -93,9 +132,9 @@ export default function Main() {
           millis
         )}`;
       }
-    } else {
-      const mins = Math.floor(time / 60000); // 1 minute = 60000ms
-      const secs = Math.floor((time % 60000) / 1000); // 1 second = 1000ms
+    } else if (runningState.isRunning == 1) {
+      return `${String(secs + 1)}`;
+    } else if (runningState.isRunning == 0) {
       const millis = Math.floor(time % 1000); // Show two decimal places for milliseconds
       if (mins == 0) {
         return `${String(secs).padStart(1, "0")}.${String(millis).padStart(
@@ -108,18 +147,29 @@ export default function Main() {
         ).padStart(3, "0")}`;
       }
     }
+    return 0;
   };
   if (averages.ao5 == -1) {
     return <Loading />;
   }
-  if (runningState.isRunning) {
+  if (runningState.isRunning == 2) {
     return (
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.button}
           onPressIn={stopStopwatch}
-          onPressOut={() => runningState.setIsRunning(false)}
+          onPressOut={() => runningState.setIsRunning(0)}
         >
+          <View style={styles.timerBox}>
+            <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  } else if (runningState.isRunning == 1) {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.button} onPressOut={startStopwatch}>
           <View style={styles.timerBox}>
             <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>
           </View>
@@ -138,7 +188,7 @@ export default function Main() {
         </View>
         <TouchableOpacity
           style={styles.button}
-          onPress={startStopwatch}
+          onPress={useInspectionTime ? startCountdown : startStopwatch}
         ></TouchableOpacity>
 
         <View style={styles.scrambleBox}>

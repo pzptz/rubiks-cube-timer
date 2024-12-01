@@ -45,10 +45,15 @@ export default function Main() {
           clearInterval(intervalRef.current);
           intervalRef.current = null;
           runningState.setIsRunning(0);
-          console.log("Inspection time is over, resetting to isRunning = 0");
-
+          const newTime = {
+            scramble: scramble,
+            time: -1,
+            user_id: session.user.id,
+          };
+          console.log("Ran out of inspection time, DNF");
+          //pushToDB(newTime);
           setStartTime(currentTime);
-          setEndTime(currentTime);
+          setEndTime(currentTime - 1);
         } else {
           setStartTime(currentTime); // Update the timer
         }
@@ -62,7 +67,6 @@ export default function Main() {
       clearInterval(intervalRef.current);
       runningState.setIsRunning(2);
       const start = Date.now(); // Adjust for any paused time
-      console.log(start);
       setStartTime(start);
       setEndTime(start);
       intervalRef.current = setInterval(() => {
@@ -97,7 +101,6 @@ export default function Main() {
       try {
         const { data, error } = await db.from("solve_times").insert(newTime);
         if (error) throw error;
-        console.log("success");
       } catch (err) {
         console.log("failed, retrying");
         setTimeout(() => pushToDB(newTime), 500); // Retry after a short time
@@ -112,12 +115,12 @@ export default function Main() {
     generateScramble();
     return () => clearInterval(intervalRef.current);
   }, []);
-  useEffect(() => {
-    console.log(runningState.isRunning);
-  }, [useInspectionTime]);
 
   // Format time into minutes, seconds, and milliseconds (mm:ss:ms)
   const formatTime = (time) => {
+    if (time < 0) {
+      return "DNF";
+    }
     const mins = Math.floor(time / 60000); // 1 minute = 60000ms
     const secs = Math.floor((time % 60000) / 1000); // 1 second = 1000ms
     if (runningState.isRunning == 2) {

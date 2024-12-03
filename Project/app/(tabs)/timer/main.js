@@ -6,7 +6,7 @@ import { Link } from "expo-router";
 import { useContext } from "react";
 import { averagesContext, runningContext, settings } from "@/assets/contexts";
 import Loading from "@/components/Loading";
-
+import Theme from "@/assets/theme";
 import {
   View,
   Text,
@@ -190,26 +190,25 @@ export default function Main() {
           style={styles.button}
           onPress={useInspectionTime ? startCountdown : startStopwatch}
         ></TouchableOpacity>
-
+        <View style={styles.subButtonsBox}>
+          <View style={{ flex: 1, alignItems: "center", padding: 12 }}>
+            <Link href="/(tabs)/timer/instructions">
+              <View style={styles.newScrambleButton}>
+                <Text style={styles.buttonText}>How to use</Text>
+              </View>
+            </Link>
+          </View>
+          <View style={{ flex: 1, alignItems: "center", padding: 12 }}>
+            <TouchableHighlight
+              style={styles.newScrambleButton}
+              onPress={() => generateScramble()}
+            >
+              <Text style={styles.buttonText}>New Scramble</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
         <View style={styles.scrambleBox}>
           <Text style={styles.scramble}>{scramble}</Text>
-        </View>
-        <View style={styles.subButtonsBox}>
-          <Link
-            href="/(tabs)/timer/instructions"
-            style={styles.instructionsButtonLink}
-          >
-            <View style={styles.instructionsButton}>
-              <Text style={styles.scramble}>How to use</Text>
-            </View>
-          </Link>
-
-          <TouchableHighlight
-            style={styles.newScrambleButton}
-            onPress={() => generateScramble()}
-          >
-            <Text style={styles.scramble}>New Scramble</Text>
-          </TouchableHighlight>
         </View>
       </View>
     );
@@ -222,6 +221,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "column-reverse",
     alignItems: "center",
+    backgroundColor: Theme.colors.backgroundPrimary,
   },
   timer: {
     fontSize: 48,
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     position: "absolute",
     top: 350,
+    color: Theme.colors.textPrimary,
   },
 
   timerBox: {
@@ -241,6 +242,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
+    color: Theme.colors.textSecondary,
   },
   statsBox: {
     position: "absolute",
@@ -249,13 +251,14 @@ const styles = StyleSheet.create({
     width: "85%",
     justifyContent: "space-between",
   },
-  scrambleBox: { width: "100%", borderBottomWidth: 3 },
+  scrambleBox: { width: "100%" },
   scramble: {
     fontSize: 24,
     fontWeight: "bold",
     fontVariant: ["tabular-nums"],
     textAlign: "center",
     padding: 12,
+    color: Theme.colors.textPrimary,
   },
   button: {
     flex: 1,
@@ -266,24 +269,19 @@ const styles = StyleSheet.create({
   subButtonsBox: {
     width: "100%",
     flexDirection: "row",
+    justifyContent: "space-evenly",
   },
   newScrambleButton: {
-    width: "50%",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 12,
-    borderLeftWidth: 1,
-    borderBottomWidth: 3,
-  },
-  instructionsButton: {
+    backgroundColor: Theme.colors.textHighlighted,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 24,
     width: "100%",
     alignItems: "center",
-    justifyContent: "center",
   },
-  instructionsButtonLink: {
-    width: "50%",
-    borderRightWidth: 1,
-    borderBottomWidth: 3,
-    paddingVertical: 12,
+  buttonText: {
+    color: Theme.colors.textPrimary,
+    fontWeight: "bold",
+    fontSize: 20,
   },
 });

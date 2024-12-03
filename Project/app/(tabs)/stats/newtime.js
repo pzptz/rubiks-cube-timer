@@ -1,0 +1,119 @@
+import React, { useState, useContext } from "react";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  Button,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
+import db from "@/database/db";
+import { averagesContext } from "@/assets/contexts";
+import useSession from "@/utils/useSession";
+import { useRouter } from "expo-router";
+import Theme from "@/assets/theme";
+
+export default function NewTime() {
+  const [time, setTime] = useState("");
+  const [scramble, setScramble] = useState("");
+  const session = useSession();
+  const setAverages = useContext(averagesContext).setAverages;
+  const router = useRouter();
+
+  const handleSubmit = async () => {
+    // Validate inputs
+    if (!time || isNaN(time)) {
+      Alert.alert("Invalid Input", "Please enter a valid time in seconds.");
+      return;
+    }
+
+    // Convert time to milliseconds (assuming time is in seconds)
+    const timeMs = parseFloat(time) * 1000;
+
+    try {
+      const { data, error } = await db.from("solve_times").insert([
+        {
+          user_id: session.user.id,
+          scramble: scramble.trim(),
+          time: timeMs,
+          ao5: null, // You might want to recalculate averages after insertion
+          ao12: null,
+        },
+      ]);
+
+      if (error) {
+        throw error;
+      }
+
+      // Optionally, refetch data or update averages here
+
+      Alert.alert("Success", "New solve time added.");
+      router.back();
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Error", "Failed to add new solve time.");
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.formGroup}>
+        <Text style={styles.label}>Time (seconds):</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter time here..."
+          keyboardType="numeric"
+          value={time}
+          onChangeText={setTime}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Theme.colors.backgroundPrimary,
+  },
+  formGroup: {
+    padding: 24,
+  },
+  label: {
+    fontSize: 16,
+    color: Theme.colors.textSecondary,
+    marginBottom: 8,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: Theme.colors.border,
+    borderRadius: 4,
+    padding: 12,
+    fontSize: 16,
+    color: Theme.colors.textPrimary,
+    backgroundColor: Theme.colors.inputBackground,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 8,
+  },
+  button: {
+    backgroundColor: Theme.colors.textHighlighted,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 4,
+  },
+  buttonText: {
+    color: Theme.colors.textPrimary,
+    fontWeight: "bold",
+  },
+});

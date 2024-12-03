@@ -27,6 +27,8 @@ export default function StackLayout() {
           headerTitleStyle: styles.text,
           headerTitle: "How to use",
           headerBackTitle: "Back",
+          headerBackTitleStyle: styles.backButton,
+          headerTintColor: Theme.colors.textHighlighted,
         }}
       />
     </Stack>
@@ -52,5 +54,8 @@ const styles = StyleSheet.create({
   },
   instructions: {
     backgroundColor: Theme.colors.backgroundPrimary,
+  },
+  backButton: {
+    color: Theme.colors.textHighlighted,
   },
 });

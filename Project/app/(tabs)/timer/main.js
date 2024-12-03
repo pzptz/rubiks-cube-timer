@@ -149,7 +149,7 @@ export default function Main() {
     }
     return 0;
   };
-  if (averages.ao5 == -1) {
+  if (!averages) {
     return <Loading />;
   }
   if (runningState.isRunning == 2) {

@@ -71,7 +71,7 @@ export default function TabLayout() {
                 }}
               />
               <Tabs.Screen
-                name="statistics"
+                name="stats"
                 options={{
                   header: StatsHeader,
                   lazy: false,

@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
+import millisToTime from "@/utils/millisToTime";
+import date from "@/utils/timeAgo";
 import {
   View,
   Text,
@@ -10,33 +12,23 @@ import {
 } from "react-native";
 import db from "@/database/db";
 import { useRouter, useLocalSearchParams } from "expo-router";
-import { averagesContext } from "@/assets/contexts";
 import Theme from "@/assets/theme";
 import Loading from "@/components/Loading";
 
 export default function Details() {
-  const { id } = useLocalSearchParams(); // Get the solve time ID from the route params
+  const { id, time, ao5, ao12, scramble, created_at } = useLocalSearchParams(); // Get the solve time ID from the route params
   const [solve, setSolve] = useState(null);
-  const setAverages = useContext(averagesContext).setAverages;
   const router = useRouter();
 
-  const fetchSolve = async () => {
-    try {
-      const { data, error } = await db
-        .from("solve_times")
-        .select()
-        .eq("id", id)
-        .single();
-
-      if (error) {
-        throw error;
-      }
-
-      setSolve(data);
-    } catch (error) {
-      console.log(error);
-      Alert.alert("Error", "Failed to fetch solve details.");
-    }
+  const fetchSolve = () => {
+    const data = {
+      time: time,
+      ao5: ao5,
+      ao12: ao12,
+      scramble: scramble,
+      created_at: created_at,
+    };
+    setSolve(data);
   };
 
   const handleDelete = () => {
@@ -57,7 +49,6 @@ export default function Details() {
       if (error) {
         throw error;
       }
-
       Alert.alert("Deleted", "Solve time has been deleted.");
       router.back();
     } catch (error) {
@@ -77,20 +68,24 @@ export default function Details() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.detailContainer}>
+        <Text style={styles.label}>Timestamp</Text>
+        <Text style={styles.value}>{date(created_at)}</Text>
+        <Text style={styles.label}>Scramble</Text>
+        <Text style={styles.value}>{scramble}</Text>
         <Text style={styles.label}>Time (s)</Text>
-        <Text style={styles.value}>{(solve.time / 1000).toFixed(2)}</Text>
+        <Text style={styles.value}>{millisToTime(time)}</Text>
 
         <Text style={styles.label}>ao5 (s)</Text>
         <Text style={styles.value}>
           {solve.ao5 !== null && solve.ao5 !== undefined
-            ? (solve.ao5 / 1000).toFixed(2)
+            ? millisToTime(ao5)
             : "-"}
         </Text>
 
         <Text style={styles.label}>ao12 (s)</Text>
         <Text style={styles.value}>
           {solve.ao12 !== null && solve.ao12 !== undefined
-            ? (solve.ao12 / 1000).toFixed(2)
+            ? millisToTime(ao12)
             : "-"}
         </Text>
       </View>

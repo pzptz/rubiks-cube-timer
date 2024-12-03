@@ -56,7 +56,11 @@ export default function Statistics() {
   const renderItem = ({ item }) => (
     <Time
       solve={item}
-      onPress={() => router.push(`/stats/details?id=${item.id}`)}
+      onPress={() =>
+        router.push(
+          `/stats/details?id=${item.id}&time=${item.time}&ao5=${item.ao5}&ao12=${item.ao12}&scramble=${item.scramble}&created_at=${item.created_at}`
+        )
+      }
     />
   );
   return (

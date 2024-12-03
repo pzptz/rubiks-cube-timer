@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 450,
     flexDirection: "row",
-    width: "70%",
+    width: "85%",
     justifyContent: "space-between",
   },
   scrambleBox: { width: "100%", borderBottomWidth: 3 },

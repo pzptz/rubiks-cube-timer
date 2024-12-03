@@ -7,14 +7,14 @@ const Time = ({ solve, onPress }) => {
     <TouchableOpacity style={styles.itemContainer} onPress={onPress}>
       {/* Time Column (Index) */}
       <View style={styles.timeColumn}>
-        <Text style={styles.timeText}>{(solve.time / 1000).toFixed(2)}</Text>
+        <Text style={styles.timeText}>{(solve.time / 1000).toFixed(3)}</Text>
       </View>
 
       {/* AO5 Column */}
       <View style={styles.aoColumn}>
         <Text style={styles.aoText}>
           {solve.ao5 !== null && solve.ao5 !== undefined
-            ? (solve.ao5 / 1000).toFixed(2)
+            ? (solve.ao5 / 1000).toFixed(3)
             : "-"}
         </Text>
       </View>
@@ -23,7 +23,7 @@ const Time = ({ solve, onPress }) => {
       <View style={styles.aoColumn}>
         <Text style={styles.aoText}>
           {solve.ao12 !== null && solve.ao12 !== undefined
-            ? (solve.ao12 / 1000).toFixed(2)
+            ? (solve.ao12 / 1000).toFixed(3)
             : "-"}
         </Text>
       </View>

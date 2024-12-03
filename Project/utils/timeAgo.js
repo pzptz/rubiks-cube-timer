@@ -5,25 +5,20 @@
  * @returns String representing how long ago the timestamp was, in the format
  * X {yrs/mos/days/hrs/mins} ago.
  */
-export default function timeAgo(timestamp) {
+
+export default function date(timestamp) {
   const now = new Date();
+
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const gmtOffsetInMinutes = now.getTimezoneOffset(); // Returns the offset in minutes (negative for UTC+)
+  const gmtOffsetInHours = -gmtOffsetInMinutes / 60;
+  timestamp =
+    timestamp.split(" ")[0] + String(gmtOffsetInHours).padStart(1, "0") + ":00";
   const date = new Date(timestamp);
-  const seconds = Math.floor((now - date) / 1000);
-
-  const intervals = [
-    { label: "yr", seconds: 60 * 60 * 24 * 365 },
-    { label: "mo", seconds: 60 * 60 * 24 * 30 },
-    { label: "day", seconds: 60 * 60 * 24 },
-    { label: "hr", seconds: 60 * 60 },
-    { label: "min", seconds: 60 },
-  ];
-
-  for (let interval of intervals) {
-    const count = Math.floor(seconds / interval.seconds);
-    if (count > 0) {
-      return `${count} ${interval.label}${count > 1 ? "s" : ""} ago`;
-    }
-  }
-
-  return "just now";
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, // Automatically use the device timezone
+    dateStyle: "short",
+    timeStyle: "long",
+  });
+  return formatter.format(date);
 }

@@ -55,10 +55,13 @@ export default function Statistics() {
     }
   };
   const handleInsert = (payload) => {
+    // also only here if user_id matches
     const length = dataRef.current.length;
     if (length >= 11) {
+      // There were at least 11 times before this one, so we will expect an update to both ao5 and ao12
       expectedUpdates.current = 2;
     } else if (length >= 4) {
+      // Not enough for ao12 so we expect only one update
       expectedUpdates.current = 1;
     } else {
       // No updates will come.
@@ -68,16 +71,18 @@ export default function Statistics() {
     // Mark the row for death
   };
   const handleUpdate = (payload) => {
+    // By the way, we are only here when payload.user_id = session.user_id.
     if (dataRef.current) {
       // tableData is not empty, find the index of the item
       const index = binarySearch(dataRef.current, payload.new, idComparator);
       if (index < 0) {
+        // This came from an insert, just wait for the last update and insert it into the list.
         if (expectedUpdates.current <= 1) {
-          let newTable = [payload.new, ...dataRef.current]; //O(n), but only one time
-          setTableData([...newTable]);
+          setTableData([payload.new, ...dataRef.current]); //O(n), but only one time
         }
         expectedUpdates.current = expectedUpdates.current - 1;
       } else {
+        // This came from a deletion. Store all of the updates in sequential order, apply them (each is O(1) except for the actual deletion
         updateRef.current.push({ index, type: "update", payload: payload.new });
         if (expectedUpdates.current <= 1) {
           let newTable = [...dataRef.current]; //O(n), but only one time
@@ -85,7 +90,9 @@ export default function Statistics() {
             if (update.type == "delete") {
               newTable.splice(update.index, 1);
             } else newTable[update.index] = update.payload;
+            // Apply the updates
           });
+          // Set the table
           updateRef.current = [];
           setTableData([...newTable]);
         }
@@ -99,6 +106,7 @@ export default function Statistics() {
   };
   const handleDelete = (payload) => {
     const index = binarySearch(dataRef.current, payload.old, idComparator);
+    // If index is not >= 0, some other user_id had a deletion. disregard.
     if (index >= 0) {
       if (index >= 11) {
         expectedUpdates.current = 15;
@@ -113,9 +121,8 @@ export default function Statistics() {
         setTableData([...newTable]);
       } else {
         updateRef.current.push({ index, type: "delete" });
-      } //O(1)
-
-      // Mark the row for death
+        // Mark the row for death
+      }
     }
   };
   useEffect(() => {

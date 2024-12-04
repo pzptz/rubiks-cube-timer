@@ -22,13 +22,14 @@ export default function Statistics() {
   const [tableData, setTableData] = useState([]); // for this screen
   const expectedUpdates = useRef(0);
   const updateRef = useRef([]);
+  const [latestRequest, setRequested] = useState(0);
   const dataRef = useRef(tableData);
   const setAverages = useContext(averagesContext).setAverages; // for the main screen
   const router = useRouter();
   const idComparator = (a, b) => {
     return b.id - a.id;
   };
-  const fetchData = async () => {
+  const fetchData = async (initialEnd = 20) => {
     try {
       if (session) {
         console.log("trying");
@@ -37,7 +38,8 @@ export default function Statistics() {
           .from("solve_times")
           .select()
           .eq("user_id", session.user.id)
-          .order("id", { ascending: false });
+          .order("id", { ascending: false })
+          .range(0, initialEnd);
         if (error) {
           throw error;
         }
@@ -52,6 +54,28 @@ export default function Statistics() {
       console.log(error);
       // This is to guarantee we get the data, eventually we'll remove this log but it's to avoid internet errors
       setTimeout(() => fetchData(), 500);
+    }
+  };
+  const extendList = async () => {
+    // This async function allows us to extend the list whenever we scroll out of bounds
+    let currentOffset = 0;
+    if (tableData.length > latestRequest) {
+      currentOffset = tableData.length;
+      try {
+        const { data, error } = await db
+          .from("solve_times")
+          .select()
+          .eq("user_id", session.user.id)
+          .order("id", { ascending: false })
+          .range(currentOffset, currentOffset + 20);
+        if (error) throw error;
+        setTableData([...tableData, ...data]);
+      } catch (error) {
+        console.log(error);
+        // This is to guarantee we get the data, eventually we'll remove this log but it's to avoid internet errors
+        setTimeout(() => extendList(), 500);
+      }
+      setRequested(tableData.length);
     }
   };
   const handleInsert = (payload) => {
@@ -203,6 +227,8 @@ export default function Statistics() {
         data={tableData}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
+        onEndReachedThreshold={10}
+        onEndReached={() => extendList()}
         ListHeaderComponent={
           <View style={styles.headerRow}>
             <Text style={[styles.headerText, styles.timeColumn]}>Time</Text>

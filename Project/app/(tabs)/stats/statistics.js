@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import {
   View,
   Text,
@@ -18,9 +18,10 @@ import Time from "@/components/Time";
 export default function Statistics() {
   const session = useSession();
   const [tableData, setTableData] = useState([]); // for this screen
+  const dataRef = useRef(tableData);
   const setAverages = useContext(averagesContext).setAverages; // for the main screen
   const router = useRouter();
-  const fetchData = async () => {
+  const fetchData = async (offset) => {
     try {
       if (session) {
         // list of jsons, each with fields {id, created_at, user_id, cube_type, scramble, time, ao5, ao12}
@@ -45,11 +46,55 @@ export default function Statistics() {
       setTimeout(() => fetchData(), 500);
     }
   };
-  // TODO: Akshar will add live listener to auto update on db changes, and also infinite scroll. All Peter must do for now is render the tableData
-  // And make it navigable. Also add a button to manually insert times.
+  const handleInsert = (payload) => {
+    if (dataRef.current) {
+      setTableData([payload.new, ...dataRef.current]);
+    } else {
+      setTableData([payload.new]);
+    }
+    setAverages({ ao5: payload.new.ao5, ao12: payload.new.ao12 });
+  };
+  const handleDelete = (payload) => {
+    console.log(payload);
+    fetchData(0);
+  };
   useEffect(() => {
     fetchData();
+    if (session) {
+      const timesInsert = db
+        .channel("times-insert")
+        .on(
+          "postgres_changes",
+          {
+            event: "UPDATE",
+            schema: "public",
+            table: "solve_times",
+            filter: `user_id=eq.${session.user.id}`,
+          },
+          (payload) => handleInsert(payload)
+        )
+        .subscribe();
+      const timesDelete = db
+        .channel("times-delete")
+        .on(
+          "postgres_changes",
+          {
+            event: "DELETE",
+            schema: "public",
+            table: "solve_times",
+          },
+          (payload) => handleDelete(payload)
+        )
+        .subscribe();
+      return () => {
+        db.removeChannel(timesInsert);
+        db.removeChannel(timesDelete);
+      };
+    }
   }, [session]);
+  useEffect(() => {
+    dataRef.current = tableData;
+  }, [tableData]);
   const handleNewTime = () => {
     router.push("/stats/newtime");
   };

@@ -36,7 +36,7 @@ export default function NewTime() {
       const { data, error } = await db.from("solve_times").insert([
         {
           user_id: session.user.id,
-          scramble: scramble.trim(),
+          scramble: scramble != "" ? scramble.trim() : "Manually inserted time",
           time: timeMs,
           ao5: null, // You might want to recalculate averages after insertion
           ao12: null,
@@ -59,6 +59,15 @@ export default function NewTime() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.formGroup}>
+        <Text style={styles.label}>Scramble (optional):</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter scramble here..."
+          value={scramble}
+          onChangeText={setScramble}
+        />
+      </View>
       <View style={styles.formGroup}>
         <Text style={styles.label}>Time (seconds):</Text>
         <TextInput

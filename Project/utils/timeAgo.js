@@ -17,7 +17,7 @@ export default function date(timestamp) {
   const formatter = new Intl.DateTimeFormat("en-US", {
     timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, // Automatically use the device timezone
     dateStyle: "medium",
-    timeStyle: "full",
+    timeStyle: "short",
   });
   return formatter.format(date);
 }

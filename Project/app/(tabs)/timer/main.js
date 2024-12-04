@@ -88,10 +88,10 @@ export default function Main() {
         time: time,
         user_id: session.user.id,
       };
-      console.log(
-        "currently not pushing db go to end of stopStopwatch in main.js"
-      );
-      //pushToDB(newTime);
+      // console.log(
+      //   "currently not pushing db go to end of stopStopwatch in main.js"
+      // );
+      pushToDB(newTime);
     }
     setEndTime(end);
     generateScramble();
@@ -101,6 +101,7 @@ export default function Main() {
       try {
         const { data, error } = await db.from("solve_times").insert(newTime);
         if (error) throw error;
+        console.log("success");
       } catch (err) {
         console.log("failed, retrying");
         setTimeout(() => pushToDB(newTime), 500); // Retry after a short time
@@ -191,14 +192,14 @@ export default function Main() {
           onPress={useInspectionTime ? startCountdown : startStopwatch}
         ></TouchableOpacity>
         <View style={styles.subButtonsBox}>
-          <View style={{ flex: 1, alignItems: "center", padding: 12 }}>
+          <View style={{ flex: 1, alignItems: "center", padding: 16 }}>
             <Link href="/(tabs)/timer/instructions">
               <View style={styles.newScrambleButton}>
                 <Text style={styles.buttonText}>How to use</Text>
               </View>
             </Link>
           </View>
-          <View style={{ flex: 1, alignItems: "center", padding: 12 }}>
+          <View style={{ flex: 1, alignItems: "center", padding: 16 }}>
             <TouchableHighlight
               style={styles.newScrambleButton}
               onPress={() => generateScramble()}
@@ -269,7 +270,7 @@ const styles = StyleSheet.create({
   subButtonsBox: {
     width: "100%",
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
   },
   newScrambleButton: {
     backgroundColor: Theme.colors.textHighlighted,

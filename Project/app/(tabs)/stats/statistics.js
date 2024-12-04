@@ -32,7 +32,7 @@ export default function Statistics() {
   const fetchData = async (initialEnd = 20) => {
     try {
       if (session) {
-        console.log("trying");
+        console.log("Fetching data");
         // list of jsons, each with fields {id, created_at, user_id, cube_type, scramble, time, ao5, ao12}
         const { data, error } = await db
           .from("solve_times")

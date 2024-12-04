@@ -101,9 +101,9 @@ export default function Main() {
       try {
         const { data, error } = await db.from("solve_times").insert(newTime);
         if (error) throw error;
-        console.log("success");
+        console.log(`Successfully pushed ${newTime.time} to db`);
       } catch (err) {
-        console.log("failed, retrying");
+        console.log("Failed to push to db, retrying");
         setTimeout(() => pushToDB(newTime), 500); // Retry after a short time
       }
     }

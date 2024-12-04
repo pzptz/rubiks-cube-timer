@@ -1,4 +1,6 @@
 import { useEffect, useState, useContext, useRef } from "react";
+const binarySearch = require("binary-search");
+
 import {
   View,
   Text,
@@ -18,12 +20,18 @@ import Time from "@/components/Time";
 export default function Statistics() {
   const session = useSession();
   const [tableData, setTableData] = useState([]); // for this screen
+  const expectedUpdates = useRef(0);
+  const updateRef = useRef([]);
   const dataRef = useRef(tableData);
   const setAverages = useContext(averagesContext).setAverages; // for the main screen
   const router = useRouter();
-  const fetchData = async (offset) => {
+  const idComparator = (a, b) => {
+    return b.id - a.id;
+  };
+  const fetchData = async () => {
     try {
       if (session) {
+        console.log("trying");
         // list of jsons, each with fields {id, created_at, user_id, cube_type, scramble, time, ao5, ao12}
         const { data, error } = await db
           .from("solve_times")
@@ -47,16 +55,68 @@ export default function Statistics() {
     }
   };
   const handleInsert = (payload) => {
-    if (dataRef.current) {
-      setTableData([payload.new, ...dataRef.current]);
+    const length = dataRef.current.length;
+    if (length >= 11) {
+      expectedUpdates.current = 2;
+    } else if (length >= 4) {
+      expectedUpdates.current = 1;
     } else {
+      // No updates will come.
+      setTableData([payload.new, ...dataRef.current]);
+      return;
+    }
+    // Mark the row for death
+  };
+  const handleUpdate = (payload) => {
+    if (dataRef.current) {
+      // tableData is not empty, find the index of the item
+      const index = binarySearch(dataRef.current, payload.new, idComparator);
+      if (index < 0) {
+        if (expectedUpdates.current <= 1) {
+          let newTable = [payload.new, ...dataRef.current]; //O(n), but only one time
+          setTableData([...newTable]);
+        }
+        expectedUpdates.current = expectedUpdates.current - 1;
+      } else {
+        updateRef.current.push({ index, type: "update", payload: payload.new });
+        if (expectedUpdates.current <= 1) {
+          let newTable = [...dataRef.current]; //O(n), but only one time
+          updateRef.current.forEach((update) => {
+            if (update.type == "delete") {
+              newTable.splice(update.index, 1);
+            } else newTable[update.index] = update.payload;
+          });
+          updateRef.current = [];
+          setTableData([...newTable]);
+        }
+        expectedUpdates.current = expectedUpdates.current - 1;
+      }
+    } else {
+      // tableData is empty, create the new array
       setTableData([payload.new]);
     }
     setAverages({ ao5: payload.new.ao5, ao12: payload.new.ao12 });
   };
   const handleDelete = (payload) => {
-    console.log(payload);
-    fetchData(0);
+    const index = binarySearch(dataRef.current, payload.old, idComparator);
+    if (index >= 0) {
+      if (index >= 11) {
+        expectedUpdates.current = 15;
+      } else if (index <= 4) {
+        expectedUpdates.current = 2 * index;
+      } else {
+        expectedUpdates.current = 8 + index - 4;
+      }
+      if (expectedUpdates.current == 0) {
+        let newTable = [...dataRef.current];
+        newTable.splice(index, 1);
+        setTableData([...newTable]);
+      } else {
+        updateRef.current.push({ index, type: "delete" });
+      } //O(1)
+
+      // Mark the row for death
+    }
   };
   useEffect(() => {
     fetchData();
@@ -66,12 +126,25 @@ export default function Statistics() {
         .on(
           "postgres_changes",
           {
-            event: "UPDATE",
+            event: "INSERT",
             schema: "public",
             table: "solve_times",
             filter: `user_id=eq.${session.user.id}`,
           },
           (payload) => handleInsert(payload)
+        )
+        .subscribe();
+      const timesUpdate = db
+        .channel("times-update")
+        .on(
+          "postgres_changes",
+          {
+            event: "UPDATE",
+            schema: "public",
+            table: "solve_times",
+            filter: `user_id=eq.${session.user.id}`,
+          },
+          (payload) => handleUpdate(payload)
         )
         .subscribe();
       const timesDelete = db
@@ -88,6 +161,7 @@ export default function Statistics() {
         .subscribe();
       return () => {
         db.removeChannel(timesInsert);
+        db.removeChannel(timesUpdate);
         db.removeChannel(timesDelete);
       };
     }

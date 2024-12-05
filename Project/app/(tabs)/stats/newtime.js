@@ -38,6 +38,7 @@ export default function NewTime() {
           user_id: session.user.id,
           scramble: scramble != "" ? scramble.trim() : "Manually inserted time",
           time: timeMs,
+          time_with_penalty: timeMs,
           ao5: null, // You might want to recalculate averages after insertion
           ao12: null,
         },

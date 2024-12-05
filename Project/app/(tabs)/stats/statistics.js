@@ -16,6 +16,7 @@ import useSession from "@/utils/useSession";
 import Theme from "@/assets/theme";
 import { useRouter, useFocusEffect } from "expo-router";
 import Time from "@/components/Time";
+import Loading from "@/components/Loading";
 
 export default function Statistics() {
   const session = useSession();
@@ -27,10 +28,12 @@ export default function Statistics() {
   const setAverages = useContext(averagesContext).setAverages; // for the main screen
   const router = useRouter();
   const [shouldRender, setShouldRender] = useState(false);
+  const [loading, setLoading] = useState(false);
   const idComparator = (a, b) => {
     return b.id - a.id;
   };
   const fetchData = async (initialEnd = 100) => {
+    setLoading(true);
     try {
       if (session) {
         console.log("Fetching data");
@@ -44,6 +47,7 @@ export default function Statistics() {
         if (error) {
           throw error;
         }
+        setLoading(false);
         setTableData(data);
         if (data && data.length > 0) {
           setAverages({ ao5: data[0].ao5, ao12: data[0].ao12 });
@@ -244,6 +248,9 @@ export default function Statistics() {
       }
     />
   );
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <SafeAreaView style={styles.container}>
       {/* Add time button */}

@@ -14,11 +14,12 @@ import { averagesContext } from "@/assets/contexts";
 import useSession from "@/utils/useSession";
 import { useRouter } from "expo-router";
 import Theme from "@/assets/theme";
-
+import Loading from "@/components/Loading";
 export default function NewTime() {
   const [time, setTime] = useState("");
   const [scramble, setScramble] = useState("");
   const session = useSession();
+  const [loading, setLoading] = useState(false);
   const setAverages = useContext(averagesContext).setAverages;
   const router = useRouter();
 
@@ -31,7 +32,7 @@ export default function NewTime() {
 
     // Convert time to milliseconds (assuming time is in seconds)
     const timeMs = parseFloat(time) * 1000;
-
+    setLoading(true);
     try {
       const { data, error } = await db.from("solve_times").insert([
         {
@@ -49,15 +50,17 @@ export default function NewTime() {
       }
 
       // Optionally, refetch data or update averages here
-
+      setLoading(false);
       Alert.alert("Success", "New solve time added.");
       router.back();
     } catch (error) {
       console.log(error);
-      Alert.alert("Error", "Failed to add new solve time.");
+      setTimeout(handleSubmit(), 50);
     }
   };
-
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.formGroup}>

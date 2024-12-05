@@ -20,6 +20,7 @@ export default function Details() {
     useLocalSearchParams(); // Get the solve time ID from the route params
   const [solve, setSolve] = useState(null);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const fetchSolve = () => {
     const data = {
@@ -63,11 +64,13 @@ export default function Details() {
   };
 
   const confirmDelete = async () => {
+    setLoading(true);
     try {
       const { error } = await db.from("solve_times").delete().eq("id", id);
       if (error) {
         throw error;
       }
+      setLoading(false);
       Alert.alert("Deleted", "Solve time has been deleted.");
       router.back();
     } catch (error) {
@@ -76,6 +79,7 @@ export default function Details() {
     }
   };
   const confirmPenalty = async (newPenalty) => {
+    setLoading(true);
     try {
       const penaltyObject = {
         solve_id: id,
@@ -90,18 +94,19 @@ export default function Details() {
       if (error) {
         throw error;
       }
+      setLoading(false);
       Alert.alert("Penalty saved");
       router.back();
     } catch (error) {
       console.log(error);
-      Alert.alert("Error", "Failed to confirm penalty");
+      setTimeout(confirmPenalty(newPenalty), 50);
     }
   };
   useEffect(() => {
     fetchSolve();
   }, [id]);
 
-  if (!solve) {
+  if (!solve || loading) {
     return <Loading />;
   }
 

@@ -16,20 +16,24 @@ export default function Settings() {
   const setCubeType = useContext(settings).setCubeType;
   const inspectionTime = useContext(settings).inspectionTime;
   const setInspectionTime = useContext(settings).setInspectionTime;
+  const [loading, setLoading] = useState(false);
   const signOut = async () => {
+    setLoading(true);
     try {
       const { error } = await db.auth.signOut();
       if (error) {
-        Alert.alert(error.message);
+        throw error;
       } else {
+        setLoading(false);
         router.navigate("/");
         Alert.alert("Sign out successful.");
       }
     } catch (err) {
-      console.error(err);
+      console.log(err);
+      setTimeout(signOut(), 50);
     }
   };
-  if (!session) {
+  if (!session || loading) {
     return <Loading />;
   }
 

@@ -98,13 +98,14 @@ export default function Main() {
       // console.log(
       //   "currently not pushing db go to end of stopStopwatch in main.js"
       // );
-      setLoading(true);
+
       pushToDB(newTime);
     }
     setEndTime(end);
     generateScramble();
   };
   const pushToDB = async (newTime) => {
+    setLoading(true);
     if (session) {
       try {
         const { data, error } = await db.from("solve_times").insert(newTime);

@@ -39,7 +39,8 @@ export default function Statistics() {
           .from("solve_times")
           .select()
           .eq("user_id", session.user.id)
-          .order("id", { ascending: false });
+          .order("id", { ascending: false })
+          .range(0, initialEnd);
         if (error) {
           throw error;
         }
@@ -57,6 +58,7 @@ export default function Statistics() {
     }
   };
   const extendList = async () => {
+    console.log("foo");
     // This async function allows us to extend the list whenever we scroll out of bounds
     let currentOffset = 0;
     if (tableData.length > latestRequest) {
@@ -67,7 +69,7 @@ export default function Statistics() {
           .select()
           .eq("user_id", session.user.id)
           .order("id", { ascending: false })
-          .range(currentOffset, currentOffset + 20);
+          .range(currentOffset, currentOffset + 100);
         if (error) throw error;
         setTableData([...tableData, ...data]);
       } catch (error) {

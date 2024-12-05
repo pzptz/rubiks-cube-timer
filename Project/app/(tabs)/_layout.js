@@ -10,7 +10,7 @@ import { StyleSheet, View, SafeAreaView, Text } from "react-native";
 import { useState } from "react";
 
 export default function TabLayout() {
-  const [averages, setAverages] = useState({ ao5: -1, ao12: -1 });
+  const [averages, setAverages] = useState(null);
   const [isRunning, setIsRunning] = useState(0);
   const [cubeType, setCubeType] = useState(3);
   const [inspectionTime, setInspectionTime] = useState(false);

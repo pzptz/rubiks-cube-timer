@@ -63,7 +63,6 @@ export default function Statistics() {
     }
   };
   const extendList = async () => {
-    console.log("foo");
     // This async function allows us to extend the list whenever we scroll out of bounds
     let currentOffset = 0;
     if (tableData.length > latestRequest) {

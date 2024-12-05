@@ -50,9 +50,11 @@ export default function Main() {
             scramble: scramble,
             time: -1,
             user_id: session.user.id,
+            penalty: 2,
+            time_with_penalty: -1,
           };
           console.log("Ran out of inspection time, DNF");
-          //pushToDB(newTime);
+          pushToDB(newTime);
           setStartTime(currentTime);
           setEndTime(currentTime - 1);
         } else {

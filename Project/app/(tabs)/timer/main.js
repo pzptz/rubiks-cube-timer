@@ -72,6 +72,8 @@ export default function Main() {
       intervalRef.current = setInterval(() => {
         setEndTime(Date.now());
       }, 100); // Update every 100 milliseconds
+    } else {
+      console.log("flag");
     }
   };
 
@@ -104,7 +106,6 @@ export default function Main() {
         const { data, error } = await db.from("solve_times").insert(newTime);
         if (error) throw error;
         console.log(`Successfully pushed ${newTime.time} to db`);
-        runningState.setIsRunning(0);
       } catch (err) {
         console.log(err);
         setTimeout(() => pushToDB(newTime), 500); // Retry after a short time
@@ -159,7 +160,11 @@ export default function Main() {
   if (runningState.isRunning == 2) {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.button} onPressIn={stopStopwatch}>
+        <TouchableOpacity
+          style={styles.button}
+          onPressIn={stopStopwatch}
+          onPressOut={() => runningState.setIsRunning(0)}
+        >
           <View style={styles.timerBox}>
             <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>
           </View>

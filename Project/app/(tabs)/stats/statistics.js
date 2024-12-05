@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext, useRef } from "react";
 const binarySearch = require("binary-search");
-
+import React from "react";
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import db from "@/database/db";
 import { averagesContext } from "@/assets/contexts";
 import useSession from "@/utils/useSession";
 import Theme from "@/assets/theme";
-import { useRouter } from "expo-router";
+import { useRouter, useFocusEffect } from "expo-router";
 import Time from "@/components/Time";
 
 export default function Statistics() {
@@ -26,10 +26,11 @@ export default function Statistics() {
   const dataRef = useRef(tableData);
   const setAverages = useContext(averagesContext).setAverages; // for the main screen
   const router = useRouter();
+  const [shouldRender, setShouldRender] = useState(false);
   const idComparator = (a, b) => {
     return b.id - a.id;
   };
-  const fetchData = async (initialEnd = 20) => {
+  const fetchData = async (initialEnd = 100) => {
     try {
       if (session) {
         console.log("Fetching data");
@@ -38,8 +39,7 @@ export default function Statistics() {
           .from("solve_times")
           .select()
           .eq("user_id", session.user.id)
-          .order("id", { ascending: false })
-          .range(0, initialEnd);
+          .order("id", { ascending: false });
         if (error) {
           throw error;
         }
@@ -58,7 +58,6 @@ export default function Statistics() {
   };
   const extendList = async () => {
     // This async function allows us to extend the list whenever we scroll out of bounds
-    console.log("foo");
     let currentOffset = 0;
     if (tableData.length > latestRequest) {
       currentOffset = tableData.length;
@@ -93,7 +92,6 @@ export default function Statistics() {
       setTableData([payload.new, ...dataRef.current]);
       return;
     }
-    // Mark the row for death
   };
   const handleUpdate = (payload) => {
     // By the way, we are only here when payload.user_id = session.user_id.
@@ -223,6 +221,17 @@ export default function Statistics() {
   const handleNewTime = () => {
     router.push("/stats/newtime");
   };
+  // HUGE optimization, only render if we need to, otherwise only keep the first element for main screen avg purposes. LETS GOOO
+  useFocusEffect(
+    React.useCallback(() => {
+      setShouldRender(true);
+      return () => {
+        setShouldRender(false);
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
   const renderItem = ({ item }) => (
     <Time
       solve={item}
@@ -244,7 +253,7 @@ export default function Statistics() {
 
       {/* FlatList with Header */}
       <FlatList
-        data={tableData}
+        data={shouldRender ? tableData : []}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         onEndReachedThreshold={0.5}

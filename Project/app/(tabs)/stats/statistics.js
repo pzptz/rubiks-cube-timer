@@ -25,6 +25,7 @@ export default function Statistics() {
   const updateRef = useRef([]);
   const [latestRequest, setRequested] = useState(0);
   const dataRef = useRef(tableData);
+  const tableBufferRef = useRef([]);
   const setAverages = useContext(averagesContext).setAverages; // for the main screen
   const router = useRouter();
   const [shouldRender, setShouldRender] = useState(false);
@@ -95,8 +96,7 @@ export default function Statistics() {
       expectedUpdates.current = 1;
     } else {
       // No updates will come.
-      setTableData([payload.new, ...dataRef.current]);
-      return;
+      tableBufferRef.current.push(payload.new);
     }
   };
   const handleUpdate = (payload) => {
@@ -107,7 +107,7 @@ export default function Statistics() {
       if (index < 0) {
         // This came from an insert, just wait for the last update and insert it into the list.
         if (expectedUpdates.current <= 1) {
-          setTableData([payload.new, ...dataRef.current]); //O(n), but only one time
+          tableBufferRef.current.push(payload.new); //O(n), but only one time
         }
         expectedUpdates.current = expectedUpdates.current - 1;
       } else {
@@ -231,6 +231,8 @@ export default function Statistics() {
   useFocusEffect(
     React.useCallback(() => {
       setShouldRender(true);
+      setTableData([...tableBufferRef.current.reverse(), ...dataRef.current]);
+      tableBufferRef.current = [];
       return () => {
         setShouldRender(false);
         // Do something when the screen is unfocused

@@ -58,6 +58,7 @@ export default function Statistics() {
   };
   const extendList = async () => {
     // This async function allows us to extend the list whenever we scroll out of bounds
+    console.log("foo");
     let currentOffset = 0;
     if (tableData.length > latestRequest) {
       currentOffset = tableData.length;
@@ -246,7 +247,7 @@ export default function Statistics() {
         data={tableData}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
-        onEndReachedThreshold={10}
+        onEndReachedThreshold={0.5}
         onEndReached={() => extendList()}
         ListHeaderComponent={
           <View style={styles.headerRow}>

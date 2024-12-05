@@ -26,6 +26,7 @@ export default function Main() {
   const averages = useContext(averagesContext).averages;
   const useInspectionTime = useContext(settings).inspectionTime;
   const runningState = useContext(runningContext);
+  const [loading, setLoading] = useState(false);
   const startCountdown = () => {
     if (runningState.isRunning !== 1) {
       runningState.setIsRunning(1);
@@ -95,6 +96,7 @@ export default function Main() {
       // console.log(
       //   "currently not pushing db go to end of stopStopwatch in main.js"
       // );
+      setLoading(true);
       pushToDB(newTime);
     }
     setEndTime(end);
@@ -106,6 +108,8 @@ export default function Main() {
         const { data, error } = await db.from("solve_times").insert(newTime);
         if (error) throw error;
         console.log(`Successfully pushed ${newTime.time} to db`);
+        setLoading(false);
+        runningState.setIsRunning(0);
       } catch (err) {
         console.log(err);
         setTimeout(() => pushToDB(newTime), 500); // Retry after a short time
@@ -154,7 +158,7 @@ export default function Main() {
     }
     return 0;
   };
-  if (!averages) {
+  if (!averages || loading) {
     return <Loading />;
   }
   if (runningState.isRunning == 2) {
@@ -163,7 +167,7 @@ export default function Main() {
         <TouchableOpacity
           style={styles.button}
           onPressIn={stopStopwatch}
-          onPressOut={() => runningState.setIsRunning(0)}
+          // onPressOut={() => runningState.setIsRunning(0)}
         >
           <View style={styles.timerBox}>
             <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>

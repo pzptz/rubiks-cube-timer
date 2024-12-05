@@ -104,6 +104,7 @@ export default function Main() {
         const { data, error } = await db.from("solve_times").insert(newTime);
         if (error) throw error;
         console.log(`Successfully pushed ${newTime.time} to db`);
+        runningState.setIsRunning(0);
       } catch (err) {
         console.log(err);
         setTimeout(() => pushToDB(newTime), 500); // Retry after a short time
@@ -158,11 +159,7 @@ export default function Main() {
   if (runningState.isRunning == 2) {
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.button}
-          onPressIn={stopStopwatch}
-          onPressOut={() => runningState.setIsRunning(0)}
-        >
+        <TouchableOpacity style={styles.button} onPressIn={stopStopwatch}>
           <View style={styles.timerBox}>
             <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>
           </View>

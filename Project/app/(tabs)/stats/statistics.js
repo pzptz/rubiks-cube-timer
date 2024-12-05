@@ -106,21 +106,40 @@ export default function Statistics() {
         }
         expectedUpdates.current = expectedUpdates.current - 1;
       } else {
-        // This came from a deletion. Store all of the updates in sequential order, apply them (each is O(1) except for the actual deletion
-        updateRef.current.push({ index, type: "update", payload: payload.new });
-        if (expectedUpdates.current <= 1) {
-          let newTable = [...dataRef.current]; //O(n), but only one time
-          updateRef.current.forEach((update) => {
-            if (update.type == "delete") {
-              newTable.splice(update.index, 1);
-            } else newTable[update.index] = update.payload;
-            // Apply the updates
+        if (expectedUpdates.current == 0) {
+          // From a penalty update
+          if (index >= 11) {
+            expectedUpdates.current = 17;
+          } else if (index <= 4) {
+            expectedUpdates.current = 2 * (index + 1);
+          } else {
+            expectedUpdates.current = 10 + index - 4;
+          }
+          updateRef.current.push({
+            index,
+            type: "penalty",
+            payload: payload.new,
           });
-          // Set the table
-          updateRef.current = [];
-          setTableData([...newTable]);
+        } else {
+          updateRef.current.push({
+            index,
+            type: "update",
+            payload: payload.new,
+          });
+          if (expectedUpdates.current == 1) {
+            let newTable = [...dataRef.current]; //O(n), but only one time
+            updateRef.current.forEach((update) => {
+              if (update.type == "delete") {
+                newTable.splice(update.index, 1);
+              } else newTable[update.index] = update.payload;
+              // Apply the updates
+            });
+            // Set the table
+            updateRef.current = [];
+            setTableData([...newTable]);
+          }
+          expectedUpdates.current = expectedUpdates.current - 1;
         }
-        expectedUpdates.current = expectedUpdates.current - 1;
       }
     } else {
       // tableData is empty, create the new array
@@ -208,7 +227,7 @@ export default function Statistics() {
       solve={item}
       onPress={() =>
         router.push(
-          `/stats/details?id=${item.id}&time=${item.time}&ao5=${item.ao5}&ao12=${item.ao12}&scramble=${item.scramble}&created_at=${item.created_at}`
+          `/stats/details?id=${item.id}&time=${item.time}&ao5=${item.ao5}&ao12=${item.ao12}&scramble=${item.scramble}&created_at=${item.created_at}&penalty=${item.penalty}`
         )
       }
     />

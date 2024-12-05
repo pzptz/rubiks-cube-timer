@@ -87,6 +87,8 @@ export default function Main() {
         scramble: scramble,
         time: time,
         user_id: session.user.id,
+        time_with_penalty: time,
+        penalty: 0,
       };
       // console.log(
       //   "currently not pushing db go to end of stopStopwatch in main.js"
@@ -103,7 +105,7 @@ export default function Main() {
         if (error) throw error;
         console.log(`Successfully pushed ${newTime.time} to db`);
       } catch (err) {
-        console.log("Failed to push to db, retrying");
+        console.log(err);
         setTimeout(() => pushToDB(newTime), 500); // Retry after a short time
       }
     }

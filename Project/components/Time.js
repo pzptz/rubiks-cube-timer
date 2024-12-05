@@ -1,20 +1,22 @@
 import React from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import Theme from "@/assets/theme";
-
+import millisToTime from "../utils/millisToTime";
 const Time = ({ solve, onPress }) => {
   return (
     <TouchableOpacity style={styles.itemContainer} onPress={onPress}>
       {/* Time Column (Index) */}
       <View style={styles.timeColumn}>
-        <Text style={styles.timeText}>{(solve.time / 1000).toFixed(3)}</Text>
+        <Text style={styles.timeText}>
+          {millisToTime(solve.time_with_penalty, solve.penalty)}
+        </Text>
       </View>
 
       {/* AO5 Column */}
       <View style={styles.aoColumn}>
         <Text style={styles.aoText}>
           {solve.ao5 !== null && solve.ao5 !== undefined
-            ? (solve.ao5 / 1000).toFixed(3)
+            ? millisToTime(solve.ao5)
             : "-"}
         </Text>
       </View>
@@ -23,7 +25,7 @@ const Time = ({ solve, onPress }) => {
       <View style={styles.aoColumn}>
         <Text style={styles.aoText}>
           {solve.ao12 !== null && solve.ao12 !== undefined
-            ? (solve.ao12 / 1000).toFixed(3)
+            ? millisToTime(solve.ao12)
             : "-"}
         </Text>
       </View>

@@ -16,7 +16,8 @@ import Theme from "@/assets/theme";
 import Loading from "@/components/Loading";
 
 export default function Details() {
-  const { id, time, ao5, ao12, scramble, created_at } = useLocalSearchParams(); // Get the solve time ID from the route params
+  const { id, time, ao5, ao12, scramble, created_at, user_id } =
+    useLocalSearchParams(); // Get the solve time ID from the route params
   const [solve, setSolve] = useState(null);
   const router = useRouter();
 
@@ -42,10 +43,28 @@ export default function Details() {
     );
   };
 
+  const setPenalty = (newPenalty) => {
+    let penaltyString = "";
+    if (newPenalty == 0) {
+      penaltyString = "No penalty on this solve?";
+    } else if (newPenalty == 1) {
+      penaltyString = "+2 on this solve?";
+    } else {
+      penaltyString = "DNF on this solve?";
+    }
+    Alert.alert("Penalty", penaltyString, [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Confirm",
+        style: "default",
+        onPress: () => confirmPenalty(newPenalty),
+      },
+    ]);
+  };
+
   const confirmDelete = async () => {
     try {
       const { error } = await db.from("solve_times").delete().eq("id", id);
-
       if (error) {
         throw error;
       }
@@ -56,7 +75,28 @@ export default function Details() {
       Alert.alert("Error", "Failed to delete solve.");
     }
   };
-
+  const confirmPenalty = async (newPenalty) => {
+    try {
+      const penaltyObject = {
+        solve_id: id,
+        user_id: user_id,
+        penalty: newPenalty,
+      };
+      const { error } = await db
+        .from("penalties")
+        .update(penaltyObject)
+        .eq("solve_id", id)
+        .select();
+      if (error) {
+        throw error;
+      }
+      Alert.alert("Penalty saved");
+      router.back();
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Error", "Failed to confirm penalty");
+    }
+  };
   useEffect(() => {
     fetchSolve();
   }, [id]);
@@ -90,6 +130,17 @@ export default function Details() {
         </Text>
       </View>
       <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={() => setPenalty(0)}>
+          <Text style={styles.buttonText}>No Penalty</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => setPenalty(1)}>
+          <Text style={styles.buttonText}>+2</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => setPenalty(2)}>
+          <Text style={styles.buttonText}>DNF</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={handleDelete}>
           <Text style={styles.buttonText}>Delete Time</Text>
         </TouchableOpacity>
@@ -121,18 +172,23 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
     margin: 8,
+    paddingBottom: 32,
+    height: "15%",
   },
   button: {
     backgroundColor: Theme.colors.textHighlighted,
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 4,
+    width: "30%",
+    justifyContent: "center",
   },
   buttonText: {
     color: Theme.colors.textPrimary,
     fontWeight: "bold",
+    textAlign: "center",
   },
 });

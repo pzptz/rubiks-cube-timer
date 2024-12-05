@@ -227,7 +227,7 @@ export default function Statistics() {
       solve={item}
       onPress={() =>
         router.push(
-          `/stats/details?id=${item.id}&time=${item.time}&ao5=${item.ao5}&ao12=${item.ao12}&scramble=${item.scramble}&created_at=${item.created_at}&penalty=${item.penalty}`
+          `/stats/details?id=${item.id}&time=${item.time_with_penalty}&ao5=${item.ao5}&ao12=${item.ao12}&scramble=${item.scramble}&created_at=${item.created_at}&user_id=${item.user_id}`
         )
       }
     />

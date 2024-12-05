@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import Theme from "@/assets/theme";
-import millisToTime from "../utils/millisToTime";
+import millisToTime from "@/utils/millisToTime";
 const Time = ({ solve, onPress }) => {
   return (
     <TouchableOpacity style={styles.itemContainer} onPress={onPress}>

@@ -16,7 +16,7 @@ import Theme from "@/assets/theme";
 import Loading from "@/components/Loading";
 
 export default function Details() {
-  const { id, time, ao5, ao12, scramble, created_at, user_id } =
+  const { id, time, ao5, ao12, scramble, created_at, user_id, penalty } =
     useLocalSearchParams(); // Get the solve time ID from the route params
   const [solve, setSolve] = useState(null);
   const router = useRouter();
@@ -113,7 +113,7 @@ export default function Details() {
         <Text style={styles.label}>Scramble</Text>
         <Text style={styles.value}>{scramble}</Text>
         <Text style={styles.label}>Time (s)</Text>
-        <Text style={styles.value}>{millisToTime(time)}</Text>
+        <Text style={styles.value}>{millisToTime(time, penalty)}</Text>
 
         <Text style={styles.label}>ao5 (s)</Text>
         <Text style={styles.value}>

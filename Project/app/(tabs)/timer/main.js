@@ -286,7 +286,6 @@ const styles = StyleSheet.create({
   newScrambleButton: {
     backgroundColor: Theme.colors.textHighlighted,
     paddingVertical: 8,
-    paddingHorizontal: 16,
     borderRadius: 24,
     width: "100%",
     alignItems: "center",

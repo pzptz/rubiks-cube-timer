@@ -28,7 +28,7 @@ export default function Statistics() {
   const tableBufferRef = useRef([]);
   const setAverages = useContext(averagesContext).setAverages; // for the main screen
   const router = useRouter();
-  const [shouldRender, setShouldRender] = useState(false);
+  const shouldRender = useRef(false);
   const [loading, setLoading] = useState(false);
   const idComparator = (a, b) => {
     return b.id - a.id;
@@ -95,7 +95,11 @@ export default function Statistics() {
       expectedUpdates.current = 1;
     } else {
       // No updates will come.
-      tableBufferRef.current.push(payload.new);
+      if (shouldRender.current) {
+        setTableData([payload.new, ...dataRef.current]);
+      } else {
+        tableBufferRef.current.push(payload.new);
+      }
     }
   };
   const handleUpdate = (payload) => {
@@ -106,7 +110,13 @@ export default function Statistics() {
       if (index < 0) {
         // This came from an insert, just wait for the last update and insert it into the list.
         if (expectedUpdates.current <= 1) {
-          tableBufferRef.current.push(payload.new); //O(n), but only one time
+          if (shouldRender.current) {
+            console.log("foo");
+            setTableData([payload.new, ...dataRef.current]);
+          } else {
+            console.log("not foo");
+            tableBufferRef.current.push(payload.new);
+          } //O(n), but only one time
         }
         expectedUpdates.current = expectedUpdates.current - 1;
       } else {
@@ -229,11 +239,12 @@ export default function Statistics() {
   // HUGE optimization, only render if we need to, otherwise only keep the first element for main screen avg purposes. LETS GOOO
   useFocusEffect(
     React.useCallback(() => {
-      setShouldRender(true);
+      shouldRender.current = true;
       setTableData([...tableBufferRef.current.reverse(), ...dataRef.current]);
       tableBufferRef.current = [];
+      console.log("moo");
       return () => {
-        setShouldRender(false);
+        shouldRender.current = false;
         // Do something when the screen is unfocused
         // Useful for cleanup functions
       };
@@ -263,7 +274,7 @@ export default function Statistics() {
 
       {/* FlatList with Header */}
       <FlatList
-        data={shouldRender ? tableData : []}
+        data={shouldRender.current ? tableData : []}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         onEndReachedThreshold={0.5}

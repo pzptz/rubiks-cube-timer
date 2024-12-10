@@ -111,10 +111,8 @@ export default function Statistics() {
         // This came from an insert, just wait for the last update and insert it into the list.
         if (expectedUpdates.current <= 1) {
           if (shouldRender.current) {
-            console.log("foo");
             setTableData([payload.new, ...dataRef.current]);
           } else {
-            console.log("not foo");
             tableBufferRef.current.push(payload.new);
           } //O(n), but only one time
         }
@@ -242,7 +240,6 @@ export default function Statistics() {
       shouldRender.current = true;
       setTableData([...tableBufferRef.current.reverse(), ...dataRef.current]);
       tableBufferRef.current = [];
-      console.log("moo");
       return () => {
         shouldRender.current = false;
         // Do something when the screen is unfocused

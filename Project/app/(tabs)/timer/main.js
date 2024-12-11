@@ -165,7 +165,7 @@ export default function Main() {
     return 0;
   };
   if (!averages || loading) {
-    return <Loading />;
+    return <Loading themeChoice={themeChoice} />;
   }
   if (runningState.isRunning == 2) {
     return (

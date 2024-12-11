@@ -119,7 +119,7 @@ export default function Details() {
   }, [id]);
 
   if (!solve || loading) {
-    return <Loading />;
+    return <Loading themeChoice={themeChoice} />;
   }
 
   return (

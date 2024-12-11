@@ -18,9 +18,9 @@ export default {
     dropDownBackground: "#EDEDED",
 
     textPrimary: "#000000",
-    textSecondary: "#444444",
+    textSecondary: "#AAAAAA",
 
-    flair: "lightblue",
+    flair: "#8dc8d6",
   },
   Halloween: {
     backgroundPrimary: "#000000",
@@ -63,7 +63,7 @@ export default {
     textPrimary: "#FF4500", // Orange-red
     textSecondary: "#008080", // Teal
 
-    flair: "#FFD700", // Bright sunny yellow
+    flair: "#FFFFFF", // clouds
   },
   Spring: {
     statusbar: "dark-content",
@@ -75,7 +75,7 @@ export default {
     textPrimary: "#008000", // Fresh green
     textSecondary: "#FF69B4", // Hot pink
 
-    flair: "#FFFF00", // Cheerful yellow
+    flair: "#C8A2D6", // Cheerful yellow
   },
   Nature: {
     statusbar: "light-content",

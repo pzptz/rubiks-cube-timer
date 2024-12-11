@@ -14,7 +14,7 @@ import db from "@/database/db";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Theme from "@/assets/theme";
 import Loading from "@/components/Loading";
-import { settings } from "@/assets/contexts";
+import { settings, loadingContext } from "@/assets/contexts";
 
 export default function Details() {
   const themeChoice = useContext(settings).themeChoice;
@@ -31,7 +31,8 @@ export default function Details() {
   } = useLocalSearchParams(); // Get the solve time ID from the route params
   const [solve, setSolve] = useState(null);
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const loading = useContext(loadingContext).loading;
+  const setLoading = useContext(loadingContext).setLoading;
   const cubeTypes = { 2: "2x2x2", 3: "3x3x3", 4: "4x4x4", 5: "5x5x5" };
   const styles = StyleSheet.create({
     container: {

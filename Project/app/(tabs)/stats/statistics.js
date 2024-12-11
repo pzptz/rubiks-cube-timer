@@ -11,7 +11,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import db from "@/database/db";
-import { averagesContext, settings } from "@/assets/contexts";
+import { averagesContext, settings, loadingContext } from "@/assets/contexts";
 import useSession from "@/utils/useSession";
 import Theme from "@/assets/theme";
 import { useRouter, useFocusEffect } from "expo-router";
@@ -31,7 +31,8 @@ export default function Statistics() {
   const setAverages = useContext(averagesContext).setAverages; // for the main screen
   const router = useRouter();
   const shouldRender = useRef(false);
-  const [loading, setLoading] = useState(false);
+  const loading = useContext(loadingContext).loading;
+  const setLoading = useContext(loadingContext).setLoading;
   const idComparator = (a, b) => {
     return b.id - a.id;
   };

@@ -4,7 +4,12 @@ import useSession from "@/utils/useSession";
 import db from "@/database/db";
 import { Link } from "expo-router";
 import { useContext } from "react";
-import { averagesContext, runningContext, settings } from "@/assets/contexts";
+import {
+  averagesContext,
+  runningContext,
+  settings,
+  loadingContext,
+} from "@/assets/contexts";
 import Loading from "@/components/Loading";
 import Theme from "@/assets/theme";
 import {
@@ -27,7 +32,8 @@ export default function Main() {
   const averages = useContext(averagesContext).averages;
   const useInspectionTime = useContext(settings).inspectionTime;
   const runningState = useContext(runningContext);
-  const [loading, setLoading] = useState(false);
+  const loading = useContext(loadingContext).loading;
+  const setLoading = useContext(loadingContext).setLoading;
   const startCountdown = () => {
     if (runningState.isRunning !== 1) {
       runningState.setIsRunning(1);

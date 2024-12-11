@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import db from "@/database/db";
-import { settings } from "@/assets/contexts";
+import { settings, loadingContext } from "@/assets/contexts";
 import useSession from "@/utils/useSession";
 import { useRouter } from "expo-router";
 import Theme from "@/assets/theme";
@@ -22,7 +22,8 @@ export default function NewTime() {
   const [time, setTime] = useState("");
   const [scramble, setScramble] = useState("");
   const session = useSession();
-  const [loading, setLoading] = useState(false);
+  const loading = useContext(loadingContext).loading;
+  const setLoading = useContext(loadingContext).setLoading;
   const router = useRouter();
   const cubeType = useContext(settings).cubeType;
   const handleSubmit = async () => {

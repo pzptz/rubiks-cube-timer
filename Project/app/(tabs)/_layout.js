@@ -4,7 +4,12 @@ import Entypo from "@expo/vector-icons/Entypo";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { averagesContext, runningContext, settings } from "@/assets/contexts";
+import {
+  averagesContext,
+  runningContext,
+  settings,
+  loadingContext,
+} from "@/assets/contexts";
 
 import { StyleSheet, View, SafeAreaView, Text, StatusBar } from "react-native";
 import { useState, useContext } from "react";
@@ -15,6 +20,7 @@ export default function TabLayout() {
   const [cubeType, setCubeType] = useState(3);
   const [inspectionTime, setInspectionTime] = useState(false);
   const [themeChoice, setThemeChoice] = useState("Dark");
+  const [loading, setLoading] = useState(false);
   const ProfileHeader = ({ navigation, route, options }) => {
     return (
       <SafeAreaView
@@ -70,50 +76,59 @@ export default function TabLayout() {
               setThemeChoice: setThemeChoice,
             }}
           >
-            <Tabs
-              screenOptions={{
-                headerStyle: {
-                  backgroundColor: Theme[themeChoice].backgroundPrimary, // Dynamically update header background
-                },
-                tabBarStyle: {
-                  backgroundColor: Theme[themeChoice].backgroundPrimary, // Dynamically update tab bar background
-                  display: isRunning == 0 ? "flex" : "none",
-                },
-                tabBarActiveTintColor: Theme[themeChoice].flair, // Dynamically update active tint color
-              }}
+            <loadingContext.Provider
+              value={{ loading: loading, setLoading: setLoading }}
             >
-              <Tabs.Screen
-                name="timer"
-                options={{
-                  tabBarLabel: "Timer",
-                  headerShown: false,
-                  tabBarIcon: ({ size, color }) => (
-                    <Entypo name="stopwatch" size={size} color={color} />
-                  ),
+              <Tabs
+                screenOptions={{
+                  headerStyle: {
+                    backgroundColor: Theme[themeChoice].backgroundPrimary, // Dynamically update header background
+                  },
+                  tabBarStyle: {
+                    backgroundColor: Theme[themeChoice].backgroundPrimary, // Dynamically update tab bar background
+                    display: isRunning == 0 ? "flex" : "none",
+                  },
+                  tabBarActiveTintColor: Theme[themeChoice].flair, // Dynamically update active tint color
                 }}
-              />
-              <Tabs.Screen
-                name="stats"
-                options={{
-                  header: StatsHeader,
-                  lazy: false,
-                  tabBarLabel: "Stats",
-                  tabBarIcon: ({ size, color }) => (
-                    <Ionicons name="stats-chart" size={size} color={color} />
-                  ),
-                }}
-              />
-              <Tabs.Screen
-                name="settings"
-                options={{
-                  header: ProfileHeader,
-                  tabBarLabel: "Settings",
-                  tabBarIcon: ({ size, color }) => (
-                    <MaterialIcons name="settings" size={size} color={color} />
-                  ),
-                }}
-              />
-            </Tabs>
+              >
+                <Tabs.Screen
+                  name="timer"
+                  options={{
+                    tabBarLabel: "Timer",
+                    headerShown: false,
+                    tabBarIcon: ({ size, color }) => (
+                      <Entypo name="stopwatch" size={size} color={color} />
+                    ),
+                  }}
+                />
+                <Tabs.Screen
+                  name="stats"
+                  options={{
+                    header: StatsHeader,
+                    lazy: false, // We want data to be pulled immediately
+                    tabBarLabel: "Stats",
+                    tabBarIcon: ({ size, color }) => (
+                      <Ionicons name="stats-chart" size={size} color={color} />
+                    ),
+                  }}
+                />
+                <Tabs.Screen
+                  name="settings"
+                  options={{
+                    header: ProfileHeader,
+                    lazy: false, // We want settings to be pulled immediately
+                    tabBarLabel: "Settings",
+                    tabBarIcon: ({ size, color }) => (
+                      <MaterialIcons
+                        name="settings"
+                        size={size}
+                        color={color}
+                      />
+                    ),
+                  }}
+                />
+              </Tabs>
+            </loadingContext.Provider>
           </settings.Provider>
         </runningContext.Provider>
       </averagesContext.Provider>

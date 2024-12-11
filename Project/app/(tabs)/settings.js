@@ -1,24 +1,26 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
-
-import { useRouter } from "expo-router";
+import React from "react";
+import { useRouter, useFocusEffect } from "expo-router";
 import { Switch } from "@rneui/themed";
 import Theme from "@/assets/theme";
 import Loading from "@/components/Loading";
 import CubeTypePicker from "@/components/CubeTypePicker";
 import db from "@/database/db";
 import useSession from "@/utils/useSession";
-import { settings } from "@/assets/contexts";
-import { useContext, useState } from "react";
+import { settings, loadingContext } from "@/assets/contexts";
+import { useContext, useEffect, useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
-
 export default function Settings() {
   const session = useSession();
   const themeChoice = useContext(settings).themeChoice;
   const setThemeChoice = useContext(settings).setThemeChoice;
+  const cubeType = useContext(settings).cubeType;
+  const setCubeType = useContext(settings).setCubeType;
   const router = useRouter();
   const inspectionTime = useContext(settings).inspectionTime;
   const setInspectionTime = useContext(settings).setInspectionTime;
-  const [loading, setLoading] = useState(false);
+  const loading = useContext(loadingContext).loading;
+  const setLoading = useContext(loadingContext).setLoading;
   const themeOptions = Object.keys(Theme).map((key) => ({
     label: key,
     value: key,
@@ -40,6 +42,69 @@ export default function Settings() {
       setTimeout(signOut(), 50);
     }
   };
+  const loadSettings = async () => {
+    try {
+      if (session) {
+        // list of jsons, each with fields {id, created_at, user_id, cube_type, scramble, time, ao5, ao12}
+        const { data, error } = await db
+          .from("settings")
+          .select()
+          .eq("user_id", session.user.id);
+        if (error) {
+          throw error;
+        }
+        setLoading(false);
+        setInspectionTime(data[0].inspection_time);
+        setThemeChoice(data[0].theme);
+        setCubeType(data[0].cube_type);
+      }
+    } catch (error) {
+      console.log(error);
+      // This is to guarantee we get the data, eventually we'll remove this log but it's to avoid internet errors
+      setTimeout(() => loadSettings(), 500);
+    }
+  };
+  const pushSettings = async (settingsJSON) => {
+    try {
+      if (session) {
+        console.log(settingsJSON);
+        // list of jsons, each with fields {id, created_at, user_id, cube_type, scramble, time, ao5, ao12}
+        const { data, error } = await db
+          .from("settings")
+          .upsert(settingsJSON, { onConflict: "user_id" });
+        if (error) {
+          throw error;
+        }
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      // This is to guarantee we get the data, eventually we'll remove this log but it's to avoid internet errors
+      setTimeout(() => pushSettings(settingsJSON), 500);
+    }
+  };
+  useEffect(() => {
+    loadSettings();
+  }, [session]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (session) {
+        console.log("foo");
+        return () => {
+          console.log("moo");
+          setLoading(true);
+          const settingsJSON = {
+            cube_type: cubeType,
+            theme: themeChoice,
+            inspection_time: inspectionTime,
+            user_id: session.user.id,
+          };
+          pushSettings(settingsJSON);
+        };
+      }
+    }, [session])
+  );
   if (!session || loading) {
     return <Loading themeChoice={themeChoice} />;
   }

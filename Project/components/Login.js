@@ -13,7 +13,7 @@ import db from "@/database/db";
 
 import Theme from "@/assets/theme";
 
-export default function Login() {
+export default function Login({ themeChoice }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);

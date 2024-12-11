@@ -2,7 +2,7 @@ import React from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import Theme from "@/assets/theme";
 import millisToTime from "@/utils/millisToTime";
-const Time = ({ solve, onPress }) => {
+const Time = ({ solve, onPress, themeChoice }) => {
   return (
     <TouchableOpacity style={styles.itemContainer} onPress={onPress}>
       {/* Time Column (Index) */}

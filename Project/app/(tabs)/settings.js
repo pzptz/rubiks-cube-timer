@@ -35,7 +35,7 @@ export default function Settings() {
     }
   };
   if (!session || loading) {
-    return <Loading />;
+    return <Loading themeChoice={themeChoice} />;
   }
 
   return (
@@ -70,7 +70,7 @@ export default function Settings() {
         }}
       >
         <Text style={[styles.text, { padding: 12 }]}>Cube Type: </Text>
-        <CubeTypePicker />
+        <CubeTypePicker themeChoice={themeChoice} />
       </View>
     </View>
   );

@@ -2,7 +2,7 @@ import { View, StyleSheet, ActivityIndicator } from "react-native";
 
 import Theme from "@/assets/theme";
 
-export default function Loading() {
+export default function Loading({ themeChoice }) {
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" />

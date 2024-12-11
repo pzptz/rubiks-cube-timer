@@ -62,12 +62,12 @@ export default function NewTime() {
     }
   };
   if (loading) {
-    return <Loading />;
+    return <Loading themeChoice={themeChoice} />;
   }
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <CubeTypePicker />
+        <CubeTypePicker themeChoice={themeChoice} />
       </View>
 
       <View style={styles.formGroup}>

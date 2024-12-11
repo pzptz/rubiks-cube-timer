@@ -4,7 +4,7 @@ import { settings } from "@/assets/contexts";
 
 import DropDownPicker from "react-native-dropdown-picker";
 
-export default function CubeTypePicker() {
+export default function CubeTypePicker({ themeChoice }) {
   const [cubeTypeSelectorOpen, setCubeTypeSelectorOpen] = useState(false);
   const setCubeType = useContext(settings).setCubeType;
   const cubeType = useContext(settings).cubeType;

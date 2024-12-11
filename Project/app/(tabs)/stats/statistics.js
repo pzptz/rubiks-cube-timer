@@ -241,6 +241,7 @@ export default function Statistics() {
   const renderItem = ({ item }) => (
     <Time
       solve={item}
+      themeChoice={themeChoice}
       onPress={() =>
         router.push(
           `/stats/details?id=${item.id}&time=${item.time_with_penalty}&ao5=${item.ao5}&ao12=${item.ao12}&scramble=${item.scramble}&created_at=${item.created_at}&user_id=${item.user_id}&penalty=${item.penalty}&cube_type=${item.cube_type}`
@@ -249,7 +250,7 @@ export default function Statistics() {
     />
   );
   if (loading) {
-    return <Loading />;
+    return <Loading themeChoice={themeChoice} />;
   }
   return (
     <SafeAreaView style={styles.container}>
@@ -258,7 +259,7 @@ export default function Statistics() {
         <TouchableOpacity style={styles.button} onPress={handleNewTime}>
           <Text style={styles.buttonText}>Add Time</Text>
         </TouchableOpacity>
-        <CubeTypePicker />
+        <CubeTypePicker themeChoice={themeChoice} />
       </View>
 
       {/* FlatList with Header */}

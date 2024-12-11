@@ -1,6 +1,7 @@
 export default {
   // Feel free to customize these colors!
   Dark: {
+    statusbar: "light-content",
     backgroundPrimary: "#121212",
     inputBackground: "#1F1F1F",
     dropDownBackground: "#252525",
@@ -11,6 +12,7 @@ export default {
     flair: "#FF5C00", // Bright accent for dark mode
   },
   Light: {
+    statusbar: "dark-content",
     backgroundPrimary: "#FFFFFF",
     inputBackground: "#F3F3F3",
     dropDownBackground: "#EDEDED",
@@ -21,6 +23,7 @@ export default {
     flair: "#FF8800", // Subtle orange for light mode
   },
   Halloween: {
+    statusbar: "light-content",
     backgroundPrimary: "#2D1E2F",
     inputBackground: "#3F2C40",
     dropDownBackground: "#4B374F",
@@ -31,6 +34,7 @@ export default {
     flair: "#8B0000", // Blood red
   },
   Christmas: {
+    statusbar: "dark-content",
     backgroundPrimary: "#005F30",
     inputBackground: "#007F40",
     dropDownBackground: "#E3E3E3", // Snowy dropdown
@@ -41,6 +45,7 @@ export default {
     flair: "#FFD700", // Gold for holiday sparkle
   },
   Cyberpunk: {
+    statusbar: "light-content",
     backgroundPrimary: "#0F0524", // Deep space purple
     inputBackground: "#1A0933",
     dropDownBackground: "#2E0D4A",
@@ -51,6 +56,7 @@ export default {
     flair: "#00FFFF", // Cyan for futuristic flair
   },
   Summer: {
+    statusbar: "dark-content",
     backgroundPrimary: "#87CEEB", // Sky blue
     inputBackground: "#E0F7FA", // Light cyan
     dropDownBackground: "#FFDAB9", // Peach
@@ -61,6 +67,8 @@ export default {
     flair: "#FFD700", // Bright sunny yellow
   },
   Spring: {
+    statusbar: "dark-content",
+
     backgroundPrimary: "#E0FFE0", // Light green
     inputBackground: "#F7FFF7", // Soft white-green
     dropDownBackground: "#FFE4E1", // Pink-tinged
@@ -71,6 +79,8 @@ export default {
     flair: "#FFFF00", // Cheerful yellow
   },
   Nature: {
+    statusbar: "light-content",
+
     backgroundPrimary: "#2E8B57", // Forest green
     inputBackground: "#556B2F", // Olive green
     dropDownBackground: "#F5DEB3", // Wheat

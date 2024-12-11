@@ -6,7 +6,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { averagesContext, runningContext, settings } from "@/assets/contexts";
 
-import { StyleSheet, View, SafeAreaView, Text } from "react-native";
+import { StyleSheet, View, SafeAreaView, Text, StatusBar } from "react-native";
 import { useState, useContext } from "react";
 
 export default function TabLayout() {
@@ -53,6 +53,7 @@ export default function TabLayout() {
   };
   return (
     <SafeAreaProvider>
+      <StatusBar style={Theme[themeChoice].statusbar} />
       <averagesContext.Provider
         value={{ averages: averages, setAverages: setAverages }}
       >

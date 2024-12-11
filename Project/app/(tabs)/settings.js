@@ -85,6 +85,7 @@ export default function Settings() {
         {/* Dynamically update text color */}
         <Switch
           value={inspectionTime}
+          color={Theme[themeChoice].textHighlighted}
           onValueChange={(value) => setInspectionTime(value)}
         />
       </View>

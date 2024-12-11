@@ -51,7 +51,7 @@ export default function Login() {
         onChangeText={(text) => setEmail(text)}
         value={email}
         placeholder="email@address.com"
-        placeholderTextColor={Theme.colors.textSecondary}
+        placeholderTextColor={Theme.dark.textSecondary}
         autoCapitalize={"none"}
         style={styles.input}
       />
@@ -59,7 +59,7 @@ export default function Login() {
         onChangeText={(text) => setPassword(text)}
         value={password}
         placeholder="Password"
-        placeholderTextColor={Theme.colors.textSecondary}
+        placeholderTextColor={Theme.dark.textSecondary}
         secureTextEntry={true}
         autoCapitalize={"none"}
         style={styles.input}
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 60,
     padding: 12,
-    backgroundColor: Theme.colors.backgroundPrimary,
+    backgroundColor: Theme.dark.backgroundPrimary,
     flex: 1,
   },
   splash: {
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   splashText: {
     fontWeight: "bold",
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     fontSize: 60,
   },
   buttonContainer: {
@@ -112,18 +112,18 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   input: {
-    color: Theme.colors.textPrimary,
-    backgroundColor: Theme.colors.backgroundSecondary,
+    color: Theme.dark.textPrimary,
+    backgroundColor: Theme.dark.backgroundSecondary,
     width: "100%",
     padding: 16,
   },
   button: {
-    color: Theme.colors.textHighlighted,
+    color: Theme.dark.textHighlighted,
     fontSize: 18,
     fontWeight: 18,
     padding: 8,
   },
   buttonDisabled: {
-    color: Theme.colors.textSecondary,
+    color: Theme.dark.textSecondary,
   },
 });

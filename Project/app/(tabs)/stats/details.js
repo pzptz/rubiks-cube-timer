@@ -14,8 +14,10 @@ import db from "@/database/db";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Theme from "@/assets/theme";
 import Loading from "@/components/Loading";
+import { settings } from "@/assets/contexts";
 
 export default function Details() {
+  const themeChoice = useContext(settings).themeChoice;
   const {
     id,
     time,
@@ -169,7 +171,7 @@ export default function Details() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Theme.colors.backgroundPrimary,
+    backgroundColor: Theme.dark.backgroundPrimary,
     padding: 16,
   },
   detailContainer: {
@@ -178,12 +180,12 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    color: Theme.colors.textSecondary,
+    color: Theme.dark.textSecondary,
     marginTop: 12,
   },
   value: {
     fontSize: 20,
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     fontWeight: "bold",
     marginTop: 4,
   },
@@ -196,7 +198,7 @@ const styles = StyleSheet.create({
     height: "15%",
   },
   button: {
-    backgroundColor: Theme.colors.textHighlighted,
+    backgroundColor: Theme.dark.textHighlighted,
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 4,
@@ -204,7 +206,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonText: {
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     fontWeight: "bold",
     textAlign: "center",
   },

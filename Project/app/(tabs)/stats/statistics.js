@@ -19,6 +19,7 @@ import Time from "@/components/Time";
 import Loading from "@/components/Loading";
 import CubeTypePicker from "@/components/CubeTypePicker";
 export default function Statistics() {
+  const themeChoice = useContext(settings).themeChoice;
   const cubeType = useContext(settings).cubeType;
   const session = useSession();
   const [tableData, setTableData] = useState([]); // for this screen
@@ -286,7 +287,7 @@ export default function Statistics() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Theme.colors.backgroundPrimary,
+    backgroundColor: Theme.dark.backgroundPrimary,
     padding: 16,
   },
   buttonContainer: {
@@ -296,7 +297,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   button: {
-    backgroundColor: Theme.colors.textHighlighted,
+    backgroundColor: Theme.dark.textHighlighted,
     paddingVertical: 8,
     borderRadius: 8,
     justifyContent: "center",
@@ -305,7 +306,7 @@ const styles = StyleSheet.create({
     width: "30%",
   },
   buttonText: {
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     fontWeight: "bold",
     fontSize: 16,
   },
@@ -314,13 +315,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: Theme.colors.border,
-    backgroundColor: Theme.colors.headerBackground,
+    borderBottomColor: Theme.dark.border,
+    backgroundColor: Theme.dark.headerBackground,
   },
   headerText: {
     fontSize: 16,
     fontWeight: "bold",
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     textAlign: "center",
   },
   timeColumn: {
@@ -337,7 +338,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   emptyText: {
-    color: Theme.colors.textSecondary,
+    color: Theme.dark.textSecondary,
     fontSize: 16,
   },
 });

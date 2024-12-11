@@ -7,13 +7,14 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { averagesContext, runningContext, settings } from "@/assets/contexts";
 
 import { StyleSheet, View, SafeAreaView, Text } from "react-native";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 export default function TabLayout() {
   const [averages, setAverages] = useState(null);
   const [isRunning, setIsRunning] = useState(0);
   const [cubeType, setCubeType] = useState(3);
   const [inspectionTime, setInspectionTime] = useState(false);
+  const [themeChoice, setThemeChoice] = useState("dark");
   const ProfileHeader = ({ navigation, route, options }) => {
     return (
       <SafeAreaView style={styles.container}>
@@ -46,18 +47,20 @@ export default function TabLayout() {
               setCubeType: setCubeType,
               inspectionTime: inspectionTime,
               setInspectionTime: setInspectionTime,
+              themeChoice: themeChoice,
+              setThemeChoice: setThemeChoice,
             }}
           >
             <Tabs
               screenOptions={{
                 headerStyle: {
-                  backgroundColor: Theme.colors.backgroundPrimary,
+                  backgroundColor: Theme.dark.backgroundPrimary,
                 },
                 tabBarStyle: {
-                  backgroundColor: Theme.colors.backgroundPrimary,
+                  backgroundColor: Theme.dark.backgroundPrimary,
                   display: isRunning == 0 ? "flex" : "none",
                 },
-                tabBarActiveTintColor: Theme.colors.iconHighlighted,
+                tabBarActiveTintColor: Theme.dark.iconHighlighted,
               }}
             >
               <Tabs.Screen
@@ -100,7 +103,7 @@ export default function TabLayout() {
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Theme.colors.backgroundPrimary,
+    backgroundColor: Theme.dark.backgroundPrimary,
     alignItems: "center",
   },
   header: {
@@ -108,7 +111,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     fontWeight: "bold",
     padding: 5,
   },

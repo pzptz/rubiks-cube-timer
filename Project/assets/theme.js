@@ -1,6 +1,6 @@
 export default {
   // Feel free to customize these colors!
-  colors: {
+  dark: {
     backgroundPrimary: "#232323",
     backgroundSecondary: "#121212",
 
@@ -16,6 +16,13 @@ export default {
     tabBarActive: "#FFFFFF",
     tabBarBorder: "#747474",
   },
+  light: {},
+  halloween: {},
+  christmas: {},
+  cyberpunk: {},
+  summer: {},
+  spring: {},
+  nature: {},
   sizes: {
     iconSmall: 16,
 

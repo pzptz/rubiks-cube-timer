@@ -12,6 +12,7 @@ import { useContext, useState } from "react";
 
 export default function Settings() {
   const session = useSession();
+  const themeChoice = useContext(settings).themeChoice;
   const router = useRouter();
   const setCubeType = useContext(settings).setCubeType;
   const inspectionTime = useContext(settings).inspectionTime;
@@ -78,7 +79,7 @@ export default function Settings() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Theme.colors.backgroundPrimary,
+    backgroundColor: Theme.dark.backgroundPrimary,
   },
   postTitle: {
     padding: 12,
@@ -94,18 +95,18 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   title: {
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     fontSize: Theme.sizes.textMedium,
     fontWeight: "bold",
   },
   text: {
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     fontSize: Theme.sizes.textMedium,
     paddingLeft: 8,
   },
   buttonText: {
     fontWeight: "bold",
-    color: Theme.colors.textHighlighted,
+    color: Theme.dark.textHighlighted,
     fontSize: Theme.sizes.textMedium,
   },
 });

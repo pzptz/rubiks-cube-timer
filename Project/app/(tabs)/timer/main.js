@@ -17,6 +17,7 @@ import {
 } from "react-native";
 
 export default function Main() {
+  const themeChoice = useContext(settings).themeChoice;
   const session = useSession();
   const [endTime, setEndTime] = useState(0); // Time in milliseconds
   const [startTime, setStartTime] = useState(0);
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "column-reverse",
     alignItems: "center",
-    backgroundColor: Theme.colors.backgroundPrimary,
+    backgroundColor: Theme.dark.backgroundPrimary,
   },
   timer: {
     fontSize: 48,
@@ -244,7 +245,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     position: "absolute",
     top: 350,
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
   },
 
   timerBox: {
@@ -256,7 +257,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    color: Theme.colors.textSecondary,
+    color: Theme.dark.textSecondary,
   },
   statsBox: {
     position: "absolute",
@@ -272,7 +273,7 @@ const styles = StyleSheet.create({
     fontVariant: ["tabular-nums"],
     textAlign: "center",
     padding: 12,
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
   },
   button: {
     flex: 1,
@@ -286,14 +287,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   newScrambleButton: {
-    backgroundColor: Theme.colors.textHighlighted,
+    backgroundColor: Theme.dark.textHighlighted,
     paddingVertical: 8,
     borderRadius: 4,
     width: "100%",
     alignItems: "center",
   },
   buttonText: {
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     fontWeight: "bold",
     fontSize: 20,
   },

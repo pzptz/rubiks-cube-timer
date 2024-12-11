@@ -18,6 +18,7 @@ import Theme from "@/assets/theme";
 import Loading from "@/components/Loading";
 import CubeTypePicker from "@/components/CubeTypePicker";
 export default function NewTime() {
+  const themeChoice = useContext(settings).themeChoice;
   const [time, setTime] = useState("");
   const [scramble, setScramble] = useState("");
   const session = useSession();
@@ -100,24 +101,24 @@ export default function NewTime() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Theme.colors.backgroundPrimary,
+    backgroundColor: Theme.dark.backgroundPrimary,
   },
   formGroup: {
     padding: 24,
   },
   label: {
     fontSize: 16,
-    color: Theme.colors.textSecondary,
+    color: Theme.dark.textSecondary,
     marginBottom: 8,
   },
   input: {
     borderWidth: 1,
-    borderColor: Theme.colors.border,
+    borderColor: Theme.dark.border,
     borderRadius: 4,
     padding: 12,
     fontSize: 16,
-    color: Theme.colors.textPrimary,
-    backgroundColor: Theme.colors.inputBackground,
+    color: Theme.dark.textPrimary,
+    backgroundColor: Theme.dark.inputBackground,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -126,13 +127,13 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   button: {
-    backgroundColor: Theme.colors.textHighlighted,
+    backgroundColor: Theme.dark.textHighlighted,
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 4,
   },
   buttonText: {
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     fontWeight: "bold",
   },
 });

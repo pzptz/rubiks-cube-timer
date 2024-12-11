@@ -11,12 +11,13 @@ import {
   Pressable,
 } from "react-native";
 import db from "@/database/db";
-import { averagesContext } from "@/assets/contexts";
+import { averagesContext, settings } from "@/assets/contexts";
 import useSession from "@/utils/useSession";
 import { useRouter } from "expo-router";
 import Theme from "@/assets/theme";
 
 export default function StackLayout() {
+  const themeChoice = useContext(settings).themeChoice;
   const router = useRouter();
   const session = useSession();
   const setAverages = useContext(averagesContext).setAverages;
@@ -36,17 +37,17 @@ export default function StackLayout() {
         name="details"
         options={{
           headerTitle: "Solve Details",
-          headerTintColor: Theme.colors.textHighlighted,
+          headerTintColor: Theme.dark.textHighlighted,
           headerStyle: {
-            backgroundColor: Theme.colors.backgroundPrimary,
+            backgroundColor: Theme.dark.backgroundPrimary,
           },
           headerTitleStyle: {
-            color: Theme.colors.textPrimary,
+            color: Theme.dark.textPrimary,
             fontWeight: "bold",
           },
           headerBackTitle: "Back",
           headerBackTitleStyle: styles.backButton,
-          headerTintColor: Theme.colors.textHighlighted,
+          headerTintColor: Theme.dark.textHighlighted,
         }}
       />
 
@@ -57,19 +58,19 @@ export default function StackLayout() {
         options={{
           presentation: "modal",
           headerTitle: "Add New Time",
-          headerTintColor: Theme.colors.textHighlighted,
+          headerTintColor: Theme.dark.textHighlighted,
           headerStyle: {
-            backgroundColor: Theme.colors.backgroundPrimary,
+            backgroundColor: Theme.dark.backgroundPrimary,
           },
           headerTitleStyle: {
-            color: Theme.colors.textPrimary,
+            color: Theme.dark.textPrimary,
             fontWeight: "bold",
           },
           headerLeft: () => (
             <Button
               title="Cancel"
               onPress={() => router.back()}
-              color={Theme.colors.textPrimary}
+              color={Theme.dark.textPrimary}
             />
           ),
         }}
@@ -80,7 +81,7 @@ export default function StackLayout() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Theme.colors.backgroundPrimary,
+    backgroundColor: Theme.dark.backgroundPrimary,
     alignItems: "center",
   },
   header: {
@@ -91,21 +92,21 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     fontWeight: "bold",
     padding: 5,
   },
   instructions: {
-    backgroundColor: Theme.colors.backgroundPrimary,
+    backgroundColor: Theme.dark.backgroundPrimary,
   },
   backButton: {
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 8,
-    color: Theme.colors.textHighlighted,
+    color: Theme.dark.textHighlighted,
   },
   backText: {
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     fontSize: 16,
     marginLeft: 8,
     paddingTop: 2,

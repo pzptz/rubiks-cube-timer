@@ -1,6 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
 import Theme from "@/assets/theme";
+import { settings } from "@/assets/contexts";
+import { useContext } from "react";
 export default function Instructions() {
+  const themeChoice = useContext(settings).themeChoice;
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
@@ -16,13 +19,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
-    backgroundColor: Theme.colors.backgroundPrimary,
+    backgroundColor: Theme.dark.backgroundPrimary,
   },
   text: {
     fontSize: 24,
     padding: 12,
     textAlign: "center",
     alignContent: "center",
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
   },
 });

@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 8,
     borderBottomWidth: 1,
-    borderBottomColor: Theme.colors.border,
-    backgroundColor: Theme.colors.cardBackground,
+    borderBottomColor: Theme.dark.border,
+    backgroundColor: Theme.dark.cardBackground,
     alignItems: "center",
   },
   timeColumn: {
@@ -53,12 +53,12 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: 16,
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     textAlign: "center",
   },
   aoText: {
     fontSize: 16,
-    color: Theme.colors.textSecondary,
+    color: Theme.dark.textSecondary,
     textAlign: "center",
   },
 });

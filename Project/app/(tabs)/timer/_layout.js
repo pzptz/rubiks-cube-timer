@@ -1,7 +1,10 @@
 import { Stack } from "expo-router";
 import Theme from "@/assets/theme";
+import { settings } from "@/assets/contexts";
+import { useContext } from "react";
 import { StyleSheet, SafeAreaView, Text, View } from "react-native";
 export default function StackLayout() {
+  const themeChoice = useContext(settings).themeChoice;
   const MainHeader = ({ navigation, route, options }) => {
     return (
       <SafeAreaView style={styles.container}>
@@ -28,7 +31,7 @@ export default function StackLayout() {
           headerTitle: "How to use",
           headerBackTitle: "Back",
           headerBackTitleStyle: styles.backButton,
-          headerTintColor: Theme.colors.textHighlighted,
+          headerTintColor: Theme.dark.textHighlighted,
         }}
       />
     </Stack>
@@ -37,7 +40,7 @@ export default function StackLayout() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Theme.colors.backgroundPrimary,
+    backgroundColor: Theme.dark.backgroundPrimary,
     alignItems: "center",
   },
   header: {
@@ -48,14 +51,14 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
-    color: Theme.colors.textPrimary,
+    color: Theme.dark.textPrimary,
     fontWeight: "bold",
     padding: 5,
   },
   instructions: {
-    backgroundColor: Theme.colors.backgroundPrimary,
+    backgroundColor: Theme.dark.backgroundPrimary,
   },
   backButton: {
-    color: Theme.colors.textHighlighted,
+    color: Theme.dark.textHighlighted,
   },
 });

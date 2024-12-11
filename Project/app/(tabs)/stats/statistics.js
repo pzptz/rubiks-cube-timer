@@ -298,8 +298,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: Theme.colors.textHighlighted,
     paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 4,
+    borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     height: 50,
@@ -308,6 +307,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: Theme.colors.textPrimary,
     fontWeight: "bold",
+    fontSize: 16,
   },
   headerRow: {
     flexDirection: "row",

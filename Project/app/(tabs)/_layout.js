@@ -17,18 +17,36 @@ export default function TabLayout() {
   const [themeChoice, setThemeChoice] = useState("light");
   const ProfileHeader = ({ navigation, route, options }) => {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor: Theme[themeChoice].backgroundPrimary },
+        ]}
+      >
         <View style={styles.header}>
-          <Text style={styles.text}>My Profile</Text>
+          <Text
+            style={[styles.text, { color: Theme[themeChoice].textPrimary }]}
+          >
+            My Profile
+          </Text>
         </View>
       </SafeAreaView>
     );
   };
   const StatsHeader = ({ navigation, route, options }) => {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor: Theme[themeChoice].backgroundPrimary },
+        ]}
+      >
         <View style={styles.header}>
-          <Text style={styles.text}>Stats</Text>
+          <Text
+            style={[styles.text, { color: Theme[themeChoice].textPrimary }]}
+          >
+            Stats
+          </Text>
         </View>
       </SafeAreaView>
     );
@@ -54,13 +72,13 @@ export default function TabLayout() {
             <Tabs
               screenOptions={{
                 headerStyle: {
-                  backgroundColor: Theme.dark.backgroundPrimary,
+                  backgroundColor: Theme[themeChoice].backgroundPrimary, // Dynamically update header background
                 },
                 tabBarStyle: {
-                  backgroundColor: Theme.dark.backgroundPrimary,
+                  backgroundColor: Theme[themeChoice].backgroundPrimary, // Dynamically update tab bar background
                   display: isRunning == 0 ? "flex" : "none",
                 },
-                tabBarActiveTintColor: Theme.dark.iconHighlighted,
+                tabBarActiveTintColor: Theme[themeChoice].iconHighlighted, // Dynamically update active tint color
               }}
             >
               <Tabs.Screen
@@ -103,7 +121,6 @@ export default function TabLayout() {
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Theme.dark.backgroundPrimary,
     alignItems: "center",
   },
   header: {
@@ -111,7 +128,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
-    color: Theme.dark.textPrimary,
     fontWeight: "bold",
     padding: 5,
   },

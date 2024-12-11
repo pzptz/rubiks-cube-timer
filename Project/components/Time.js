@@ -4,17 +4,28 @@ import Theme from "@/assets/theme";
 import millisToTime from "@/utils/millisToTime";
 const Time = ({ solve, onPress, themeChoice }) => {
   return (
-    <TouchableOpacity style={styles.itemContainer} onPress={onPress}>
+    <TouchableOpacity
+      style={[
+        styles.itemContainer,
+        {
+          borderBottomColor: Theme[themeChoice].border,
+          backgroundColor: Theme[themeChoice].cardBackground,
+        },
+      ]}
+      onPress={onPress}
+    >
       {/* Time Column (Index) */}
       <View style={styles.timeColumn}>
-        <Text style={styles.timeText}>
+        <Text
+          style={[styles.timeText, { color: Theme[themeChoice].textPrimary }]}
+        >
           {millisToTime(solve.time_with_penalty, solve.penalty)}
         </Text>
       </View>
 
       {/* AO5 Column */}
       <View style={styles.aoColumn}>
-        <Text style={styles.aoText}>
+        <Text style={[styles.aoText, { color: Theme.dark.textSecondary }]}>
           {solve.ao5 !== null && solve.ao5 !== undefined
             ? millisToTime(solve.ao5)
             : "-"}
@@ -23,7 +34,7 @@ const Time = ({ solve, onPress, themeChoice }) => {
 
       {/* AO12 Column */}
       <View style={styles.aoColumn}>
-        <Text style={styles.aoText}>
+        <Text style={[styles.aoText, { color: Theme.dark.textSecondary }]}>
           {solve.ao12 !== null && solve.ao12 !== undefined
             ? millisToTime(solve.ao12)
             : "-"}
@@ -39,8 +50,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 8,
     borderBottomWidth: 1,
-    borderBottomColor: Theme.dark.border,
-    backgroundColor: Theme.dark.cardBackground,
     alignItems: "center",
   },
   timeColumn: {
@@ -53,12 +62,10 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: 16,
-    color: Theme.dark.textPrimary,
     textAlign: "center",
   },
   aoText: {
     fontSize: 16,
-    color: Theme.dark.textSecondary,
     textAlign: "center",
   },
 });

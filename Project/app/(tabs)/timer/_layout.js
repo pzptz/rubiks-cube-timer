@@ -7,9 +7,18 @@ export default function StackLayout() {
   const themeChoice = useContext(settings).themeChoice;
   const MainHeader = ({ navigation, route, options }) => {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor: Theme[themeChoice].backgroundPrimary },
+        ]}
+      >
         <View style={styles.header}>
-          <Text style={styles.text}>Timer</Text>
+          <Text
+            style={[styles.text, { color: Theme[themeChoice].textPrimary }]}
+          >
+            Timer
+          </Text>
         </View>
       </SafeAreaView>
     );
@@ -26,12 +35,17 @@ export default function StackLayout() {
       <Stack.Screen
         name="instructions"
         options={{
-          headerStyle: styles.instructions,
-          headerTitleStyle: styles.text,
+          headerStyle: {
+            backgroundColor: Theme[themeChoice].backgroundPrimary,
+          },
+          headerTitleStyle: [
+            styles.text,
+            { color: Theme[themeChoice].textPrimary },
+          ],
           headerTitle: "How to use",
           headerBackTitle: "Back",
-          headerBackTitleStyle: styles.backButton,
-          headerTintColor: Theme.dark.textHighlighted,
+          headerBackTitleStyle: { color: Theme[themeChoice].textHighlighted },
+          headerTintColor: Theme[themeChoice].textHighlighted,
         }}
       />
     </Stack>
@@ -40,7 +54,6 @@ export default function StackLayout() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Theme.dark.backgroundPrimary,
     alignItems: "center",
   },
   header: {
@@ -51,14 +64,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
-    color: Theme.dark.textPrimary,
     fontWeight: "bold",
     padding: 5,
-  },
-  instructions: {
-    backgroundColor: Theme.dark.backgroundPrimary,
-  },
-  backButton: {
-    color: Theme.dark.textHighlighted,
   },
 });

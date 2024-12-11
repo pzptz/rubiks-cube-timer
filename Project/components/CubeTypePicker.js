@@ -21,6 +21,7 @@ export default function CubeTypePicker({ themeChoice }) {
     <View style={styles.picker}>
       <DropDownPicker
         style={{
+          borderWidth: 0,
           backgroundColor: Theme[themeChoice].textHighlighted,
         }}
         textStyle={{

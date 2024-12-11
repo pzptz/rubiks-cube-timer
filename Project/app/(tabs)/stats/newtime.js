@@ -65,24 +65,51 @@ export default function NewTime() {
     return <Loading themeChoice={themeChoice} />;
   }
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        { backgroundColor: Theme[themeChoice].backgroundPrimary },
+      ]}
+    >
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <CubeTypePicker themeChoice={themeChoice} />
       </View>
 
       <View style={styles.formGroup}>
-        <Text style={styles.label}>Scramble (optional):</Text>
+        <Text
+          style={[styles.label, { color: Theme[themeChoice].textSecondary }]}
+        >
+          Scramble (optional):
+        </Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            {
+              borderColor: Theme[themeChoice].border,
+              color: Theme[themeChoice].textPrimary,
+              backgroundColor: Theme[themeChoice].inputBackground,
+            },
+          ]}
           placeholder="Enter scramble here..."
           value={scramble}
           onChangeText={setScramble}
         />
       </View>
       <View style={styles.formGroup}>
-        <Text style={styles.label}>Time (seconds):</Text>
+        <Text
+          style={[styles.label, { color: Theme[themeChoice].textSecondary }]}
+        >
+          Time (seconds):
+        </Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            {
+              borderColor: Theme[themeChoice].border,
+              color: Theme[themeChoice].textPrimary,
+              backgroundColor: Theme[themeChoice].inputBackground,
+            },
+          ]}
           placeholder="Enter time here..."
           keyboardType="numeric"
           value={time}
@@ -90,8 +117,21 @@ export default function NewTime() {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit</Text>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            { backgroundColor: Theme[themeChoice].textHighlighted },
+          ]}
+          onPress={handleSubmit}
+        >
+          <Text
+            style={[
+              styles.buttonText,
+              { color: Theme[themeChoice].textPrimary },
+            ]}
+          >
+            Submit
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -101,24 +141,20 @@ export default function NewTime() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Theme.dark.backgroundPrimary,
   },
   formGroup: {
     padding: 24,
   },
   label: {
     fontSize: 16,
-    color: Theme.dark.textSecondary,
     marginBottom: 8,
   },
   input: {
     borderWidth: 1,
-    borderColor: Theme.dark.border,
+
     borderRadius: 4,
     padding: 12,
     fontSize: 16,
-    color: Theme.dark.textPrimary,
-    backgroundColor: Theme.dark.inputBackground,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -127,13 +163,11 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   button: {
-    backgroundColor: Theme.dark.textHighlighted,
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 4,
   },
   buttonText: {
-    color: Theme.dark.textPrimary,
     fontWeight: "bold",
   },
 });

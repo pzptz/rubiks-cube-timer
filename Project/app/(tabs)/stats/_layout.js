@@ -37,17 +37,20 @@ export default function StackLayout() {
         name="details"
         options={{
           headerTitle: "Solve Details",
-          headerTintColor: Theme.dark.textHighlighted,
+          headerTintColor: Theme[themeChoice].textHighlighted,
           headerStyle: {
-            backgroundColor: Theme.dark.backgroundPrimary,
+            backgroundColor: Theme[themeChoice].backgroundPrimary,
           },
           headerTitleStyle: {
-            color: Theme.dark.textPrimary,
+            color: Theme[themeChoice].textPrimary,
             fontWeight: "bold",
           },
           headerBackTitle: "Back",
-          headerBackTitleStyle: styles.backButton,
-          headerTintColor: Theme.dark.textHighlighted,
+          headerBackTitleStyle: [
+            styles.backButton,
+            { color: Theme[themeChoice].textHighlighted },
+          ],
+          headerTintColor: Theme[themeChoice].textHighlighted,
         }}
       />
 
@@ -58,19 +61,19 @@ export default function StackLayout() {
         options={{
           presentation: "modal",
           headerTitle: "Add New Time",
-          headerTintColor: Theme.dark.textHighlighted,
+          headerTintColor: Theme[themeChoice].textHighlighted,
           headerStyle: {
-            backgroundColor: Theme.dark.backgroundPrimary,
+            backgroundColor: Theme[themeChoice].backgroundPrimary,
           },
           headerTitleStyle: {
-            color: Theme.dark.textPrimary,
+            color: Theme[themeChoice].textPrimary,
             fontWeight: "bold",
           },
           headerLeft: () => (
             <Button
               title="Cancel"
               onPress={() => router.back()}
-              color={Theme.dark.textPrimary}
+              color={Theme[themeChoice].textPrimary}
             />
           ),
         }}
@@ -81,7 +84,6 @@ export default function StackLayout() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Theme.dark.backgroundPrimary,
     alignItems: "center",
   },
   header: {
@@ -92,21 +94,15 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
-    color: Theme.dark.textPrimary,
     fontWeight: "bold",
     padding: 5,
-  },
-  instructions: {
-    backgroundColor: Theme.dark.backgroundPrimary,
   },
   backButton: {
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 8,
-    color: Theme.dark.textHighlighted,
   },
   backText: {
-    color: Theme.dark.textPrimary,
     fontSize: 16,
     marginLeft: 8,
     paddingTop: 2,

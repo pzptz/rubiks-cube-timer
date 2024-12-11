@@ -253,11 +253,29 @@ export default function Statistics() {
     return <Loading themeChoice={themeChoice} />;
   }
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        { backgroundColor: Theme[themeChoice].backgroundPrimary },
+      ]}
+    >
       {/* Add time button */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleNewTime}>
-          <Text style={styles.buttonText}>Add Time</Text>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            { backgroundColor: Theme[themeChoice].textHighlighted },
+          ]}
+          onPress={handleNewTime}
+        >
+          <Text
+            style={[
+              styles.buttonText,
+              { color: Theme[themeChoice].textPrimary },
+            ]}
+          >
+            Add Time
+          </Text>
         </TouchableOpacity>
         <CubeTypePicker themeChoice={themeChoice} />
       </View>
@@ -270,10 +288,39 @@ export default function Statistics() {
         onEndReachedThreshold={0.5}
         onEndReached={() => extendList()}
         ListHeaderComponent={
-          <View style={styles.headerRow}>
-            <Text style={[styles.headerText, styles.timeColumn]}>Time</Text>
-            <Text style={[styles.headerText, styles.aoColumn]}>ao5</Text>
-            <Text style={[styles.headerText, styles.aoColumn]}>ao12</Text>
+          <View
+            style={[
+              styles.headerRow,
+              {
+                borderBottomColor: Theme.dark.border,
+                backgroundColor: Theme.dark.headerBackground,
+              },
+            ]}
+          >
+            <Text
+              style={[
+                styles.headerText,
+                { color: Theme[themeChoice].textPrimary },
+              ]}
+            >
+              Time
+            </Text>
+            <Text
+              style={[
+                styles.headerText,
+                { color: Theme[themeChoice].textPrimary },
+              ]}
+            >
+              ao5
+            </Text>
+            <Text
+              style={[
+                styles.headerText,
+                { color: Theme[themeChoice].textPrimary },
+              ]}
+            >
+              ao12
+            </Text>
           </View>
         }
         ListEmptyComponent={
@@ -288,7 +335,6 @@ export default function Statistics() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Theme.dark.backgroundPrimary,
     padding: 16,
   },
   buttonContainer: {
@@ -298,7 +344,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   button: {
-    backgroundColor: Theme.dark.textHighlighted,
     paddingVertical: 8,
     borderRadius: 8,
     justifyContent: "center",
@@ -307,7 +352,6 @@ const styles = StyleSheet.create({
     width: "30%",
   },
   buttonText: {
-    color: Theme.dark.textPrimary,
     fontWeight: "bold",
     fontSize: 16,
   },
@@ -316,20 +360,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: Theme.dark.border,
-    backgroundColor: Theme.dark.headerBackground,
   },
   headerText: {
     fontSize: 16,
     fontWeight: "bold",
-    color: Theme.dark.textPrimary,
+
     textAlign: "center",
-  },
-  timeColumn: {
-    flex: 1,
-    alignItems: "center",
-  },
-  aoColumn: {
     flex: 1,
     alignItems: "center",
   },

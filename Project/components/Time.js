@@ -25,7 +25,9 @@ const Time = ({ solve, onPress, themeChoice }) => {
 
       {/* AO5 Column */}
       <View style={styles.aoColumn}>
-        <Text style={[styles.aoText, { color: Theme.dark.textSecondary }]}>
+        <Text
+          style={[styles.aoText, { color: Theme[themeChoice].textSecondary }]}
+        >
           {solve.ao5 !== null && solve.ao5 !== undefined
             ? millisToTime(solve.ao5)
             : "-"}
@@ -34,7 +36,9 @@ const Time = ({ solve, onPress, themeChoice }) => {
 
       {/* AO12 Column */}
       <View style={styles.aoColumn}>
-        <Text style={[styles.aoText, { color: Theme.dark.textSecondary }]}>
+        <Text
+          style={[styles.aoText, { color: Theme[themeChoice].textSecondary }]}
+        >
           {solve.ao12 !== null && solve.ao12 !== undefined
             ? millisToTime(solve.ao12)
             : "-"}

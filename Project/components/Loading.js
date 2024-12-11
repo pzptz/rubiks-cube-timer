@@ -2,7 +2,7 @@ import { View, StyleSheet, ActivityIndicator } from "react-native";
 
 import Theme from "@/assets/theme";
 
-export default function Loading({ themeChoice = "dark" }) {
+export default function Loading({ themeChoice = "Dark" }) {
   return (
     <View
       style={[

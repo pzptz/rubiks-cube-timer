@@ -13,7 +13,7 @@ import db from "@/database/db";
 
 import Theme from "@/assets/theme";
 
-export default function Login({ themeChoice = "dark" }) {
+export default function Login({ themeChoice = "Dark" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -89,8 +89,8 @@ export default function Login({ themeChoice = "dark" }) {
             style={[
               styles.button,
               isSignInDisabled
-                ? { color: Theme.dark.textSecondary }
-                : { color: Theme.dark.textHighlighted },
+                ? { color: Theme[themeChoice].textSecondary }
+                : { color: Theme[themeChoice].textHighlighted },
             ]}
           >
             Sign in

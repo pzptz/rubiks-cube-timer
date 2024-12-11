@@ -87,10 +87,11 @@ export default function NewTime() {
             {
               borderColor: Theme[themeChoice].border,
               color: Theme[themeChoice].textPrimary,
-              backgroundColor: Theme[themeChoice].inputBackground,
+              backgroundColor: Theme[themeChoice].backgroundSecondary,
             },
           ]}
           placeholder="Enter scramble here..."
+          placeholderTextColor={Theme[themeChoice].textSecondary}
           value={scramble}
           onChangeText={setScramble}
         />
@@ -107,10 +108,11 @@ export default function NewTime() {
             {
               borderColor: Theme[themeChoice].border,
               color: Theme[themeChoice].textPrimary,
-              backgroundColor: Theme[themeChoice].inputBackground,
+              backgroundColor: Theme[themeChoice].backgroundSecondary,
             },
           ]}
           placeholder="Enter time here..."
+          placeholderTextColor={Theme[themeChoice].textSecondary}
           keyboardType="numeric"
           value={time}
           onChangeText={setTime}
@@ -151,7 +153,6 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-
     borderRadius: 4,
     padding: 12,
     fontSize: 16,

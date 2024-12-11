@@ -1,6 +1,6 @@
 export default {
   // Feel free to customize these colors!
-  dark: {
+  Dark: {
     backgroundPrimary: "#232323",
     backgroundSecondary: "#121212",
 
@@ -14,7 +14,7 @@ export default {
     tabBarActive: "#FFFFFF",
     tabBarBorder: "#747474",
   },
-  light: {
+  Light: {
     backgroundPrimary: "#FFFFFF",
     backgroundSecondary: "#EEEEEE",
 
@@ -30,10 +30,10 @@ export default {
     tabBarActive: "#FFFFFF",
     tabBarBorder: "#747474",
   },
-  halloween: {},
-  christmas: {},
-  cyberpunk: {},
-  summer: {},
-  spring: {},
-  nature: {},
+  Halloween: {},
+  Christmas: {},
+  Cyberpunk: {},
+  Summer: {},
+  Spring: {},
+  Nature: {},
 };

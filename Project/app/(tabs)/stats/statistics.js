@@ -292,8 +292,8 @@ export default function Statistics() {
             style={[
               styles.headerRow,
               {
-                borderBottomColor: Theme.dark.border,
-                backgroundColor: Theme.dark.headerBackground,
+                borderBottomColor: Theme[themeChoice].border,
+                backgroundColor: Theme[themeChoice].headerBackground,
               },
             ]}
           >
@@ -324,7 +324,14 @@ export default function Statistics() {
           </View>
         }
         ListEmptyComponent={
-          <Text style={styles.emptyText}>No records found.</Text>
+          <Text
+            style={[
+              styles.emptyText,
+              { color: Theme[themeChoice].textSecondary },
+            ]}
+          >
+            No records found.
+          </Text>
         }
         contentContainerStyle={tableData.length === 0 && styles.emptyContainer}
       />
@@ -375,7 +382,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   emptyText: {
-    color: Theme.dark.textSecondary,
     fontSize: 16,
   },
 });

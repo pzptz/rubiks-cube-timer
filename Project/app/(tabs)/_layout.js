@@ -14,7 +14,7 @@ export default function TabLayout() {
   const [isRunning, setIsRunning] = useState(0);
   const [cubeType, setCubeType] = useState(3);
   const [inspectionTime, setInspectionTime] = useState(false);
-  const [themeChoice, setThemeChoice] = useState("light");
+  const [themeChoice, setThemeChoice] = useState("Dark");
   const ProfileHeader = ({ navigation, route, options }) => {
     return (
       <SafeAreaView

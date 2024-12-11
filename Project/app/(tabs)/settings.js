@@ -9,15 +9,21 @@ import db from "@/database/db";
 import useSession from "@/utils/useSession";
 import { settings } from "@/assets/contexts";
 import { useContext, useState } from "react";
+import DropDownPicker from "react-native-dropdown-picker";
 
 export default function Settings() {
   const session = useSession();
   const themeChoice = useContext(settings).themeChoice;
+  const setThemeChoice = useContext(settings).setThemeChoice;
   const router = useRouter();
-  const setCubeType = useContext(settings).setCubeType;
   const inspectionTime = useContext(settings).inspectionTime;
   const setInspectionTime = useContext(settings).setInspectionTime;
   const [loading, setLoading] = useState(false);
+  const themeOptions = Object.keys(Theme).map((key) => ({
+    label: key,
+    value: key,
+  }));
+  const [themeSelectorOpen, setThemeSelectorOpen] = useState(false);
   const signOut = async () => {
     setLoading(true);
     try {
@@ -67,13 +73,7 @@ export default function Settings() {
           {session.user.email}
         </Text>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          paddingVertical: 24,
-        }}
-      >
+      <View style={styles.settingView}>
         <Text
           style={[
             styles.text,
@@ -82,29 +82,53 @@ export default function Settings() {
         >
           Inspection Time:{" "}
         </Text>
-        {/* Dynamically update text color */}
         <Switch
           value={inspectionTime}
           color={Theme[themeChoice].textHighlighted}
           onValueChange={(value) => setInspectionTime(value)}
         />
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          paddingVertical: 24,
-        }}
-      >
+      <View style={styles.settingView}>
         <Text
           style={[
             styles.text,
             { padding: 12, color: Theme[themeChoice].textPrimary },
           ]}
         >
-          Cube Type:{" "}
+          Cube Type:
         </Text>
         <CubeTypePicker themeChoice={themeChoice} />
+      </View>
+      <View style={styles.settingView}>
+        <Text
+          style={[
+            styles.text,
+            { padding: 12, color: Theme[themeChoice].textPrimary },
+          ]}
+        >
+          Theme:
+        </Text>
+        <View style={{ width: "40%" }}>
+          <DropDownPicker
+            style={{
+              borderWidth: 0,
+              backgroundColor: Theme[themeChoice].textHighlighted,
+            }}
+            textStyle={{
+              color: Theme[themeChoice].textPrimary,
+              fontSize: 16,
+              fontWeight: "bold",
+            }}
+            dropDownContainerStyle={{
+              backgroundColor: Theme[themeChoice].textTertiary,
+            }}
+            open={themeSelectorOpen}
+            value={themeChoice}
+            items={themeOptions}
+            setOpen={setThemeSelectorOpen}
+            onSelectItem={(item) => setThemeChoice(item.value)}
+          />
+        </View>
       </View>
     </View>
   );
@@ -138,5 +162,10 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: "bold",
     fontSize: 16,
+  },
+  settingView: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 24,
   },
 });

@@ -37,7 +37,7 @@ export default function StackLayout() {
         name="details"
         options={{
           headerTitle: "Solve Details",
-          headerTintColor: Theme[themeChoice].textHighlighted,
+          headerTintColor: Theme[themeChoice].flair,
           headerStyle: {
             backgroundColor: Theme[themeChoice].backgroundPrimary,
           },
@@ -48,9 +48,9 @@ export default function StackLayout() {
           headerBackTitle: "Back",
           headerBackTitleStyle: [
             styles.backButton,
-            { color: Theme[themeChoice].textHighlighted },
+            { color: Theme[themeChoice].flair },
           ],
-          headerTintColor: Theme[themeChoice].textHighlighted,
+          headerTintColor: Theme[themeChoice].flair,
         }}
       />
 
@@ -61,7 +61,7 @@ export default function StackLayout() {
         options={{
           presentation: "modal",
           headerTitle: "Add New Time",
-          headerTintColor: Theme[themeChoice].textHighlighted,
+          headerTintColor: Theme[themeChoice].flair,
           headerStyle: {
             backgroundColor: Theme[themeChoice].backgroundPrimary,
           },

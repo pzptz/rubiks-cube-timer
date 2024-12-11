@@ -262,10 +262,7 @@ export default function Statistics() {
       {/* Add time button */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={[
-            styles.button,
-            { backgroundColor: Theme[themeChoice].textHighlighted },
-          ]}
+          style={[styles.button, { backgroundColor: Theme[themeChoice].flair }]}
           onPress={handleNewTime}
         >
           <Text

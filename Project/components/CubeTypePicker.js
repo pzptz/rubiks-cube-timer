@@ -22,7 +22,7 @@ export default function CubeTypePicker({ themeChoice }) {
       <DropDownPicker
         style={{
           borderWidth: 0,
-          backgroundColor: Theme[themeChoice].textHighlighted,
+          backgroundColor: Theme[themeChoice].flair,
         }}
         textStyle={{
           color: Theme[themeChoice].textPrimary,
@@ -30,7 +30,7 @@ export default function CubeTypePicker({ themeChoice }) {
           fontWeight: "bold",
         }}
         dropDownContainerStyle={{
-          backgroundColor: Theme[themeChoice].textTertiary,
+          backgroundColor: Theme[themeChoice].dropDownBackground,
         }}
         open={cubeTypeSelectorOpen}
         value={cubeType}

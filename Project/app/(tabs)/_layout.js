@@ -78,7 +78,7 @@ export default function TabLayout() {
                   backgroundColor: Theme[themeChoice].backgroundPrimary, // Dynamically update tab bar background
                   display: isRunning == 0 ? "flex" : "none",
                 },
-                tabBarActiveTintColor: Theme[themeChoice].iconHighlighted, // Dynamically update active tint color
+                tabBarActiveTintColor: Theme[themeChoice].flair, // Dynamically update active tint color
               }}
             >
               <Tabs.Screen

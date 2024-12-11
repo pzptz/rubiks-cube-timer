@@ -87,7 +87,7 @@ export default function NewTime() {
             {
               borderColor: Theme[themeChoice].border,
               color: Theme[themeChoice].textPrimary,
-              backgroundColor: Theme[themeChoice].backgroundSecondary,
+              backgroundColor: Theme[themeChoice].inputBackground,
             },
           ]}
           placeholder="Enter scramble here..."
@@ -108,7 +108,7 @@ export default function NewTime() {
             {
               borderColor: Theme[themeChoice].border,
               color: Theme[themeChoice].textPrimary,
-              backgroundColor: Theme[themeChoice].backgroundSecondary,
+              backgroundColor: Theme[themeChoice].inputBackground,
             },
           ]}
           placeholder="Enter time here..."
@@ -120,10 +120,7 @@ export default function NewTime() {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={[
-            styles.button,
-            { backgroundColor: Theme[themeChoice].textHighlighted },
-          ]}
+          style={[styles.button, { backgroundColor: Theme[themeChoice].flair }]}
           onPress={handleSubmit}
         >
           <Text

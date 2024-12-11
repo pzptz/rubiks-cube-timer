@@ -60,10 +60,7 @@ export default function Settings() {
           </Text>
           <TouchableOpacity onPress={() => signOut()}>
             <Text
-              style={[
-                styles.buttonText,
-                { color: Theme[themeChoice].textHighlighted },
-              ]}
+              style={[styles.buttonText, { color: Theme[themeChoice].flair }]}
             >
               Sign out{" "}
             </Text>
@@ -84,7 +81,7 @@ export default function Settings() {
         </Text>
         <Switch
           value={inspectionTime}
-          color={Theme[themeChoice].textHighlighted}
+          color={Theme[themeChoice].flair}
           onValueChange={(value) => setInspectionTime(value)}
         />
       </View>
@@ -112,7 +109,7 @@ export default function Settings() {
           <DropDownPicker
             style={{
               borderWidth: 0,
-              backgroundColor: Theme[themeChoice].textHighlighted,
+              backgroundColor: Theme[themeChoice].flair,
             }}
             textStyle={{
               color: Theme[themeChoice].textPrimary,
@@ -120,7 +117,7 @@ export default function Settings() {
               fontWeight: "bold",
             }}
             dropDownContainerStyle={{
-              backgroundColor: Theme[themeChoice].textTertiary,
+              backgroundColor: Theme[themeChoice].dropDownBackground,
             }}
             open={themeSelectorOpen}
             value={themeChoice}

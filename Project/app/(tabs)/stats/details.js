@@ -63,7 +63,7 @@ export default function Details() {
       height: "15%",
     },
     button: {
-      backgroundColor: Theme[themeChoice].textHighlighted,
+      backgroundColor: Theme[themeChoice].flair,
       paddingVertical: 8,
       paddingHorizontal: 16,
       borderRadius: 4,

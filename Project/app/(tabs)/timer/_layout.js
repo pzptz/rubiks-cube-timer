@@ -44,8 +44,8 @@ export default function StackLayout() {
           ],
           headerTitle: "How to use",
           headerBackTitle: "Back",
-          headerBackTitleStyle: { color: Theme[themeChoice].textHighlighted },
-          headerTintColor: Theme[themeChoice].textHighlighted,
+          headerBackTitleStyle: { color: Theme[themeChoice].flair },
+          headerTintColor: Theme[themeChoice].flair,
         }}
       />
     </Stack>

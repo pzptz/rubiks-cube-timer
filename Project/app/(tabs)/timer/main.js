@@ -177,7 +177,11 @@ export default function Main() {
       >
         <TouchableOpacity style={styles.button} onPressIn={stopStopwatch}>
           <View style={styles.timerBox}>
-            <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>
+            <Text
+              style={[styles.timer, { color: Theme[themeChoice].textPrimary }]}
+            >
+              {formatTime(endTime - startTime)}
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -192,7 +196,11 @@ export default function Main() {
       >
         <TouchableOpacity style={styles.button} onPressOut={startStopwatch}>
           <View style={styles.timerBox}>
-            <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>
+            <Text
+              style={[styles.timer, { color: Theme[themeChoice].textPrimary }]}
+            >
+              {formatTime(endTime - startTime)}
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -234,7 +242,7 @@ export default function Main() {
               <View
                 style={[
                   styles.newScrambleButton,
-                  { backgroundColor: Theme[themeChoice].textHighlighted },
+                  { backgroundColor: Theme[themeChoice].flair },
                 ]}
               >
                 <Text
@@ -252,7 +260,7 @@ export default function Main() {
             <TouchableHighlight
               style={[
                 styles.newScrambleButton,
-                { backgroundColor: Theme[themeChoice].textHighlighted },
+                { backgroundColor: Theme[themeChoice].flair },
               ]}
               onPress={() => generateScramble()}
             >

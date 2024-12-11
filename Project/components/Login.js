@@ -61,7 +61,7 @@ export default function Login({ themeChoice = "Dark" }) {
           styles.input,
           {
             color: theme.textPrimary,
-            backgroundColor: theme.backgroundSecondary,
+            backgroundColor: theme.inputBackground,
           },
         ]}
       />
@@ -76,7 +76,7 @@ export default function Login({ themeChoice = "Dark" }) {
           styles.input,
           {
             color: theme.textPrimary,
-            backgroundColor: theme.backgroundSecondary,
+            backgroundColor: theme.inputBackground,
           },
         ]}
       />
@@ -90,7 +90,7 @@ export default function Login({ themeChoice = "Dark" }) {
               styles.button,
               isSignInDisabled
                 ? { color: Theme[themeChoice].textSecondary }
-                : { color: Theme[themeChoice].textHighlighted },
+                : { color: Theme[themeChoice].flair },
             ]}
           >
             Sign in

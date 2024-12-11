@@ -11,14 +11,15 @@ import {
   SafeAreaView,
 } from "react-native";
 import db from "@/database/db";
-import { averagesContext } from "@/assets/contexts";
+import { averagesContext, settings } from "@/assets/contexts";
 import useSession from "@/utils/useSession";
 import Theme from "@/assets/theme";
 import { useRouter, useFocusEffect } from "expo-router";
 import Time from "@/components/Time";
 import Loading from "@/components/Loading";
-
+import CubeTypePicker from "@/components/CubeTypePicker";
 export default function Statistics() {
+  const cubeType = useContext(settings).cubeType;
   const session = useSession();
   const [tableData, setTableData] = useState([]); // for this screen
   const expectedUpdates = useRef(0);
@@ -43,6 +44,7 @@ export default function Statistics() {
           .from("solve_times")
           .select()
           .eq("user_id", session.user.id)
+          .eq("cube_type", cubeType)
           .order("id", { ascending: false })
           .range(0, initialEnd);
         if (error) {
@@ -72,6 +74,7 @@ export default function Statistics() {
           .from("solve_times")
           .select()
           .eq("user_id", session.user.id)
+          .eq("cube_type", cubeType)
           .order("id", { ascending: false })
           .range(currentOffset, currentOffset + 100);
         if (error) throw error;
@@ -87,20 +90,7 @@ export default function Statistics() {
   const handleInsert = (payload) => {
     // also only here if user_id matches
     const length = dataRef.current.length;
-    if (length >= 11) {
-      // There were at least 11 times before this one, so we will expect an update to both ao5 and ao12
-      expectedUpdates.current = 2;
-    } else if (length >= 4) {
-      // Not enough for ao12 so we expect only one update
-      expectedUpdates.current = 1;
-    } else {
-      // No updates will come.
-      if (shouldRender.current) {
-        setTableData([payload.new, ...dataRef.current]);
-      } else {
-        tableBufferRef.current.push(payload.new);
-      }
-    }
+    expectedUpdates.current = 2;
   };
   const handleUpdate = (payload) => {
     // By the way, we are only here when payload.user_id = session.user_id.
@@ -227,7 +217,7 @@ export default function Statistics() {
         db.removeChannel(timesDelete);
       };
     }
-  }, [session]);
+  }, [session, cubeType]);
   useEffect(() => {
     dataRef.current = tableData;
   }, [tableData]);
@@ -252,7 +242,7 @@ export default function Statistics() {
       solve={item}
       onPress={() =>
         router.push(
-          `/stats/details?id=${item.id}&time=${item.time_with_penalty}&ao5=${item.ao5}&ao12=${item.ao12}&scramble=${item.scramble}&created_at=${item.created_at}&user_id=${item.user_id}&penalty=${item.penalty}`
+          `/stats/details?id=${item.id}&time=${item.time_with_penalty}&ao5=${item.ao5}&ao12=${item.ao12}&scramble=${item.scramble}&created_at=${item.created_at}&user_id=${item.user_id}&penalty=${item.penalty}&cube_type=${item.cube_type}`
         )
       }
     />
@@ -267,6 +257,7 @@ export default function Statistics() {
         <TouchableOpacity style={styles.button} onPress={handleNewTime}>
           <Text style={styles.buttonText}>Add Time</Text>
         </TouchableOpacity>
+        <CubeTypePicker />
       </View>
 
       {/* FlatList with Header */}
@@ -299,16 +290,20 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   buttonContainer: {
+    width: "100%",
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-    margin: 8,
+    justifyContent: "space-evenly",
   },
   button: {
     backgroundColor: Theme.colors.textHighlighted,
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 4,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    width: "30%",
   },
   buttonText: {
     color: Theme.colors.textPrimary,

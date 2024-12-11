@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import { useContext, useState } from "react";
+
 import {
   View,
   Text,
@@ -10,19 +11,19 @@ import {
   TouchableOpacity,
 } from "react-native";
 import db from "@/database/db";
-import { averagesContext } from "@/assets/contexts";
+import { settings } from "@/assets/contexts";
 import useSession from "@/utils/useSession";
 import { useRouter } from "expo-router";
 import Theme from "@/assets/theme";
 import Loading from "@/components/Loading";
+import CubeTypePicker from "@/components/CubeTypePicker";
 export default function NewTime() {
   const [time, setTime] = useState("");
   const [scramble, setScramble] = useState("");
   const session = useSession();
   const [loading, setLoading] = useState(false);
-  const setAverages = useContext(averagesContext).setAverages;
   const router = useRouter();
-
+  const cubeType = useContext(settings).cubeType;
   const handleSubmit = async () => {
     // Validate inputs
     if (!time || isNaN(time)) {
@@ -42,6 +43,7 @@ export default function NewTime() {
           time_with_penalty: timeMs,
           ao5: null, // You might want to recalculate averages after insertion
           ao12: null,
+          cube_type: cubeType,
         },
       ]);
 
@@ -63,6 +65,10 @@ export default function NewTime() {
   }
   return (
     <SafeAreaView style={styles.container}>
+      <View style={{ flexDirection: "row", justifyContent: "center" }}>
+        <CubeTypePicker />
+      </View>
+
       <View style={styles.formGroup}>
         <Text style={styles.label}>Scramble (optional):</Text>
         <TextInput

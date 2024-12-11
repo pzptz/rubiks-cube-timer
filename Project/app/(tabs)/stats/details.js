@@ -16,12 +16,21 @@ import Theme from "@/assets/theme";
 import Loading from "@/components/Loading";
 
 export default function Details() {
-  const { id, time, ao5, ao12, scramble, created_at, user_id, penalty } =
-    useLocalSearchParams(); // Get the solve time ID from the route params
+  const {
+    id,
+    time,
+    ao5,
+    ao12,
+    scramble,
+    created_at,
+    user_id,
+    penalty,
+    cube_type,
+  } = useLocalSearchParams(); // Get the solve time ID from the route params
   const [solve, setSolve] = useState(null);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
+  const cubeTypes = { 2: "2x2x2", 3: "3x3x3", 4: "4x4x4", 5: "5x5x5" };
   const fetchSolve = () => {
     const data = {
       time: time,
@@ -29,6 +38,7 @@ export default function Details() {
       ao12: ao12,
       scramble: scramble,
       created_at: created_at,
+      cube_type: cube_type,
     };
     setSolve(data);
   };
@@ -115,6 +125,8 @@ export default function Details() {
       <View style={styles.detailContainer}>
         <Text style={styles.label}>Timestamp</Text>
         <Text style={styles.value}>{date(created_at)}</Text>
+        <Text style={styles.label}>Cube Type</Text>
+        <Text style={styles.value}>{cubeTypes[cube_type]}</Text>
         <Text style={styles.label}>Scramble</Text>
         <Text style={styles.value}>{scramble}</Text>
         <Text style={styles.label}>Time (s)</Text>

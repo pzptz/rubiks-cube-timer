@@ -21,7 +21,7 @@ export default function Main() {
   const [endTime, setEndTime] = useState(0); // Time in milliseconds
   const [startTime, setStartTime] = useState(0);
   const [scramble, setScramble] = useState(null);
-  const [needReset, setNeedReset] = useState(false);
+  const cubeType = useContext(settings).cubeType;
   const intervalRef = useRef(null); // Ref to store the interval ID
   const averages = useContext(averagesContext).averages;
   const useInspectionTime = useContext(settings).inspectionTime;
@@ -52,6 +52,7 @@ export default function Main() {
             user_id: session.user.id,
             penalty: 2,
             time_with_penalty: -1,
+            cube_type: cubeType,
           };
           console.log("Ran out of inspection time, DNF");
           pushToDB(newTime);
@@ -94,6 +95,7 @@ export default function Main() {
         user_id: session.user.id,
         time_with_penalty: time,
         penalty: 0,
+        cube_type: cubeType,
       };
       // console.log(
       //   "currently not pushing db go to end of stopStopwatch in main.js"
@@ -120,13 +122,13 @@ export default function Main() {
     }
   };
   const generateScramble = async () => {
-    setScramble(generateScrambleSync(21, 3).scramble);
+    setScramble(generateScrambleSync(21, cubeType).scramble);
   };
   // Cleanup on unmount
   useEffect(() => {
     generateScramble();
     return () => clearInterval(intervalRef.current);
-  }, []);
+  }, [cubeType]);
 
   // Format time into minutes, seconds, and milliseconds (mm:ss:ms)
   const formatTime = (time) => {

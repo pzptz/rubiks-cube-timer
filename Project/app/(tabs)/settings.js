@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 import { Switch } from "@rneui/themed";
 import Theme from "@/assets/theme";
 import Loading from "@/components/Loading";
-
+import CubeTypePicker from "@/components/CubeTypePicker";
 import db from "@/database/db";
 import useSession from "@/utils/useSession";
 import { settings } from "@/assets/contexts";
@@ -60,6 +60,16 @@ export default function Settings() {
           value={inspectionTime}
           onValueChange={(value) => setInspectionTime(value)}
         />
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          paddingVertical: 24,
+        }}
+      >
+        <Text style={[styles.text, { padding: 12 }]}>Cube Type: </Text>
+        <CubeTypePicker />
       </View>
     </View>
   );

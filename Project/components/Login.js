@@ -13,11 +13,11 @@ import db from "@/database/db";
 
 import Theme from "@/assets/theme";
 
-export default function Login({ themeChoice }) {
+export default function Login({ themeChoice = "dark" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const theme = Theme[themeChoice];
   const signInWithEmail = async () => {
     setLoading(true);
     try {
@@ -42,27 +42,43 @@ export default function Login({ themeChoice }) {
     loading || email.length === 0 || password.length === 0;
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: theme.backgroundPrimary }]}
+    >
       <StatusBar style="light" />
       <View style={styles.splash}>
-        <Text style={styles.splashText}>Title TBD</Text>
+        <Text style={[styles.splashText, { color: theme.textPrimary }]}>
+          Title TBD
+        </Text>
       </View>
       <TextInput
         onChangeText={(text) => setEmail(text)}
         value={email}
         placeholder="email@address.com"
-        placeholderTextColor={Theme.dark.textSecondary}
+        placeholderTextColor={theme.textSecondary}
         autoCapitalize={"none"}
-        style={styles.input}
+        style={[
+          styles.input,
+          {
+            color: theme.textPrimary,
+            backgroundColor: theme.backgroundSecondary,
+          },
+        ]}
       />
       <TextInput
         onChangeText={(text) => setPassword(text)}
         value={password}
         placeholder="Password"
-        placeholderTextColor={Theme.dark.textSecondary}
+        placeholderTextColor={theme.textSecondary}
         secureTextEntry={true}
         autoCapitalize={"none"}
-        style={styles.input}
+        style={[
+          styles.input,
+          {
+            color: theme.textPrimary,
+            backgroundColor: theme.backgroundSecondary,
+          },
+        ]}
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -72,7 +88,9 @@ export default function Login({ themeChoice }) {
           <Text
             style={[
               styles.button,
-              isSignInDisabled ? styles.buttonDisabled : undefined,
+              isSignInDisabled
+                ? { color: Theme.dark.textSecondary }
+                : { color: Theme.dark.textHighlighted },
             ]}
           >
             Sign in
@@ -87,7 +105,6 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 60,
     padding: 12,
-    backgroundColor: Theme.dark.backgroundPrimary,
     flex: 1,
   },
   splash: {
@@ -96,7 +113,7 @@ const styles = StyleSheet.create({
   },
   splashText: {
     fontWeight: "bold",
-    color: Theme.dark.textPrimary,
+
     fontSize: 60,
   },
   buttonContainer: {
@@ -112,18 +129,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   input: {
-    color: Theme.dark.textPrimary,
-    backgroundColor: Theme.dark.backgroundSecondary,
     width: "100%",
     padding: 16,
   },
   button: {
-    color: Theme.dark.textHighlighted,
     fontSize: 18,
     fontWeight: 18,
     padding: 8,
-  },
-  buttonDisabled: {
-    color: Theme.dark.textSecondary,
   },
 });

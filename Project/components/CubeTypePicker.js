@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import { settings } from "@/assets/contexts";
-
 import DropDownPicker from "react-native-dropdown-picker";
+import Theme from "@/assets/theme";
 
 export default function CubeTypePicker({ themeChoice }) {
   const [cubeTypeSelectorOpen, setCubeTypeSelectorOpen] = useState(false);
@@ -20,6 +20,17 @@ export default function CubeTypePicker({ themeChoice }) {
   return (
     <View style={styles.picker}>
       <DropDownPicker
+        style={{
+          backgroundColor: Theme[themeChoice].textHighlighted,
+        }}
+        textStyle={{
+          color: Theme[themeChoice].textPrimary,
+          fontSize: 16,
+          fontWeight: "bold",
+        }}
+        dropDownContainerStyle={{
+          backgroundColor: Theme[themeChoice].textTertiary,
+        }}
         open={cubeTypeSelectorOpen}
         value={cubeType}
         items={cubeOptions}

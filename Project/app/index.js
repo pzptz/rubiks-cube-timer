@@ -30,8 +30,8 @@ export default function App() {
   if (session) {
     return <Redirect href="/(tabs)/timer/main" />;
   } else if (isLoading) {
-    return <Loading themeChoice={themeChoice} />;
+    return <Loading />;
   } else {
-    return <Login themeChoice={themeChoice} />;
+    return <Login />;
   }
 }

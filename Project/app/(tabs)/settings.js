@@ -39,15 +39,33 @@ export default function Settings() {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: Theme[themeChoice].backgroundPrimary },
+      ]}
+    >
       <View style={styles.userContainer}>
         <View style={styles.userTextContainer}>
-          <Text style={styles.title}>Logged in as: </Text>
+          <Text
+            style={[styles.title, { color: Theme[themeChoice].textPrimary }]}
+          >
+            Logged in as:{" "}
+          </Text>
           <TouchableOpacity onPress={() => signOut()}>
-            <Text style={styles.buttonText}>Sign out</Text>
+            <Text
+              style={[
+                styles.buttonText,
+                { color: Theme[themeChoice].textHighlighted },
+              ]}
+            >
+              Sign out{" "}
+            </Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.text}>{session.user.email}</Text>
+        <Text style={[styles.text, { color: Theme[themeChoice].textPrimary }]}>
+          {session.user.email}
+        </Text>
       </View>
       <View
         style={{
@@ -56,7 +74,15 @@ export default function Settings() {
           paddingVertical: 24,
         }}
       >
-        <Text style={[styles.text, { padding: 12 }]}>Inspection Time: </Text>
+        <Text
+          style={[
+            styles.text,
+            { padding: 12, color: Theme[themeChoice].textPrimary },
+          ]}
+        >
+          Inspection Time:{" "}
+        </Text>
+        {/* Dynamically update text color */}
         <Switch
           value={inspectionTime}
           onValueChange={(value) => setInspectionTime(value)}
@@ -69,7 +95,14 @@ export default function Settings() {
           paddingVertical: 24,
         }}
       >
-        <Text style={[styles.text, { padding: 12 }]}>Cube Type: </Text>
+        <Text
+          style={[
+            styles.text,
+            { padding: 12, color: Theme[themeChoice].textPrimary },
+          ]}
+        >
+          Cube Type:{" "}
+        </Text>
         <CubeTypePicker themeChoice={themeChoice} />
       </View>
     </View>
@@ -79,7 +112,6 @@ export default function Settings() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Theme.dark.backgroundPrimary,
   },
   postTitle: {
     padding: 12,
@@ -95,18 +127,15 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   title: {
-    color: Theme.dark.textPrimary,
-    fontSize: Theme.sizes.textMedium,
+    fontSize: 16,
     fontWeight: "bold",
   },
   text: {
-    color: Theme.dark.textPrimary,
-    fontSize: Theme.sizes.textMedium,
+    fontSize: 16,
     paddingLeft: 8,
   },
   buttonText: {
     fontWeight: "bold",
-    color: Theme.dark.textHighlighted,
-    fontSize: Theme.sizes.textMedium,
+    fontSize: 16,
   },
 });

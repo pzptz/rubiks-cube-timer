@@ -9,6 +9,20 @@ export default {
     textTertiary: "#6C6C6C",
     textHighlighted: "#FF5C00",
 
+    iconHighlighted: "#FF5C00",
+
+    tabBarActive: "#FFFFFF",
+    tabBarBorder: "#747474",
+  },
+  light: {
+    backgroundPrimary: "#FFFFFF",
+    backgroundSecondary: "#EEEEEE",
+
+    textPrimary: "#000000",
+    textSecondary: "#222222",
+    textTertiary: "#444444",
+    textHighlighted: "#FF5C00",
+
     iconPrimary: "#FFFFFF",
     iconSecondary: "#B4B4B4",
     iconHighlighted: "#FF5C00",
@@ -16,17 +30,10 @@ export default {
     tabBarActive: "#FFFFFF",
     tabBarBorder: "#747474",
   },
-  light: {},
   halloween: {},
   christmas: {},
   cyberpunk: {},
   summer: {},
   spring: {},
   nature: {},
-  sizes: {
-    iconSmall: 16,
-
-    textMedium: 16,
-    textLarge: 20,
-  },
 };

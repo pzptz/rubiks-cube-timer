@@ -105,7 +105,7 @@ export default function Settings() {
         >
           Theme:
         </Text>
-        <View style={{ width: "40%" }}>
+        <View style={{ zIndex: 100, width: "40%" }}>
           <DropDownPicker
             style={{
               borderWidth: 0,

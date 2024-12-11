@@ -9,7 +9,7 @@ export default {
     textPrimary: "#FFFFFF",
     textSecondary: "#B4B4B4",
 
-    flair: "#FF5C00", // Bright accent for dark mode
+    flair: "#FF4500",
   },
   Light: {
     statusbar: "dark-content",
@@ -20,29 +20,28 @@ export default {
     textPrimary: "#000000",
     textSecondary: "#444444",
 
-    flair: "#FF8800", // Subtle orange for light mode
+    flair: "lightblue",
   },
   Halloween: {
-    statusbar: "light-content",
-    backgroundPrimary: "#2D1E2F",
+    backgroundPrimary: "#000000",
     inputBackground: "#3F2C40",
     dropDownBackground: "#4B374F",
 
     textPrimary: "#FF9800", // Pumpkin orange
     textSecondary: "#D3A6D2", // Lavender contrast
 
-    flair: "#8B0000", // Blood red
+    flair: "#007b30", // Blood red
   },
   Christmas: {
     statusbar: "dark-content",
-    backgroundPrimary: "#005F30",
+    backgroundPrimary: "#003F20",
     inputBackground: "#007F40",
     dropDownBackground: "#E3E3E3", // Snowy dropdown
 
-    textPrimary: "#FFFFFF", // Snow white
-    textSecondary: "#FF0000", // Christmas red
+    textPrimary: "#ff2c38",
+    textSecondary: "#87c38f",
 
-    flair: "#FFD700", // Gold for holiday sparkle
+    flair: "#ffbf00", // Gold for holiday sparkle
   },
   Cyberpunk: {
     statusbar: "light-content",
@@ -81,13 +80,13 @@ export default {
   Nature: {
     statusbar: "light-content",
 
-    backgroundPrimary: "#2E8B57", // Forest green
+    backgroundPrimary: "#0E6B37", // Forest green
     inputBackground: "#556B2F", // Olive green
-    dropDownBackground: "#F5DEB3", // Wheat
+    dropDownBackground: "#8B4513", // Wheat
 
     textPrimary: "#FFFFFF", // Neutral white
-    textSecondary: "#8B4513", // Saddle brown
+    textSecondary: "#F5DEB3", // Saddle brown
 
-    flair: "#4682B4", // Sky blue for natural contrast
+    flair: "#6692E4", // Sky blue for natural contrast
   },
 };

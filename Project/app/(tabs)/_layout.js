@@ -58,7 +58,12 @@ export default function TabLayout() {
     );
   };
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider
+      style={{
+        backgroundColor: Theme[themeChoice].backgroundPrimary,
+        paddingTop: 40,
+      }}
+    >
       <StatusBar style={Theme[themeChoice].statusbar} />
       <averagesContext.Provider
         value={{ averages: averages, setAverages: setAverages }}

@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import React from "react";
 import { useRouter, useFocusEffect } from "expo-router";
 import { Switch } from "@rneui/themed";
@@ -170,7 +177,7 @@ export default function Settings() {
           onValueChange={(value) => handleInspectionTimeChange(value)}
         />
       </View>
-      <View style={styles.settingView}>
+      <View style={[styles.settingView, { zIndex: 5 }]}>
         <Text
           style={[
             styles.text,
@@ -184,7 +191,12 @@ export default function Settings() {
           handleChange={handleCubeTypeChange}
         />
       </View>
-      <View style={styles.settingView}>
+      <View
+        style={[
+          styles.settingView,
+          Platform.OS === "android" ? {} : { zIndex: 3 },
+        ]}
+      >
         <Text
           style={[
             styles.text,
@@ -193,9 +205,10 @@ export default function Settings() {
         >
           Theme:
         </Text>
-        <View style={{ zIndex: 100, width: "50%" }}>
+        <View style={{ width: "50%" }}>
           <DropDownPicker
             style={{
+              zIndex: 1,
               borderWidth: 0,
               backgroundColor: Theme[themeChoice].flair,
             }}
@@ -205,12 +218,12 @@ export default function Settings() {
               fontWeight: "bold",
             }}
             dropDownContainerStyle={{
+              zIndex: 1,
               backgroundColor: Theme[themeChoice].dropDownBackground,
             }}
             tickIconStyle={{
               tintColor: Theme[themeChoice].textPrimary,
             }}
-            searchable={true}
             open={themeSelectorOpen}
             value={themeChoice}
             items={themeOptions}

@@ -162,19 +162,13 @@ export default function Settings() {
         >
           Inspection Time:{" "}
         </Text>
-        <View
-          style={[
-            styles.switchWrapper,
-            { backgroundColor: Theme[themeChoice].tabInactive },
-          ]}
-        >
-          <Switch
-            value={inspectionTime}
-            color={Theme[themeChoice].flair}
-            thumbColor={Theme[themeChoice].textPrimary}
-            onValueChange={(value) => handleInspectionTimeChange(value)}
-          />
-        </View>
+
+        <Switch
+          value={inspectionTime}
+          color={Theme[themeChoice].flair}
+          thumbColor={Theme[themeChoice].textPrimary}
+          onValueChange={(value) => handleInspectionTimeChange(value)}
+        />
       </View>
       <View style={styles.settingView}>
         <Text
@@ -216,6 +210,7 @@ export default function Settings() {
             tickIconStyle={{
               tintColor: Theme[themeChoice].textPrimary,
             }}
+            searchable={true}
             open={themeSelectorOpen}
             value={themeChoice}
             items={themeOptions}

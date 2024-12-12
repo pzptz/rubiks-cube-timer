@@ -21,7 +21,6 @@ export default function StackLayout() {
   const router = useRouter();
   const session = useSession();
   const setAverages = useContext(averagesContext).setAverages;
-
   return (
     <Stack>
       {/* Main Statistics Screen */}
@@ -36,6 +35,7 @@ export default function StackLayout() {
       <Stack.Screen
         name="details"
         options={{
+          headerTitleAlign: "center",
           headerTitle: "Solve Details",
           headerTintColor: Theme[themeChoice].flair,
           headerStyle: {
@@ -59,6 +59,7 @@ export default function StackLayout() {
       <Stack.Screen
         name="newtime"
         options={{
+          headerTitleAlign: "center",
           presentation: "modal",
           headerTitle: "Add New Time",
           headerTintColor: Theme[themeChoice].flair,
@@ -73,7 +74,7 @@ export default function StackLayout() {
             <Button
               title="Cancel"
               onPress={() => router.back()}
-              color={Theme[themeChoice].textPrimary}
+              color={Theme[themeChoice].flair}
             />
           ),
         }}

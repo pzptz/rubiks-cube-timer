@@ -58,87 +58,102 @@ export default function TabLayout() {
     );
   };
   return (
-    <SafeAreaProvider
+    <View
       style={{
+        flex: 1,
         backgroundColor: Theme[themeChoice].backgroundPrimary,
-        paddingTop: 30,
       }}
     >
-      <StatusBar style={Theme[themeChoice].statusbar} />
-      <averagesContext.Provider
-        value={{ averages: averages, setAverages: setAverages }}
+      <SafeAreaProvider
+        style={{
+          backgroundColor: Theme[themeChoice].backgroundPrimary,
+          paddingTop: 40,
+        }}
       >
-        <runningContext.Provider
-          value={{ isRunning: isRunning, setIsRunning: setIsRunning }}
+        <StatusBar
+          translucent={true}
+          backgroundColor={Theme[themeChoice].backgroundPrimary}
+          barStyle={Theme[themeChoice].statusbar}
+        />
+        <averagesContext.Provider
+          value={{ averages: averages, setAverages: setAverages }}
         >
-          <settings.Provider
-            value={{
-              cubeType: cubeType,
-              setCubeType: setCubeType,
-              inspectionTime: inspectionTime,
-              setInspectionTime: setInspectionTime,
-              themeChoice: themeChoice,
-              setThemeChoice: setThemeChoice,
-            }}
+          <runningContext.Provider
+            value={{ isRunning: isRunning, setIsRunning: setIsRunning }}
           >
-            <loadingContext.Provider
-              value={{ loading: loading, setLoading: setLoading }}
+            <settings.Provider
+              value={{
+                cubeType: cubeType,
+                setCubeType: setCubeType,
+                inspectionTime: inspectionTime,
+                setInspectionTime: setInspectionTime,
+                themeChoice: themeChoice,
+                setThemeChoice: setThemeChoice,
+              }}
             >
-              <Tabs
-                screenOptions={{
-                  headerStyle: {
-                    backgroundColor: Theme[themeChoice].backgroundPrimary, // Dynamically update header background
-                  },
-                  tabBarStyle: {
-                    backgroundColor: Theme[themeChoice].backgroundPrimary, // Dynamically update tab bar background
-                    display: isRunning == 0 ? "flex" : "none",
-                  },
-                  tabBarActiveTintColor: Theme[themeChoice].flair, // Dynamically update active tint color
-                  tabBarInactiveTintColor: Theme[themeChoice].tabInactive,
-                }}
+              <loadingContext.Provider
+                value={{ loading: loading, setLoading: setLoading }}
               >
-                <Tabs.Screen
-                  name="timer"
-                  options={{
-                    tabBarLabel: "Timer",
-                    headerShown: false,
-                    tabBarIcon: ({ size, color }) => (
-                      <Entypo name="stopwatch" size={size} color={color} />
-                    ),
+                <Tabs
+                  screenOptions={{
+                    headerStyle: {
+                      backgroundColor: Theme[themeChoice].backgroundPrimary, // Dynamically update header background
+                    },
+                    tabBarStyle: {
+                      backgroundColor: Theme[themeChoice].backgroundPrimary, // Dynamically update tab bar background
+                      display: isRunning == 0 ? "flex" : "none",
+                    },
+                    tabBarActiveTintColor: Theme[themeChoice].flair, // Dynamically update active tint color
+                    tabBarInactiveTintColor: Theme[themeChoice].tabInactive,
                   }}
-                />
-                <Tabs.Screen
-                  name="stats"
-                  options={{
-                    header: StatsHeader,
-                    lazy: false, // We want data to be pulled immediately
-                    tabBarLabel: "Stats",
-                    tabBarIcon: ({ size, color }) => (
-                      <Ionicons name="stats-chart" size={size} color={color} />
-                    ),
-                  }}
-                />
-                <Tabs.Screen
-                  name="settings"
-                  options={{
-                    header: SettingsHeader,
-                    lazy: false, // We want settings to be pulled immediately
-                    tabBarLabel: "Settings",
-                    tabBarIcon: ({ size, color }) => (
-                      <MaterialIcons
-                        name="settings"
-                        size={size}
-                        color={color}
-                      />
-                    ),
-                  }}
-                />
-              </Tabs>
-            </loadingContext.Provider>
-          </settings.Provider>
-        </runningContext.Provider>
-      </averagesContext.Provider>
-    </SafeAreaProvider>
+                >
+                  <Tabs.Screen
+                    name="timer"
+                    options={{
+                      tabBarLabel: "Timer",
+                      headerShown: false,
+                      tabBarIcon: ({ size, color }) => (
+                        <Entypo name="stopwatch" size={size} color={color} />
+                      ),
+                    }}
+                  />
+                  <Tabs.Screen
+                    name="stats"
+                    options={{
+                      header: StatsHeader,
+                      lazy: false, // We want data to be pulled immediately
+                      tabBarLabel: "Stats",
+                      tabBarIcon: ({ size, color }) => (
+                        <Ionicons
+                          name="stats-chart"
+                          size={size}
+                          color={color}
+                        />
+                      ),
+                    }}
+                  />
+                  <Tabs.Screen
+                    name="settings"
+                    options={{
+                      header: SettingsHeader,
+                      lazy: false, // We want settings to be pulled immediately
+                      tabBarLabel: "Settings",
+                      tabBarIcon: ({ size, color }) => (
+                        <MaterialIcons
+                          name="settings"
+                          size={size}
+                          color={color}
+                        />
+                      ),
+                    }}
+                  />
+                </Tabs>
+              </loadingContext.Provider>
+            </settings.Provider>
+          </runningContext.Provider>
+        </averagesContext.Provider>
+      </SafeAreaProvider>
+    </View>
   );
 }
 const styles = StyleSheet.create({

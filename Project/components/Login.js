@@ -34,6 +34,7 @@ export default function Login({ themeChoice = "Dark" }) {
       setLoading(false);
     } catch (err) {
       console.error(err);
+      // Should not force here, because that could be an infinite loop with invalid shit
       setLoading(false);
     }
   };

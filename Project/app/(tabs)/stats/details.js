@@ -133,7 +133,8 @@ export default function Details() {
       router.back();
     } catch (error) {
       console.log(error);
-      Alert.alert("Error", "Failed to delete solve.");
+      // Keep trying until delete goes through
+      setTimeout(() => confirmDelete(), 500);
     }
   };
   const confirmPenalty = async (newPenalty) => {

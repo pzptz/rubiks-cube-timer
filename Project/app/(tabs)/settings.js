@@ -50,8 +50,8 @@ export default function Settings() {
       }
     } catch (err) {
       console.log(err);
-      setLoading(false);
-      Alert.alert("Error", "Failed to sign out. Please try again.");
+      // Keep trying until sign out
+      setTimeout(() => signOut(), 500);
     }
   };
   const handleCubeTypeChange = (newCubeType) => {

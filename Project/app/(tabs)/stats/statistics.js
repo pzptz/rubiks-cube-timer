@@ -173,7 +173,7 @@ export default function Statistics() {
       }
     }
   };
-  const handleDeleteAll = async () => {
+  const handleDeleteAll = () => {
     if (session) {
       Alert.alert(
         "Confirm Deletion",
@@ -183,32 +183,32 @@ export default function Statistics() {
           {
             text: "Delete",
             style: "destructive",
-            onPress: async () => {
-              try {
-                const { error } = await db
-                  .from("solve_times")
-                  .delete()
-                  .eq("user_id", session.user.id)
-                  .eq("cube_type", cubeType);
-                if (error) {
-                  throw error;
-                }
-                setTableData([]); // Clear the table data locally
-                setAverages({ ao5: null, ao12: null }); // Reset averages
-                Alert.alert("Success", "All times have been deleted.");
-              } catch (error) {
-                console.log(error);
-                Alert.alert(
-                  "Error",
-                  "An error occurred while trying to delete all times."
-                );
-              }
-            },
+            onPress: confirmDeleteAll,
           },
         ]
       );
     } else {
       Alert.alert("Error", "User session not found.");
+    }
+  };
+  const confirmDeleteAll = async () => {
+    setLoading(true);
+    try {
+      const { error } = await db
+        .from("solve_times")
+        .delete()
+        .eq("user_id", session.user.id)
+        .eq("cube_type", cubeType);
+      if (error) {
+        throw error;
+      }
+      setTableData([]); // Clear the table data locally
+      setAverages({ ao5: null, ao12: null }); // Reset averages
+      setLoading(false);
+      Alert.alert("Success", "All times have been deleted.");
+    } catch (error) {
+      console.log(error);
+      setTimeout(() => confirmDeleteAll(), 500);
     }
   };
   useEffect(() => {

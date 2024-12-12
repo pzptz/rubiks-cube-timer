@@ -23,6 +23,7 @@ export default {
     flair: "#8dc8d6",
   },
   Halloween: {
+    statusbar: "light-content",
     backgroundPrimary: "#000000",
     inputBackground: "#3F2C40",
     dropDownBackground: "#4B374F",

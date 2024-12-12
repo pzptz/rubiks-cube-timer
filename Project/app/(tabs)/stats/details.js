@@ -198,10 +198,11 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: Theme.colors.textHighlighted,
     paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 4,
-    width: "30%",
+    borderRadius: 8,
     justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    width: "30%",
   },
   buttonText: {
     color: Theme.colors.textPrimary,

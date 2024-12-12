@@ -8,9 +8,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import db from "@/database/db";
-
 import Theme from "@/assets/theme";
 
 export default function Login() {
@@ -22,8 +21,8 @@ export default function Login() {
     setLoading(true);
     try {
       const { data, error } = await db.auth.signInWithPassword({
-        email: email,
-        password: password,
+        email,
+        password,
         options: {
           shouldCreateUser: false,
         },
@@ -35,6 +34,28 @@ export default function Login() {
       setLoading(false);
     } catch (err) {
       console.error(err);
+      setLoading(false);
+    }
+  };
+
+  const signUpWithEmail = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await db.auth.signUp({
+        email,
+        password,
+      });
+
+      if (error) {
+        Alert.alert("Sign Up Failed", error.message);
+      } else {
+        Alert.alert("Success", "Account created successfully!");
+      }
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      Alert.alert("Error", "Something went wrong during sign-up.");
+      setLoading(false);
     }
   };
 
@@ -45,7 +66,10 @@ export default function Login() {
     <View style={styles.container}>
       <StatusBar style="light" />
       <View style={styles.splash}>
-        <Text style={styles.splashText}>Title TBD</Text>
+        <FontAwesome size="50" name="cube" color={Theme.colors.iconSecondary} />
+      </View>
+      <View style={styles.splash}>
+        <Text style={styles.splashText}>RubikTime</Text>
       </View>
       <TextInput
         onChangeText={(text) => setEmail(text)}
@@ -65,10 +89,7 @@ export default function Login() {
         style={styles.input}
       />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => signInWithEmail()}
-          disabled={isSignInDisabled}
-        >
+        <TouchableOpacity onPress={signInWithEmail} disabled={isSignInDisabled}>
           <Text
             style={[
               styles.button,
@@ -77,6 +98,11 @@ export default function Login() {
           >
             Sign in
           </Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={signUpWithEmail}>
+          <Text style={styles.button}>Sign up</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -104,13 +130,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
-  verticallySpaced: {
-    marginVertical: 4,
-    alignSelf: "stretch",
-  },
-  mt20: {
-    marginTop: 20,
-  },
   input: {
     color: Theme.colors.textPrimary,
     backgroundColor: Theme.colors.backgroundSecondary,
@@ -120,7 +139,7 @@ const styles = StyleSheet.create({
   button: {
     color: Theme.colors.textHighlighted,
     fontSize: 18,
-    fontWeight: 18,
+    fontWeight: "bold",
     padding: 8,
   },
   buttonDisabled: {

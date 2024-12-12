@@ -90,4 +90,81 @@ export default {
 
     flair: "#6692E4", // Sky blue for natural contrast
   },
+  Ocean: {
+    statusbar: "dark-content",
+    backgroundPrimary: "#001F3F",
+    inputBackground: "#003366",
+    dropDownBackground: "#00509E",
+
+    textPrimary: "#FFFFFF",
+    textSecondary: "#87CEFA",
+
+    flair: "#FFD700",
+  },
+  Desert: {
+    statusbar: "dark-content",
+    backgroundPrimary: "#EDC9AF",
+    inputBackground: "#E1A95F",
+    dropDownBackground: "#C19A6B",
+
+    textPrimary: "#000000",
+    textSecondary: "#6B4226",
+
+    flair: "#FF4500",
+  },
+  Galaxy: {
+    statusbar: "light-content",
+    backgroundPrimary: "#0A001F",
+    inputBackground: "#1C0F33",
+    dropDownBackground: "#2B134D",
+
+    textPrimary: "#E0E0FF",
+    textSecondary: "#7D7DFE",
+
+    flair: "#FFD700",
+  },
+  Sunset: {
+    statusbar: "light-content",
+    backgroundPrimary: "#FF4500",
+    inputBackground: "#FF6347",
+    dropDownBackground: "#FF7F50",
+
+    textPrimary: "#FFFFFF",
+    textSecondary: "#FFDAB9",
+
+    flair: "#008080",
+  },
+  Monochrome: {
+    statusbar: "dark-content",
+    backgroundPrimary: "#2C2C2C",
+    inputBackground: "#383838",
+    dropDownBackground: "#4C4C4C",
+
+    textPrimary: "#FFFFFF",
+    textSecondary: "#B0B0B0",
+
+    flair: "#FFD700",
+  },
+  Tropical: {
+    statusbar: "dark-content",
+    backgroundPrimary: "#008080",
+    inputBackground: "#4CA69A",
+    dropDownBackground: "#E0FFE0",
+
+    textPrimary: "#FF6347",
+    textSecondary: "#FFDAB9",
+
+    flair: "#FFFF00",
+  },
+  Aurora: {
+    statusbar: "light-content",
+    backgroundPrimary: "#003366",
+    inputBackground: "#1C1F4A",
+    dropDownBackground: "#334D6E",
+
+    textPrimary: "#E0FFFA",
+    textSecondary: "#A1E3A1",
+
+    flair: "#FF69B4",
+  },
 };

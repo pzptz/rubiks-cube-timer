@@ -65,8 +65,11 @@ export default function NewTime() {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.cubeType}>
-        <CubeTypePicker />
+      <View style={styles.formGroup}>
+        <Text style={styles.label}>Cube Type:</Text>
+        <View style={styles.cubeType}>
+          <CubeTypePicker />
+        </View>
       </View>
 
       <View style={styles.formGroup}>
@@ -128,16 +131,19 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: Theme.colors.textHighlighted,
     paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 4,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    width: "30%",
   },
   buttonText: {
     color: Theme.colors.textPrimary,
     fontWeight: "bold",
+    fontSize: 16,
   },
   cubeType: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 16,
   },
 });

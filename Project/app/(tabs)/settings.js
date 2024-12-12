@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import React from "react";
 import { useRouter, useFocusEffect } from "expo-router";
 import { Switch } from "@rneui/themed";
@@ -179,7 +186,8 @@ export default function Settings() {
       <View
         style={[
           styles.settingView,
-          { borderBottomColor: Theme[themeChoice].textSecondary },
+          ,
+          { zIndex: 5, borderBottomColor: Theme[themeChoice].textSecondary },
         ]}
       >
         <Text
@@ -198,6 +206,7 @@ export default function Settings() {
       <View
         style={[
           styles.settingView,
+          Platform.OS === "android" ? {} : { zIndex: 3 },
           { borderBottomColor: Theme[themeChoice].textSecondary },
         ]}
       >
@@ -209,9 +218,10 @@ export default function Settings() {
         >
           Theme:
         </Text>
-        <View style={{ zIndex: 100, width: "50%" }}>
+        <View style={{ width: "50%" }}>
           <DropDownPicker
             style={{
+              zIndex: 1,
               borderWidth: 0,
               backgroundColor: Theme[themeChoice].flair,
             }}
@@ -221,12 +231,12 @@ export default function Settings() {
               fontWeight: "bold",
             }}
             dropDownContainerStyle={{
+              zIndex: 1,
               backgroundColor: Theme[themeChoice].dropDownBackground,
             }}
             tickIconStyle={{
               tintColor: Theme[themeChoice].textPrimary,
             }}
-            searchable={true}
             open={themeSelectorOpen}
             value={themeChoice}
             items={themeOptions}

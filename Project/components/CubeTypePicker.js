@@ -29,6 +29,9 @@ export default function CubeTypePicker({ themeChoice, handleChange }) {
         dropDownContainerStyle={{
           backgroundColor: Theme[themeChoice].dropDownBackground,
         }}
+        tickIconStyle={{
+          tintColor: Theme[themeChoice].textPrimary,
+        }}
         open={cubeTypeSelectorOpen}
         value={cubeType}
         items={cubeOptions}

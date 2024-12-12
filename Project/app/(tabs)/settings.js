@@ -189,7 +189,7 @@ export default function Settings() {
         >
           Theme:
         </Text>
-        <View style={{ zIndex: 100, width: "40%" }}>
+        <View style={{ zIndex: 100, width: "50%" }}>
           <DropDownPicker
             style={{
               borderWidth: 0,
@@ -202,6 +202,9 @@ export default function Settings() {
             }}
             dropDownContainerStyle={{
               backgroundColor: Theme[themeChoice].dropDownBackground,
+            }}
+            tickIconStyle={{
+              tintColor: Theme[themeChoice].textPrimary,
             }}
             open={themeSelectorOpen}
             value={themeChoice}

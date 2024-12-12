@@ -61,7 +61,7 @@ export default function TabLayout() {
     <SafeAreaProvider
       style={{
         backgroundColor: Theme[themeChoice].backgroundPrimary,
-        paddingTop: 40,
+        paddingTop: 30,
       }}
     >
       <StatusBar style={Theme[themeChoice].statusbar} />

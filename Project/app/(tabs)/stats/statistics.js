@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: Theme.text.textMedium,
   },
   headerRow: {
     flexDirection: "row",
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   headerText: {
-    fontSize: 16,
+    fontSize: Theme.text.textMedium,
     fontWeight: "bold",
 
     textAlign: "center",
@@ -382,6 +382,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   emptyText: {
-    fontSize: 16,
+    fontSize: Theme.text.textMedium,
   },
 });

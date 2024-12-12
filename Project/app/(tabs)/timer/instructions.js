@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontSize: 24,
+    fontSize: Theme.text.textXL,
     padding: 12,
     textAlign: "center",
     alignContent: "center",

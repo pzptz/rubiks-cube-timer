@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    fontSize: 24,
+    fontSize: Theme.text.textXL,
     fontWeight: "bold",
     padding: 5,
   },

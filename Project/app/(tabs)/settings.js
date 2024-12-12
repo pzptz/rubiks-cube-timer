@@ -23,10 +23,12 @@ export default function Settings() {
   const setLoading = useContext(loadingContext).setLoading;
   const settingsRef = useRef(null);
   const changedFlag = useRef(false);
-  const themeOptions = Object.keys(Theme).map((key) => ({
-    label: key,
-    value: key,
-  }));
+  const themeOptions = Object.keys(Theme)
+    .filter((key) => key !== "text") // Exclude "text"
+    .map((key) => ({
+      label: key,
+      value: key,
+    }));
   const [themeSelectorOpen, setThemeSelectorOpen] = useState(false);
   const signOut = async () => {
     setLoading(true);
@@ -160,11 +162,20 @@ export default function Settings() {
         >
           Inspection Time:{" "}
         </Text>
-        <Switch
-          value={inspectionTime}
-          color={Theme[themeChoice].flair}
-          onValueChange={(value) => handleInspectionTimeChange(value)}
-        />
+        <View
+          style={[
+            styles.switchWrapper,
+            { backgroundColor: Theme[themeChoice].tabInactive },
+          ]}
+        >
+          <Switch
+            style={{ height: 30, width: 50 }}
+            value={inspectionTime}
+            color={Theme[themeChoice].flair}
+            thumbColor={Theme[themeChoice].textPrimary}
+            onValueChange={(value) => handleInspectionTimeChange(value)}
+          />
+        </View>
       </View>
       <View style={styles.settingView}>
         <Text
@@ -197,7 +208,7 @@ export default function Settings() {
             }}
             textStyle={{
               color: Theme[themeChoice].textPrimary,
-              fontSize: 20,
+              fontSize: Theme.text.textMedium,
               fontWeight: "bold",
             }}
             dropDownContainerStyle={{
@@ -236,21 +247,29 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   title: {
-    fontSize: 16,
+    fontSize: Theme.text.textMedium,
     fontWeight: "bold",
   },
   text: {
-    fontSize: 20,
+    fontSize: Theme.text.textMedium,
     paddingLeft: 8,
     fontWeight: "bold",
   },
   buttonText: {
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: Theme.text.textMedium,
   },
   settingView: {
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 24,
+  },
+  switchWrapper: {
+    borderRadius: 16,
+    padding: 5,
+    width: 50,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

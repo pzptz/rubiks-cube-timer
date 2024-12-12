@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     width: "30%",
   },
   text: {
-    fontSize: 24,
+    fontSize: Theme.text.textXL,
     fontWeight: "bold",
     padding: 5,
   },

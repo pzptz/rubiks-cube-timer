@@ -147,14 +147,14 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   label: {
-    fontSize: 16,
+    fontSize: Theme.text.textMedium,
     marginBottom: 8,
   },
   input: {
     borderWidth: 1,
     borderRadius: 4,
     padding: 12,
-    fontSize: 16,
+    fontSize: Theme.text.textMedium,
   },
   buttonContainer: {
     flexDirection: "row",

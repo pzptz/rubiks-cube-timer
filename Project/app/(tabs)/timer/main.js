@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   timer: {
-    fontSize: 48,
+    fontSize: Theme.text.textXXL,
     fontWeight: "bold",
     fontVariant: ["tabular-nums"],
     textAlign: "center",
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   stats: {
-    fontSize: 24,
+    fontSize: Theme.text.textXL,
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
   },
   scrambleBox: { width: "100%" },
   scramble: {
-    fontSize: 24,
+    fontSize: Theme.text.textXL,
     fontWeight: "bold",
     fontVariant: ["tabular-nums"],
     textAlign: "center",
@@ -353,6 +353,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: Theme.text.textLarge,
   },
 });

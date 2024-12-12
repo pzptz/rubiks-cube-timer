@@ -1,5 +1,12 @@
 export default {
   // Feel free to customize these colors!
+  text: {
+    textSmall: 12,
+    textMedium: 16,
+    textLarge: 20,
+    textXL: 24,
+    textXXL: 48,
+  },
   Dark: {
     statusbar: "light-content",
     backgroundPrimary: "#121212",
@@ -62,28 +69,52 @@ export default {
   },
   Summer: {
     statusbar: "dark-content",
-    backgroundPrimary: "#87CEEB", // Sky blue
-    inputBackground: "#E0F7FA", // Light cyan
-    dropDownBackground: "#FFDAB9", // Peach
+    backgroundPrimary: "#87CEEB",
+    inputBackground: "#E0F7FA",
+    dropDownBackground: "#FFDAB9",
 
-    textPrimary: "#FF4500", // Orange-red
-    textSecondary: "#008080", // Teal
+    textPrimary: "#FF4500",
+    textSecondary: "#008080",
 
-    flair: "#FFFFFF", // clouds
+    flair: "#FFFFFF",
     tabInactive: "#4F4F4F",
   },
   Spring: {
     statusbar: "dark-content",
 
-    backgroundPrimary: "#E0FFE0", // Light green
-    inputBackground: "#F7FFF7", // Soft white-green
-    dropDownBackground: "#FFE4E1", // Pink-tinged
+    backgroundPrimary: "#E0FFE0",
+    inputBackground: "#F7FFF7",
+    dropDownBackground: "#FFE4E1",
 
-    textPrimary: "#008000", // Fresh green
-    textSecondary: "#FF69B4", // Hot pink
+    textPrimary: "#008000",
+    textSecondary: "#FF69B4",
 
-    flair: "#C8A2D6", // Cheerful yellow
+    flair: "#C8A2D6",
     tabInactive: "#4F4F4F",
+  },
+  Autumn: {
+    statusbar: "dark-content",
+    backgroundPrimary: "#8B4513",
+    inputBackground: "#D2691E",
+    dropDownBackground: "#A0522D",
+
+    textPrimary: "#FFF5EE",
+    textSecondary: "#8FBC8F",
+
+    flair: "#C9A000",
+    tabInactive: "#8B8B8B",
+  },
+  Winter: {
+    statusbar: "dark-content",
+    backgroundPrimary: "#A2C2E2",
+    inputBackground: "#E0F7FA",
+    dropDownBackground: "#F0F4F8",
+
+    textPrimary: "#1E3A8A",
+    textSecondary: "#5C7492",
+
+    flair: "#FFFFFF",
+    tabInactive: "#B0B0B0",
   },
   Nature: {
     statusbar: "light-content",
@@ -137,14 +168,14 @@ export default {
   },
   Sunset: {
     statusbar: "light-content",
-    backgroundPrimary: "#E35D47", // Balanced bold orange
-    inputBackground: "#FF6347", // Tomato red (unchanged)
-    dropDownBackground: "#FF7F50", // Coral pink (unchanged)
+    backgroundPrimary: "#E35D47",
+    inputBackground: "#FF6347",
+    dropDownBackground: "#FF7F50",
 
-    textPrimary: "#8B1A1A", // Bold, vibrant pink for strong contrast
-    textSecondary: "#FFDAB9", // Light peach (unchanged)
+    textPrimary: "#8B1A1A",
+    textSecondary: "#FFDAB9",
 
-    flair: "#FFB800", // Yellow for flair (unchanged)
+    flair: "#FFB800",
     tabInactive: "#4F4F4F",
   },
   Monochrome: {

@@ -45,12 +45,12 @@ export default function Details() {
       marginBottom: 24,
     },
     label: {
-      fontSize: 16,
+      fontSize: Theme.text.textMedium,
       color: Theme[themeChoice].textSecondary,
       marginTop: 12,
     },
     value: {
-      fontSize: 20,
+      fontSize: Theme.text.textLarge,
       color: Theme[themeChoice].textPrimary,
       fontWeight: "bold",
       marginTop: 4,

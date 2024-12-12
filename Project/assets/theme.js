@@ -99,7 +99,7 @@ export default {
     textPrimary: "#FFFFFF",
     textSecondary: "#87CEFA",
 
-    flair: "#FFD700",
+    flair: "#008F73",
   },
   Desert: {
     statusbar: "dark-content",
@@ -107,54 +107,55 @@ export default {
     inputBackground: "#E1A95F",
     dropDownBackground: "#C19A6B",
 
-    textPrimary: "#000000",
+    textPrimary: "#4A2C2A", // A rich brown
     textSecondary: "#6B4226",
 
-    flair: "#FF4500",
+    flair: "#FF8243", // A softer orange
   },
+
   Galaxy: {
     statusbar: "light-content",
     backgroundPrimary: "#0A001F",
     inputBackground: "#1C0F33",
     dropDownBackground: "#2B134D",
 
-    textPrimary: "#E0E0FF",
-    textSecondary: "#7D7DFE",
+    textPrimary: "#FFFFFF", // Lavender for better contrast
+    textSecondary: "#7D7DFE", // Keeping as is
 
-    flair: "#FFD700",
+    flair: "#E0A800", // Slightly darker yellow for better contrast with textPrimary
   },
   Sunset: {
     statusbar: "light-content",
-    backgroundPrimary: "#FF4500",
-    inputBackground: "#FF6347",
-    dropDownBackground: "#FF7F50",
+    backgroundPrimary: "#E35D2D", // Balanced bold orange
+    inputBackground: "#FF6347", // Tomato red (unchanged)
+    dropDownBackground: "#FF7F50", // Coral pink (unchanged)
 
-    textPrimary: "#FFFFFF",
-    textSecondary: "#FFDAB9",
+    textPrimary: "#B22222", // Bold, vibrant pink for strong contrast
+    textSecondary: "#FFDAB9", // Light peach (unchanged)
 
-    flair: "#008080",
+    flair: "#FFB800", // Yellow for flair (unchanged)
   },
   Monochrome: {
     statusbar: "dark-content",
-    backgroundPrimary: "#2C2C2C",
-    inputBackground: "#383838",
-    dropDownBackground: "#4C4C4C",
+    backgroundPrimary: "#2C2C2C", // Dark gray for the main background
+    inputBackground: "#383838", // Slightly lighter gray for input fields
+    dropDownBackground: "#4C4C4C", // Mid-tone gray for dropdowns
 
-    textPrimary: "#FFFFFF",
-    textSecondary: "#B0B0B0",
+    textPrimary: "#FFFFFF", // White text for high contrast
+    textSecondary: "#B0B0B0", // Light gray text for secondary info
 
-    flair: "#FFD700",
+    flair: "#C8A500", // Muted gold-yellow for flair (less bright)
   },
   Tropical: {
     statusbar: "dark-content",
-    backgroundPrimary: "#008080",
-    inputBackground: "#4CA69A",
-    dropDownBackground: "#E0FFE0",
+    backgroundPrimary: "#66B2B2", // Lighter tropical teal
+    inputBackground: "#4CA69A", // Muted turquoise (unchanged)
+    dropDownBackground: "#E0FFE0", // Light mint green (unchanged)
 
-    textPrimary: "#FF6347",
-    textSecondary: "#FFDAB9",
+    textPrimary: "#D15B9B", // Rich coral/orange for contrast (unchanged)
+    textSecondary: "#FFDAB9", // Soft peach (unchanged)
 
-    flair: "#FFFF00",
+    flair: "#FFFF00", // Bright yellow flair (unchanged)
   },
   Aurora: {
     statusbar: "light-content",
@@ -162,7 +163,7 @@ export default {
     inputBackground: "#1C1F4A",
     dropDownBackground: "#334D6E",
 
-    textPrimary: "#E0FFFA",
+    textPrimary: "#A7FF3E",
     textSecondary: "#A1E3A1",
 
     flair: "#FF69B4",

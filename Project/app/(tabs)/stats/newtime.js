@@ -65,7 +65,7 @@ export default function NewTime() {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ flexDirection: "row", justifyContent: "center" }}>
+      <View style={styles.cubeType}>
         <CubeTypePicker />
       </View>
 
@@ -134,5 +134,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: Theme.colors.textPrimary,
     fontWeight: "bold",
+  },
+  cubeType: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 16,
   },
 });

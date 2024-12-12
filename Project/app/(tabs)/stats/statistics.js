@@ -170,6 +170,44 @@ export default function Statistics() {
       }
     }
   };
+  const handleDeleteAll = async () => {
+    if (session) {
+      Alert.alert(
+        "Confirm Deletion",
+        "Are you sure you want to delete all times? This action cannot be undone.",
+        [
+          { text: "Cancel", style: "cancel" },
+          {
+            text: "Delete",
+            style: "destructive",
+            onPress: async () => {
+              try {
+                const { error } = await db
+                  .from("solve_times")
+                  .delete()
+                  .eq("user_id", session.user.id)
+                  .eq("cube_type", cubeType);
+                if (error) {
+                  throw error;
+                }
+                setTableData([]); // Clear the table data locally
+                setAverages({ ao5: null, ao12: null }); // Reset averages
+                Alert.alert("Success", "All times have been deleted.");
+              } catch (error) {
+                console.log(error);
+                Alert.alert(
+                  "Error",
+                  "An error occurred while trying to delete all times."
+                );
+              }
+            },
+          },
+        ]
+      );
+    } else {
+      Alert.alert("Error", "User session not found.");
+    }
+  };
   useEffect(() => {
     fetchData();
     if (session) {
@@ -258,6 +296,9 @@ export default function Statistics() {
           <Text style={styles.buttonText}>Add Time</Text>
         </TouchableOpacity>
         <CubeTypePicker />
+        <TouchableOpacity style={styles.button} onPress={handleDeleteAll}>
+          <Text style={styles.buttonText}>Delete All</Text>
+        </TouchableOpacity>
       </View>
 
       {/* FlatList with Header */}
@@ -294,6 +335,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
+    marginVertical: 8,
   },
   button: {
     backgroundColor: Theme.colors.textHighlighted,

@@ -163,8 +163,8 @@ export default {
     inputBackground: "#1C1F4A",
     dropDownBackground: "#334D6E",
 
-    textPrimary: "#A7FF3E",
-    textSecondary: "#A1E3A1",
+    textPrimary: "#A0FFB0",
+    textSecondary: "#7FBF7F",
 
     flair: "#FF69B4",
   },

@@ -31,6 +31,56 @@ export default {
     flair: "#8dc8d6",
     tabInactive: "#A5A5A5",
   },
+  Spring: {
+    statusbar: "dark-content",
+
+    backgroundPrimary: "#E0FFE0",
+    inputBackground: "#F7FFF7",
+    dropDownBackground: "#FFE4E1",
+
+    textPrimary: "#008000",
+    textSecondary: "#FF69B4",
+
+    flair: "#C8A2D6",
+    tabInactive: "#4F4F4F",
+  },
+  Summer: {
+    statusbar: "dark-content",
+    backgroundPrimary: "#87CEEB",
+    inputBackground: "#E0F7FA",
+    dropDownBackground: "#FFDAB9",
+
+    textPrimary: "#FF4500",
+    textSecondary: "#008080",
+
+    flair: "#FFFFFF",
+    tabInactive: "#4F4F4F",
+  },
+
+  Autumn: {
+    statusbar: "dark-content",
+    backgroundPrimary: "#8B4513",
+    inputBackground: "#D2691E",
+    dropDownBackground: "#A0522D",
+
+    textPrimary: "#FFF5EE",
+    textSecondary: "#8FBC8F",
+
+    flair: "#C9A000",
+    tabInactive: "#8B8B8B",
+  },
+  Winter: {
+    statusbar: "dark-content",
+    backgroundPrimary: "#A2C2E2",
+    inputBackground: "#E0F7FA",
+    dropDownBackground: "#F0F4F8",
+
+    textPrimary: "#1E3A8A",
+    textSecondary: "#5C7492",
+
+    flair: "#FFFFFF",
+    tabInactive: "#B0B0B0",
+  },
   Halloween: {
     statusbar: "light-content",
     backgroundPrimary: "#000000",
@@ -67,55 +117,7 @@ export default {
     flair: "#00FFFF", // Cyan for futuristic flair
     tabInactive: "#A5A5A5",
   },
-  Summer: {
-    statusbar: "dark-content",
-    backgroundPrimary: "#87CEEB",
-    inputBackground: "#E0F7FA",
-    dropDownBackground: "#FFDAB9",
 
-    textPrimary: "#FF4500",
-    textSecondary: "#008080",
-
-    flair: "#FFFFFF",
-    tabInactive: "#4F4F4F",
-  },
-  Spring: {
-    statusbar: "dark-content",
-
-    backgroundPrimary: "#E0FFE0",
-    inputBackground: "#F7FFF7",
-    dropDownBackground: "#FFE4E1",
-
-    textPrimary: "#008000",
-    textSecondary: "#FF69B4",
-
-    flair: "#C8A2D6",
-    tabInactive: "#4F4F4F",
-  },
-  Autumn: {
-    statusbar: "dark-content",
-    backgroundPrimary: "#8B4513",
-    inputBackground: "#D2691E",
-    dropDownBackground: "#A0522D",
-
-    textPrimary: "#FFF5EE",
-    textSecondary: "#8FBC8F",
-
-    flair: "#C9A000",
-    tabInactive: "#8B8B8B",
-  },
-  Winter: {
-    statusbar: "dark-content",
-    backgroundPrimary: "#A2C2E2",
-    inputBackground: "#E0F7FA",
-    dropDownBackground: "#F0F4F8",
-
-    textPrimary: "#1E3A8A",
-    textSecondary: "#5C7492",
-
-    flair: "#FFFFFF",
-    tabInactive: "#B0B0B0",
-  },
   Nature: {
     statusbar: "light-content",
 

@@ -169,7 +169,6 @@ export default function Settings() {
           ]}
         >
           <Switch
-            style={{ height: 30, width: 50 }}
             value={inspectionTime}
             color={Theme[themeChoice].flair}
             thumbColor={Theme[themeChoice].textPrimary}

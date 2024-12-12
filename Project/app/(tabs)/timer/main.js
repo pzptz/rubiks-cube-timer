@@ -4,7 +4,12 @@ import useSession from "@/utils/useSession";
 import db from "@/database/db";
 import { Link } from "expo-router";
 import { useContext } from "react";
-import { averagesContext, runningContext, settings } from "@/assets/contexts";
+import {
+  averagesContext,
+  runningContext,
+  settings,
+  loadingContext,
+} from "@/assets/contexts";
 import Loading from "@/components/Loading";
 import Theme from "@/assets/theme";
 import {
@@ -17,6 +22,7 @@ import {
 } from "react-native";
 
 export default function Main() {
+  const themeChoice = useContext(settings).themeChoice;
   const session = useSession();
   const [endTime, setEndTime] = useState(0); // Time in milliseconds
   const [startTime, setStartTime] = useState(0);
@@ -26,7 +32,8 @@ export default function Main() {
   const averages = useContext(averagesContext).averages;
   const useInspectionTime = useContext(settings).inspectionTime;
   const runningState = useContext(runningContext);
-  const [loading, setLoading] = useState(false);
+  const loading = useContext(loadingContext).loading;
+  const setLoading = useContext(loadingContext).setLoading;
   const startCountdown = () => {
     if (runningState.isRunning !== 1) {
       runningState.setIsRunning(1);
@@ -164,65 +171,122 @@ export default function Main() {
     return 0;
   };
   if (!averages || loading) {
-    return <Loading />;
+    return <Loading themeChoice={themeChoice} />;
   }
   if (runningState.isRunning == 2) {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.button}
-          onPressIn={stopStopwatch}
-          // onPressOut={() => runningState.setIsRunning(0)}
-        >
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: Theme[themeChoice].backgroundPrimary },
+        ]}
+      >
+        <TouchableOpacity style={styles.button} onPressIn={stopStopwatch}>
           <View style={styles.timerBox}>
-            <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>
+            <Text
+              style={[styles.timer, { color: Theme[themeChoice].textPrimary }]}
+            >
+              {formatTime(endTime - startTime)}
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
     );
   } else if (runningState.isRunning == 1) {
     return (
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: Theme[themeChoice].backgroundPrimary },
+        ]}
+      >
         <TouchableOpacity style={styles.button} onPressOut={startStopwatch}>
           <View style={styles.timerBox}>
-            <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>
+            <Text
+              style={[styles.timer, { color: Theme[themeChoice].textPrimary }]}
+            >
+              {formatTime(endTime - startTime)}
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
     );
   } else {
     return (
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: Theme[themeChoice].backgroundPrimary },
+        ]}
+      >
         <View style={styles.statsBox}>
-          <Text style={styles.stats}>ao5: {formatTime(averages.ao5)}</Text>
-          <Text style={styles.stats}>ao12: {formatTime(averages.ao12)}</Text>
+          <Text
+            style={[styles.stats, { color: Theme[themeChoice].textSecondary }]}
+          >
+            ao5: {formatTime(averages.ao5)}
+          </Text>
+          <Text
+            style={[styles.stats, { color: Theme[themeChoice].textSecondary }]}
+          >
+            ao12: {formatTime(averages.ao12)}
+          </Text>
         </View>
         <View style={styles.timerBox}>
-          <Text style={styles.timer}>{formatTime(endTime - startTime)}</Text>
+          <Text
+            style={[styles.timer, { color: Theme[themeChoice].textPrimary }]}
+          >
+            {formatTime(endTime - startTime)}
+          </Text>
         </View>
         <TouchableOpacity
           style={styles.button}
           onPress={useInspectionTime ? startCountdown : startStopwatch}
-        ></TouchableOpacity>
+        />
         <View style={styles.subButtonsBox}>
           <View style={{ flex: 1, alignItems: "center", padding: 16 }}>
             <Link href="/(tabs)/timer/instructions">
-              <View style={styles.newScrambleButton}>
-                <Text style={styles.buttonText}>How to use</Text>
+              <View
+                style={[
+                  styles.newScrambleButton,
+                  { backgroundColor: Theme[themeChoice].flair },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.buttonText,
+                    { color: Theme[themeChoice].textPrimary },
+                  ]}
+                >
+                  How to use
+                </Text>
               </View>
             </Link>
           </View>
           <View style={{ flex: 1, alignItems: "center", padding: 16 }}>
             <TouchableHighlight
-              style={styles.newScrambleButton}
+              style={[
+                styles.newScrambleButton,
+                { backgroundColor: Theme[themeChoice].flair },
+              ]}
               onPress={() => generateScramble()}
             >
-              <Text style={styles.buttonText}>New Scramble</Text>
+              <Text
+                style={[
+                  styles.buttonText,
+                  { color: Theme[themeChoice].textPrimary },
+                ]}
+              >
+                New Scramble
+              </Text>
             </TouchableHighlight>
           </View>
         </View>
         <View style={styles.scrambleBox}>
-          <Text style={styles.scramble}>{scramble}</Text>
+          <Text
+            style={[styles.scramble, { color: Theme[themeChoice].textPrimary }]}
+          >
+            {scramble}
+          </Text>
         </View>
       </View>
     );
@@ -235,16 +299,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "column-reverse",
     alignItems: "center",
-    backgroundColor: Theme.colors.backgroundPrimary,
   },
   timer: {
-    fontSize: 48,
+    fontSize: Theme.text.textXXL,
     fontWeight: "bold",
     fontVariant: ["tabular-nums"],
     textAlign: "center",
     position: "absolute",
     top: 350,
-    color: Theme.colors.textPrimary,
   },
 
   timerBox: {
@@ -253,10 +315,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   stats: {
-    fontSize: 24,
+    fontSize: Theme.text.textXL,
     fontWeight: "bold",
     textAlign: "center",
-    color: Theme.colors.textSecondary,
   },
   statsBox: {
     position: "absolute",
@@ -267,12 +328,11 @@ const styles = StyleSheet.create({
   },
   scrambleBox: { width: "100%" },
   scramble: {
-    fontSize: 24,
+    fontSize: Theme.text.textXL,
     fontWeight: "bold",
     fontVariant: ["tabular-nums"],
     textAlign: "center",
     padding: 12,
-    color: Theme.colors.textPrimary,
   },
   button: {
     flex: 1,
@@ -286,15 +346,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   newScrambleButton: {
-    backgroundColor: Theme.colors.textHighlighted,
     paddingVertical: 8,
     borderRadius: 4,
     width: "100%",
     alignItems: "center",
   },
   buttonText: {
-    color: Theme.colors.textPrimary,
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: Theme.text.textLarge,
   },
 });

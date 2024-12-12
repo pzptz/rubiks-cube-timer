@@ -14,8 +14,10 @@ import db from "@/database/db";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Theme from "@/assets/theme";
 import Loading from "@/components/Loading";
+import { settings, loadingContext } from "@/assets/contexts";
 
 export default function Details() {
+  const themeChoice = useContext(settings).themeChoice;
   const {
     id,
     time,
@@ -29,8 +31,53 @@ export default function Details() {
   } = useLocalSearchParams(); // Get the solve time ID from the route params
   const [solve, setSolve] = useState(null);
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const loading = useContext(loadingContext).loading;
+  const setLoading = useContext(loadingContext).setLoading;
   const cubeTypes = { 2: "2x2x2", 3: "3x3x3", 4: "4x4x4", 5: "5x5x5" };
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: Theme[themeChoice].backgroundPrimary,
+      padding: 16,
+    },
+    detailContainer: {
+      marginHorizontal: 24,
+      marginBottom: 24,
+    },
+    label: {
+      fontSize: Theme.text.textMedium,
+      color: Theme[themeChoice].textSecondary,
+      marginTop: 12,
+    },
+    value: {
+      fontSize: Theme.text.textLarge,
+      color: Theme[themeChoice].textPrimary,
+      fontWeight: "bold",
+      marginTop: 4,
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+      alignItems: "center",
+      margin: 8,
+      paddingBottom: 32,
+      height: "15%",
+    },
+    button: {
+      backgroundColor: Theme[themeChoice].flair,
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+      borderRadius: 4,
+      width: "30%",
+      justifyContent: "center",
+    },
+    buttonText: {
+      color: Theme[themeChoice].textPrimary,
+      fontWeight: "bold",
+      textAlign: "center",
+    },
+  });
+
   const fetchSolve = () => {
     const data = {
       time: time,
@@ -117,7 +164,7 @@ export default function Details() {
   }, [id]);
 
   if (!solve || loading) {
-    return <Loading />;
+    return <Loading themeChoice={themeChoice} />;
   }
 
   return (
@@ -165,47 +212,3 @@ export default function Details() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Theme.colors.backgroundPrimary,
-    padding: 16,
-  },
-  detailContainer: {
-    marginHorizontal: 24,
-    marginBottom: 24,
-  },
-  label: {
-    fontSize: 16,
-    color: Theme.colors.textSecondary,
-    marginTop: 12,
-  },
-  value: {
-    fontSize: 20,
-    color: Theme.colors.textPrimary,
-    fontWeight: "bold",
-    marginTop: 4,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    margin: 8,
-    paddingBottom: 32,
-    height: "15%",
-  },
-  button: {
-    backgroundColor: Theme.colors.textHighlighted,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 4,
-    width: "30%",
-    justifyContent: "center",
-  },
-  buttonText: {
-    color: Theme.colors.textPrimary,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-});

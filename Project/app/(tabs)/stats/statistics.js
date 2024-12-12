@@ -11,7 +11,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import db from "@/database/db";
-import { averagesContext, settings } from "@/assets/contexts";
+import { averagesContext, settings, loadingContext } from "@/assets/contexts";
 import useSession from "@/utils/useSession";
 import Theme from "@/assets/theme";
 import { useRouter, useFocusEffect } from "expo-router";
@@ -19,7 +19,9 @@ import Time from "@/components/Time";
 import Loading from "@/components/Loading";
 import CubeTypePicker from "@/components/CubeTypePicker";
 export default function Statistics() {
+  const themeChoice = useContext(settings).themeChoice;
   const cubeType = useContext(settings).cubeType;
+  const setCubeType = useContext(settings).setCubeType;
   const session = useSession();
   const [tableData, setTableData] = useState([]); // for this screen
   const expectedUpdates = useRef(0);
@@ -30,7 +32,8 @@ export default function Statistics() {
   const setAverages = useContext(averagesContext).setAverages; // for the main screen
   const router = useRouter();
   const shouldRender = useRef(false);
-  const [loading, setLoading] = useState(false);
+  const loading = useContext(loadingContext).loading;
+  const setLoading = useContext(loadingContext).setLoading;
   const idComparator = (a, b) => {
     return b.id - a.id;
   };
@@ -170,6 +173,7 @@ export default function Statistics() {
       }
     }
   };
+
   useEffect(() => {
     fetchData();
     if (session) {
@@ -240,6 +244,7 @@ export default function Statistics() {
   const renderItem = ({ item }) => (
     <Time
       solve={item}
+      themeChoice={themeChoice}
       onPress={() =>
         router.push(
           `/stats/details?id=${item.id}&time=${item.time_with_penalty}&ao5=${item.ao5}&ao12=${item.ao12}&scramble=${item.scramble}&created_at=${item.created_at}&user_id=${item.user_id}&penalty=${item.penalty}&cube_type=${item.cube_type}`
@@ -248,16 +253,31 @@ export default function Statistics() {
     />
   );
   if (loading) {
-    return <Loading />;
+    return <Loading themeChoice={themeChoice} />;
   }
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        { backgroundColor: Theme[themeChoice].backgroundPrimary },
+      ]}
+    >
       {/* Add time button */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleNewTime}>
-          <Text style={styles.buttonText}>Add Time</Text>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: Theme[themeChoice].flair }]}
+          onPress={handleNewTime}
+        >
+          <Text
+            style={[
+              styles.buttonText,
+              { color: Theme[themeChoice].textPrimary },
+            ]}
+          >
+            Add Time
+          </Text>
         </TouchableOpacity>
-        <CubeTypePicker />
+        <CubeTypePicker themeChoice={themeChoice} handleChange={setCubeType} />
       </View>
 
       {/* FlatList with Header */}
@@ -268,14 +288,50 @@ export default function Statistics() {
         onEndReachedThreshold={0.5}
         onEndReached={() => extendList()}
         ListHeaderComponent={
-          <View style={styles.headerRow}>
-            <Text style={[styles.headerText, styles.timeColumn]}>Time</Text>
-            <Text style={[styles.headerText, styles.aoColumn]}>ao5</Text>
-            <Text style={[styles.headerText, styles.aoColumn]}>ao12</Text>
+          <View
+            style={[
+              styles.headerRow,
+              {
+                borderBottomColor: Theme[themeChoice].border,
+                backgroundColor: Theme[themeChoice].headerBackground,
+              },
+            ]}
+          >
+            <Text
+              style={[
+                styles.headerText,
+                { color: Theme[themeChoice].textPrimary },
+              ]}
+            >
+              Time
+            </Text>
+            <Text
+              style={[
+                styles.headerText,
+                { color: Theme[themeChoice].textPrimary },
+              ]}
+            >
+              ao5
+            </Text>
+            <Text
+              style={[
+                styles.headerText,
+                { color: Theme[themeChoice].textPrimary },
+              ]}
+            >
+              ao12
+            </Text>
           </View>
         }
         ListEmptyComponent={
-          <Text style={styles.emptyText}>No records found.</Text>
+          <Text
+            style={[
+              styles.emptyText,
+              { color: Theme[themeChoice].textSecondary },
+            ]}
+          >
+            No records found.
+          </Text>
         }
         contentContainerStyle={tableData.length === 0 && styles.emptyContainer}
       />
@@ -286,7 +342,6 @@ export default function Statistics() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Theme.colors.backgroundPrimary,
     padding: 16,
   },
   buttonContainer: {
@@ -296,7 +351,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   button: {
-    backgroundColor: Theme.colors.textHighlighted,
     paddingVertical: 8,
     borderRadius: 8,
     justifyContent: "center",
@@ -305,29 +359,20 @@ const styles = StyleSheet.create({
     width: "30%",
   },
   buttonText: {
-    color: Theme.colors.textPrimary,
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: Theme.text.textMedium,
   },
   headerRow: {
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: Theme.colors.border,
-    backgroundColor: Theme.colors.headerBackground,
   },
   headerText: {
-    fontSize: 16,
+    fontSize: Theme.text.textMedium,
     fontWeight: "bold",
-    color: Theme.colors.textPrimary,
+
     textAlign: "center",
-  },
-  timeColumn: {
-    flex: 1,
-    alignItems: "center",
-  },
-  aoColumn: {
     flex: 1,
     alignItems: "center",
   },
@@ -337,7 +382,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   emptyText: {
-    color: Theme.colors.textSecondary,
-    fontSize: 16,
+    fontSize: Theme.text.textMedium,
   },
 });

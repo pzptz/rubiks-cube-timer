@@ -1,12 +1,24 @@
 import { Stack } from "expo-router";
 import Theme from "@/assets/theme";
+import { settings } from "@/assets/contexts";
+import { useContext } from "react";
 import { StyleSheet, SafeAreaView, Text, View } from "react-native";
 export default function StackLayout() {
+  const themeChoice = useContext(settings).themeChoice;
   const MainHeader = ({ navigation, route, options }) => {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor: Theme[themeChoice].backgroundPrimary },
+        ]}
+      >
         <View style={styles.header}>
-          <Text style={styles.text}>Timer</Text>
+          <Text
+            style={[styles.text, { color: Theme[themeChoice].textPrimary }]}
+          >
+            Timer
+          </Text>
         </View>
       </SafeAreaView>
     );
@@ -23,12 +35,17 @@ export default function StackLayout() {
       <Stack.Screen
         name="instructions"
         options={{
-          headerStyle: styles.instructions,
-          headerTitleStyle: styles.text,
+          headerStyle: {
+            backgroundColor: Theme[themeChoice].backgroundPrimary,
+          },
+          headerTitleStyle: [
+            styles.text,
+            { color: Theme[themeChoice].textPrimary },
+          ],
           headerTitle: "How to use",
           headerBackTitle: "Back",
-          headerBackTitleStyle: styles.backButton,
-          headerTintColor: Theme.colors.textHighlighted,
+          headerBackTitleStyle: { color: Theme[themeChoice].flair },
+          headerTintColor: Theme[themeChoice].flair,
         }}
       />
     </Stack>
@@ -37,7 +54,6 @@ export default function StackLayout() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Theme.colors.backgroundPrimary,
     alignItems: "center",
   },
   header: {
@@ -47,15 +63,8 @@ const styles = StyleSheet.create({
     width: "30%",
   },
   text: {
-    fontSize: 24,
-    color: Theme.colors.textPrimary,
+    fontSize: Theme.text.textXL,
     fontWeight: "bold",
     padding: 5,
-  },
-  instructions: {
-    backgroundColor: Theme.colors.backgroundPrimary,
-  },
-  backButton: {
-    color: Theme.colors.textHighlighted,
   },
 });

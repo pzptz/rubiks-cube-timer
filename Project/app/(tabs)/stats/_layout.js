@@ -11,16 +11,16 @@ import {
   Pressable,
 } from "react-native";
 import db from "@/database/db";
-import { averagesContext } from "@/assets/contexts";
+import { averagesContext, settings } from "@/assets/contexts";
 import useSession from "@/utils/useSession";
 import { useRouter } from "expo-router";
 import Theme from "@/assets/theme";
 
 export default function StackLayout() {
+  const themeChoice = useContext(settings).themeChoice;
   const router = useRouter();
   const session = useSession();
   const setAverages = useContext(averagesContext).setAverages;
-
   return (
     <Stack>
       {/* Main Statistics Screen */}
@@ -35,18 +35,22 @@ export default function StackLayout() {
       <Stack.Screen
         name="details"
         options={{
+          headerTitleAlign: "center",
           headerTitle: "Solve Details",
-          headerTintColor: Theme.colors.textHighlighted,
+          headerTintColor: Theme[themeChoice].flair,
           headerStyle: {
-            backgroundColor: Theme.colors.backgroundPrimary,
+            backgroundColor: Theme[themeChoice].backgroundPrimary,
           },
           headerTitleStyle: {
-            color: Theme.colors.textPrimary,
+            color: Theme[themeChoice].textPrimary,
             fontWeight: "bold",
           },
           headerBackTitle: "Back",
-          headerBackTitleStyle: styles.backButton,
-          headerTintColor: Theme.colors.textHighlighted,
+          headerBackTitleStyle: [
+            styles.backButton,
+            { color: Theme[themeChoice].flair },
+          ],
+          headerTintColor: Theme[themeChoice].flair,
         }}
       />
 
@@ -55,21 +59,22 @@ export default function StackLayout() {
       <Stack.Screen
         name="newtime"
         options={{
+          headerTitleAlign: "center",
           presentation: "modal",
           headerTitle: "Add New Time",
-          headerTintColor: Theme.colors.textHighlighted,
+          headerTintColor: Theme[themeChoice].flair,
           headerStyle: {
-            backgroundColor: Theme.colors.backgroundPrimary,
+            backgroundColor: Theme[themeChoice].backgroundPrimary,
           },
           headerTitleStyle: {
-            color: Theme.colors.textPrimary,
+            color: Theme[themeChoice].textPrimary,
             fontWeight: "bold",
           },
           headerLeft: () => (
             <Button
               title="Cancel"
               onPress={() => router.back()}
-              color={Theme.colors.textPrimary}
+              color={Theme[themeChoice].flair}
             />
           ),
         }}
@@ -80,7 +85,6 @@ export default function StackLayout() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Theme.colors.backgroundPrimary,
     alignItems: "center",
   },
   header: {
@@ -90,23 +94,17 @@ const styles = StyleSheet.create({
     width: "30%",
   },
   text: {
-    fontSize: 24,
-    color: Theme.colors.textPrimary,
+    fontSize: Theme.text.textXL,
     fontWeight: "bold",
     padding: 5,
-  },
-  instructions: {
-    backgroundColor: Theme.colors.backgroundPrimary,
   },
   backButton: {
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 8,
-    color: Theme.colors.textHighlighted,
   },
   backText: {
-    color: Theme.colors.textPrimary,
-    fontSize: 16,
+    fontSize: Theme.text.textMedium,
     marginLeft: 8,
     paddingTop: 2,
   },

@@ -21,7 +21,7 @@ export default function TabLayout() {
   const [inspectionTime, setInspectionTime] = useState(false);
   const [themeChoice, setThemeChoice] = useState("Dark");
   const [loading, setLoading] = useState(false);
-  const ProfileHeader = ({ navigation, route, options }) => {
+  const SettingsHeader = ({ navigation, route, options }) => {
     return (
       <SafeAreaView
         style={[
@@ -33,7 +33,7 @@ export default function TabLayout() {
           <Text
             style={[styles.text, { color: Theme[themeChoice].textPrimary }]}
           >
-            My Profile
+            Settings
           </Text>
         </View>
       </SafeAreaView>
@@ -115,7 +115,7 @@ export default function TabLayout() {
                 <Tabs.Screen
                   name="settings"
                   options={{
-                    header: ProfileHeader,
+                    header: SettingsHeader,
                     lazy: false, // We want settings to be pulled immediately
                     tabBarLabel: "Settings",
                     tabBarIcon: ({ size, color }) => (

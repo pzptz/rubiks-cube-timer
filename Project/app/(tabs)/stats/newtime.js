@@ -74,7 +74,11 @@ export default function NewTime() {
       ]}
     >
       <View style={styles.formGroup}>
-        <Text style={styles.label}>Cube Type:</Text>
+        <Text
+          style={[styles.label, { color: Theme[themeChoice].textSecondary }]}
+        >
+          Cube Type:
+        </Text>
         <View style={styles.cubeType}>
           <CubeTypePicker
             themeChoice={themeChoice}

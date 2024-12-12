@@ -216,4 +216,28 @@ export default {
     flair: "#FF69B4",
     tabInactive: "#A5A5A5",
   },
+  Metallic: {
+    statusbar: "light-content",
+    backgroundPrimary: "#3A3A3A", // Gunmetal gray
+    inputBackground: "#525252", // Dark silver
+    dropDownBackground: "#6E6E6E", // Mid-tone metallic gray
+
+    textPrimary: "#D4D4D4", // Gold text for metallic elegance
+    textSecondary: "#A8A8A8", // Silver text for secondary info
+
+    flair: "#B87333", // Copper for flair
+    tabInactive: "#7F7F7F", // Neutral muted gray
+  },
+  Pastel: {
+    statusbar: "dark-content",
+    backgroundPrimary: "#FBEFFB", // Very pale pink
+    inputBackground: "#E3F2FD", // Soft baby blue
+    dropDownBackground: "#FFF7E6", // Creamy pale yellow
+
+    textPrimary: "#4CAF50", // Light pastel green
+    textSecondary: "#64B5F6", // Pastel light blue
+
+    flair: "#FFC1A1", // Soft pastel coral for better contrast
+    tabInactive: "#D3D3D3", // Light gray for inactive tabs
+  },
 };

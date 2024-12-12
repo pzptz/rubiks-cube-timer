@@ -10,6 +10,7 @@ export default {
     textSecondary: "#B4B4B4",
 
     flair: "#FF4500",
+    tabInactive: "#A5A5A5",
   },
   Light: {
     statusbar: "dark-content",
@@ -21,6 +22,7 @@ export default {
     textSecondary: "#AAAAAA",
 
     flair: "#8dc8d6",
+    tabInactive: "#A5A5A5",
   },
   Halloween: {
     statusbar: "light-content",
@@ -32,6 +34,7 @@ export default {
     textSecondary: "#D3A6D2", // Lavender contrast
 
     flair: "#007b30", // Blood red
+    tabInactive: "#A5A5A5",
   },
   Christmas: {
     statusbar: "dark-content",
@@ -43,6 +46,7 @@ export default {
     textSecondary: "#87c38f",
 
     flair: "#ffbf00", // Gold for holiday sparkle
+    tabInactive: "#A5A5A5",
   },
   Cyberpunk: {
     statusbar: "light-content",
@@ -54,6 +58,7 @@ export default {
     textSecondary: "#7DFF00", // Neon green
 
     flair: "#00FFFF", // Cyan for futuristic flair
+    tabInactive: "#A5A5A5",
   },
   Summer: {
     statusbar: "dark-content",
@@ -65,6 +70,7 @@ export default {
     textSecondary: "#008080", // Teal
 
     flair: "#FFFFFF", // clouds
+    tabInactive: "#4F4F4F",
   },
   Spring: {
     statusbar: "dark-content",
@@ -77,6 +83,7 @@ export default {
     textSecondary: "#FF69B4", // Hot pink
 
     flair: "#C8A2D6", // Cheerful yellow
+    tabInactive: "#4F4F4F",
   },
   Nature: {
     statusbar: "light-content",
@@ -89,6 +96,7 @@ export default {
     textSecondary: "#F5DEB3", // Saddle brown
 
     flair: "#6692E4", // Sky blue for natural contrast
+    tabInactive: "#A5A5A5",
   },
   Ocean: {
     statusbar: "dark-content",
@@ -100,10 +108,11 @@ export default {
     textSecondary: "#87CEFA",
 
     flair: "#008F73",
+    tabInactive: "#A5A5A5",
   },
   Desert: {
     statusbar: "dark-content",
-    backgroundPrimary: "#EDC9AF",
+    backgroundPrimary: "#F1D8C4",
     inputBackground: "#E1A95F",
     dropDownBackground: "#C19A6B",
 
@@ -111,6 +120,7 @@ export default {
     textSecondary: "#6B4226",
 
     flair: "#FF8243", // A softer orange
+    tabInactive: "#4F4F4F",
   },
 
   Galaxy: {
@@ -123,17 +133,19 @@ export default {
     textSecondary: "#7D7DFE", // Keeping as is
 
     flair: "#E0A800", // Slightly darker yellow for better contrast with textPrimary
+    tabInactive: "#A5A5A5",
   },
   Sunset: {
     statusbar: "light-content",
-    backgroundPrimary: "#E35D2D", // Balanced bold orange
+    backgroundPrimary: "#E35D47", // Balanced bold orange
     inputBackground: "#FF6347", // Tomato red (unchanged)
     dropDownBackground: "#FF7F50", // Coral pink (unchanged)
 
-    textPrimary: "#B22222", // Bold, vibrant pink for strong contrast
+    textPrimary: "#8B1A1A", // Bold, vibrant pink for strong contrast
     textSecondary: "#FFDAB9", // Light peach (unchanged)
 
     flair: "#FFB800", // Yellow for flair (unchanged)
+    tabInactive: "#4F4F4F",
   },
   Monochrome: {
     statusbar: "dark-content",
@@ -145,6 +157,7 @@ export default {
     textSecondary: "#B0B0B0", // Light gray text for secondary info
 
     flair: "#C8A500", // Muted gold-yellow for flair (less bright)
+    tabInactive: "#A5A5A5",
   },
   Tropical: {
     statusbar: "dark-content",
@@ -152,10 +165,11 @@ export default {
     inputBackground: "#4CA69A", // Muted turquoise (unchanged)
     dropDownBackground: "#E0FFE0", // Light mint green (unchanged)
 
-    textPrimary: "#D15B9B", // Rich coral/orange for contrast (unchanged)
+    textPrimary: "#B14481", // Rich coral/orange for contrast (unchanged)
     textSecondary: "#FFDAB9", // Soft peach (unchanged)
 
     flair: "#FFFF00", // Bright yellow flair (unchanged)
+    tabInactive: "#4F4F4F",
   },
   Aurora: {
     statusbar: "light-content",
@@ -167,5 +181,6 @@ export default {
     textSecondary: "#7FBF7F",
 
     flair: "#FF69B4",
+    tabInactive: "#A5A5A5",
   },
 };

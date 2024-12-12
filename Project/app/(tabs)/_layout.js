@@ -89,6 +89,7 @@ export default function TabLayout() {
                     display: isRunning == 0 ? "flex" : "none",
                   },
                   tabBarActiveTintColor: Theme[themeChoice].flair, // Dynamically update active tint color
+                  tabBarInactiveTintColor: Theme[themeChoice].tabInactive,
                 }}
               >
                 <Tabs.Screen

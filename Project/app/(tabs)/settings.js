@@ -197,7 +197,7 @@ export default function Settings() {
             }}
             textStyle={{
               color: Theme[themeChoice].textPrimary,
-              fontSize: 16,
+              fontSize: 20,
               fontWeight: "bold",
             }}
             dropDownContainerStyle={{
@@ -237,8 +237,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   text: {
-    fontSize: 16,
+    fontSize: 20,
     paddingLeft: 8,
+    fontWeight: "bold",
   },
   buttonText: {
     fontWeight: "bold",

@@ -23,7 +23,7 @@ export default function CubeTypePicker({ themeChoice, handleChange }) {
         }}
         textStyle={{
           color: Theme[themeChoice].textPrimary,
-          fontSize: 16,
+          fontSize: 20,
           fontWeight: "bold",
         }}
         dropDownContainerStyle={{

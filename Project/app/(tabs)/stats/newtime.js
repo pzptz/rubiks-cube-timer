@@ -73,8 +73,14 @@ export default function NewTime() {
         { backgroundColor: Theme[themeChoice].backgroundPrimary },
       ]}
     >
-      <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <CubeTypePicker themeChoice={themeChoice} handleChange={setCubeType} />
+      <View style={styles.formGroup}>
+        <Text style={styles.label}>Cube Type:</Text>
+        <View style={styles.cubeType}>
+          <CubeTypePicker
+            themeChoice={themeChoice}
+            handleChange={setCubeType}
+          />
+        </View>
       </View>
 
       <View style={styles.formGroup}>
@@ -164,10 +170,18 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 4,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    width: "30%",
   },
   buttonText: {
     fontWeight: "bold",
+    fontSize: 16,
+  },
+  cubeType: {
+    flexDirection: "row",
+    justifyContent: "center",
   },
 });

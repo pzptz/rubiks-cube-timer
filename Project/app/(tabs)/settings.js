@@ -43,7 +43,8 @@ export default function Settings() {
       }
     } catch (err) {
       console.log(err);
-      setTimeout(signOut(), 50);
+      setLoading(false);
+      Alert.alert("Error", "Failed to sign out. Please try again.");
     }
   };
   const handleCubeTypeChange = (newCubeType) => {
@@ -153,7 +154,12 @@ export default function Settings() {
           {session.user.email}
         </Text>
       </View>
-      <View style={styles.settingView}>
+      <View
+        style={[
+          styles.settingView,
+          { borderBottomColor: Theme[themeChoice].textSecondary },
+        ]}
+      >
         <Text
           style={[
             styles.text,
@@ -170,7 +176,12 @@ export default function Settings() {
           onValueChange={(value) => handleInspectionTimeChange(value)}
         />
       </View>
-      <View style={styles.settingView}>
+      <View
+        style={[
+          styles.settingView,
+          { borderBottomColor: Theme[themeChoice].textSecondary },
+        ]}
+      >
         <Text
           style={[
             styles.text,
@@ -184,7 +195,12 @@ export default function Settings() {
           handleChange={handleCubeTypeChange}
         />
       </View>
-      <View style={styles.settingView}>
+      <View
+        style={[
+          styles.settingView,
+          { borderBottomColor: Theme[themeChoice].textSecondary },
+        ]}
+      >
         <Text
           style={[
             styles.text,
@@ -226,18 +242,17 @@ export default function Settings() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  postTitle: {
-    padding: 12,
+    paddingHorizontal: 16,
+    paddingTop: 12,
   },
   userContainer: {
     width: "100%",
-    marginTop: 12,
-    paddingHorizontal: 12,
+    marginBottom: 24,
   },
   userTextContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 8,
   },
   title: {
@@ -255,8 +270,10 @@ const styles = StyleSheet.create({
   },
   settingView: {
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 24,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
   },
   switchWrapper: {
     borderRadius: 16,

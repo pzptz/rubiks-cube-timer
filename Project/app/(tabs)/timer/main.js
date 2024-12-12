@@ -347,9 +347,11 @@ const styles = StyleSheet.create({
   },
   newScrambleButton: {
     paddingVertical: 8,
-    borderRadius: 4,
-    width: "100%",
+    borderRadius: 8,
+    justifyContent: "center",
     alignItems: "center",
+    height: 50,
+    width: "100%",
   },
   buttonText: {
     fontWeight: "bold",

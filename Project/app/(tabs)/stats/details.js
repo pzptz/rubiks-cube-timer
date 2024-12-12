@@ -41,8 +41,8 @@ export default function Details() {
       padding: 16,
     },
     detailContainer: {
-      marginHorizontal: 24,
-      marginBottom: 24,
+      marginHorizontal: Theme.text.textXL,
+      marginBottom: Theme.text.textXL,
     },
     label: {
       fontSize: Theme.text.textMedium,
@@ -66,10 +66,11 @@ export default function Details() {
     button: {
       backgroundColor: Theme[themeChoice].flair,
       paddingVertical: 8,
-      paddingHorizontal: 16,
-      borderRadius: 4,
-      width: "30%",
+      borderRadius: 8,
       justifyContent: "center",
+      alignItems: "center",
+      height: 50,
+      width: "30%",
     },
     buttonText: {
       color: Theme[themeChoice].textPrimary,

@@ -8,9 +8,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import db from "@/database/db";
-
 import Theme from "@/assets/theme";
 
 export default function Login({ themeChoice = "Dark" }) {
@@ -22,8 +21,8 @@ export default function Login({ themeChoice = "Dark" }) {
     setLoading(true);
     try {
       const { data, error } = await db.auth.signInWithPassword({
-        email: email,
-        password: password,
+        email,
+        password,
         options: {
           shouldCreateUser: false,
         },
@@ -35,6 +34,28 @@ export default function Login({ themeChoice = "Dark" }) {
       setLoading(false);
     } catch (err) {
       console.error(err);
+      setLoading(false);
+    }
+  };
+
+  const signUpWithEmail = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await db.auth.signUp({
+        email,
+        password,
+      });
+
+      if (error) {
+        Alert.alert("Sign Up Failed", error.message);
+      } else {
+        Alert.alert("Success", "Account created successfully!");
+      }
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      Alert.alert("Error", "Something went wrong during sign-up.");
+      setLoading(false);
     }
   };
 
@@ -47,8 +68,11 @@ export default function Login({ themeChoice = "Dark" }) {
     >
       <StatusBar style="light" />
       <View style={styles.splash}>
+        <FontAwesome size={50} name="cube" color={theme.flair} />
+      </View>
+      <View style={styles.splash}>
         <Text style={[styles.splashText, { color: theme.textPrimary }]}>
-          Title TBD
+          RubikTime
         </Text>
       </View>
       <TextInput
@@ -81,10 +105,7 @@ export default function Login({ themeChoice = "Dark" }) {
         ]}
       />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => signInWithEmail()}
-          disabled={isSignInDisabled}
-        >
+        <TouchableOpacity onPress={signInWithEmail} disabled={isSignInDisabled}>
           <Text
             style={[
               styles.button,
@@ -94,6 +115,13 @@ export default function Login({ themeChoice = "Dark" }) {
             ]}
           >
             Sign in
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={signUpWithEmail}>
+          <Text style={[styles.button, { color: Theme[themeChoice].flair }]}>
+            Sign up
           </Text>
         </TouchableOpacity>
       </View>
@@ -121,20 +149,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
-  verticallySpaced: {
-    marginVertical: 4,
-    alignSelf: "stretch",
-  },
-  mt20: {
-    marginTop: 20,
-  },
   input: {
     width: "100%",
     padding: 16,
   },
   button: {
     fontSize: 18,
-    fontWeight: 18,
+    fontWeight: "bold",
     padding: 8,
   },
 });

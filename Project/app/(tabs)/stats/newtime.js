@@ -26,6 +26,7 @@ export default function NewTime() {
   const setLoading = useContext(loadingContext).setLoading;
   const router = useRouter();
   const cubeType = useContext(settings).cubeType;
+  const setCubeType = useContext(settings).setCubeType;
   const handleSubmit = async () => {
     // Validate inputs
     if (!time || isNaN(time)) {
@@ -73,7 +74,7 @@ export default function NewTime() {
       ]}
     >
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <CubeTypePicker themeChoice={themeChoice} />
+        <CubeTypePicker themeChoice={themeChoice} handleChange={setCubeType} />
       </View>
 
       <View style={styles.formGroup}>

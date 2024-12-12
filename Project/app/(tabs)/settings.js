@@ -8,7 +8,7 @@ import CubeTypePicker from "@/components/CubeTypePicker";
 import db from "@/database/db";
 import useSession from "@/utils/useSession";
 import { settings, loadingContext } from "@/assets/contexts";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
 export default function Settings() {
   const session = useSession();
@@ -21,6 +21,8 @@ export default function Settings() {
   const setInspectionTime = useContext(settings).setInspectionTime;
   const loading = useContext(loadingContext).loading;
   const setLoading = useContext(loadingContext).setLoading;
+  const settingsRef = useRef(null);
+  const changedFlag = useRef(false);
   const themeOptions = Object.keys(Theme).map((key) => ({
     label: key,
     value: key,
@@ -41,6 +43,18 @@ export default function Settings() {
       console.log(err);
       setTimeout(signOut(), 50);
     }
+  };
+  const handleCubeTypeChange = (newCubeType) => {
+    changedFlag.current = true;
+    setCubeType(newCubeType);
+  };
+  const handleInspectionTimeChange = (shouldHaveIT) => {
+    changedFlag.current = true;
+    setInspectionTime(shouldHaveIT);
+  };
+  const setNewTheme = (newTheme) => {
+    changedFlag.current = true;
+    setThemeChoice(newTheme);
   };
   const loadSettings = async () => {
     try {
@@ -64,14 +78,13 @@ export default function Settings() {
       setTimeout(() => loadSettings(), 500);
     }
   };
-  const pushSettings = async (settingsJSON) => {
+  const pushSettings = async () => {
     try {
       if (session) {
-        console.log(settingsJSON);
         // list of jsons, each with fields {id, created_at, user_id, cube_type, scramble, time, ao5, ao12}
         const { data, error } = await db
           .from("settings")
-          .upsert(settingsJSON, { onConflict: "user_id" });
+          .upsert(settingsRef.current, { onConflict: "user_id" });
         if (error) {
           throw error;
         }
@@ -80,27 +93,30 @@ export default function Settings() {
     } catch (error) {
       console.log(error);
       // This is to guarantee we get the data, eventually we'll remove this log but it's to avoid internet errors
-      setTimeout(() => pushSettings(settingsJSON), 500);
+      setTimeout(() => pushSettings(), 500);
     }
   };
   useEffect(() => {
     loadSettings();
   }, [session]);
-
+  useEffect(() => {
+    if (session) {
+      settingsRef.current = {
+        cube_type: cubeType,
+        theme: themeChoice,
+        inspection_time: inspectionTime,
+        user_id: session.user.id,
+      };
+    }
+  }, [themeChoice, cubeType, inspectionTime]);
   useFocusEffect(
     React.useCallback(() => {
       if (session) {
-        console.log("foo");
         return () => {
-          console.log("moo");
-          setLoading(true);
-          const settingsJSON = {
-            cube_type: cubeType,
-            theme: themeChoice,
-            inspection_time: inspectionTime,
-            user_id: session.user.id,
-          };
-          pushSettings(settingsJSON);
+          if (changedFlag.current) {
+            setLoading(true);
+            pushSettings();
+          }
         };
       }
     }, [session])
@@ -147,7 +163,7 @@ export default function Settings() {
         <Switch
           value={inspectionTime}
           color={Theme[themeChoice].flair}
-          onValueChange={(value) => setInspectionTime(value)}
+          onValueChange={(value) => handleInspectionTimeChange(value)}
         />
       </View>
       <View style={styles.settingView}>
@@ -159,7 +175,10 @@ export default function Settings() {
         >
           Cube Type:
         </Text>
-        <CubeTypePicker themeChoice={themeChoice} />
+        <CubeTypePicker
+          themeChoice={themeChoice}
+          handleChange={handleCubeTypeChange}
+        />
       </View>
       <View style={styles.settingView}>
         <Text
@@ -188,7 +207,7 @@ export default function Settings() {
             value={themeChoice}
             items={themeOptions}
             setOpen={setThemeSelectorOpen}
-            onSelectItem={(item) => setThemeChoice(item.value)}
+            onSelectItem={(item) => setNewTheme(item.value)}
           />
         </View>
       </View>

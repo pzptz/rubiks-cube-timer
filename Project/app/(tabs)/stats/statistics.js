@@ -21,6 +21,7 @@ import CubeTypePicker from "@/components/CubeTypePicker";
 export default function Statistics() {
   const themeChoice = useContext(settings).themeChoice;
   const cubeType = useContext(settings).cubeType;
+  const setCubeType = useContext(settings).setCubeType;
   const session = useSession();
   const [tableData, setTableData] = useState([]); // for this screen
   const expectedUpdates = useRef(0);
@@ -172,6 +173,7 @@ export default function Statistics() {
       }
     }
   };
+
   useEffect(() => {
     fetchData();
     if (session) {
@@ -275,7 +277,7 @@ export default function Statistics() {
             Add Time
           </Text>
         </TouchableOpacity>
-        <CubeTypePicker themeChoice={themeChoice} />
+        <CubeTypePicker themeChoice={themeChoice} handleChange={setCubeType} />
       </View>
 
       {/* FlatList with Header */}

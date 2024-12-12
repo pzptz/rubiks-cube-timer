@@ -4,7 +4,7 @@ import { settings } from "@/assets/contexts";
 import DropDownPicker from "react-native-dropdown-picker";
 import Theme from "@/assets/theme";
 
-export default function CubeTypePicker({ themeChoice }) {
+export default function CubeTypePicker({ themeChoice, handleChange }) {
   const [cubeTypeSelectorOpen, setCubeTypeSelectorOpen] = useState(false);
   const setCubeType = useContext(settings).setCubeType;
   const cubeType = useContext(settings).cubeType;
@@ -14,9 +14,6 @@ export default function CubeTypePicker({ themeChoice }) {
     { label: "4x4x4", value: 4 },
     { label: "5x5x5", value: 5 },
   ];
-  const handleChange = (item) => {
-    setCubeType(item.value);
-  };
   return (
     <View style={styles.picker}>
       <DropDownPicker
@@ -36,7 +33,7 @@ export default function CubeTypePicker({ themeChoice }) {
         value={cubeType}
         items={cubeOptions}
         setOpen={setCubeTypeSelectorOpen}
-        onSelectItem={(item) => handleChange(item)}
+        onSelectItem={(item) => handleChange(item.value)}
       />
     </View>
   );

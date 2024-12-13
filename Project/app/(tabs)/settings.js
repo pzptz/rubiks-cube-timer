@@ -133,6 +133,9 @@ export default function Settings() {
       setTimeout(() => pushSettings(), 500);
     }
   };
+  const handleNewPassword = () => {
+    setIsModalVisible(true);
+  };
 
   useEffect(() => {
     loadSettings();
@@ -165,10 +168,6 @@ export default function Settings() {
   if (!session || loading) {
     return <Loading themeChoice={themeChoice} />;
   }
-
-  const handleNewPassword = () => {
-    router.push("/newpassword");
-  };
 
   return (
     <View

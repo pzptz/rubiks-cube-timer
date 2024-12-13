@@ -75,15 +75,20 @@ const ChangePasswordModal = ({ isVisible, onClose }) => {
   return (
     <Modal
       animationType="slide"
-      transparent={true}
+      transparent={false}
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <View style={styles.modalOverlay}>
+      <View
+        style={[
+          styles.modalOverlay,
+          { backgroundColor: Theme[themeChoice].dropDownBackground },
+        ]}
+      >
         <View
           style={[
             styles.modalContainer,
-            { backgroundColor: Theme[themeChoice].backgroundSecondary },
+            { backgroundColor: Theme[themeChoice].backgroundPrimary },
           ]}
         >
           <Text
@@ -100,6 +105,7 @@ const ChangePasswordModal = ({ isVisible, onClose }) => {
               {
                 borderColor: Theme[themeChoice].textSecondary,
                 color: Theme[themeChoice].textPrimary,
+                backgroundColor: Theme[themeChoice].inputBackground,
               },
             ]}
             placeholder="Current Password"
@@ -114,6 +120,7 @@ const ChangePasswordModal = ({ isVisible, onClose }) => {
               {
                 borderColor: Theme[themeChoice].textSecondary,
                 color: Theme[themeChoice].textPrimary,
+                backgroundColor: Theme[themeChoice].inputBackground,
               },
             ]}
             placeholder="New Password"
@@ -128,6 +135,7 @@ const ChangePasswordModal = ({ isVisible, onClose }) => {
               {
                 borderColor: Theme[themeChoice].textSecondary,
                 color: Theme[themeChoice].textPrimary,
+                backgroundColor: Theme[themeChoice].inputBackground,
               },
             ]}
             placeholder="Confirm New Password"

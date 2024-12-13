@@ -14,7 +14,7 @@ import Theme from "@/assets/theme";
 import { router } from "expo-router";
 import Loading from "@/components/Loading";
 
-export default function signup({ themeChoice = "Dark" }) {
+export default function Signup({ themeChoice = "Dark" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);

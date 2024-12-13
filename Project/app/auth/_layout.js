@@ -22,7 +22,6 @@ export default function StackLayout() {
   const session = useSession();
   return (
     <Stack>
-      {/* Main Statistics Screen */}
       <Stack.Screen
         name="signup"
         options={{
@@ -43,7 +42,7 @@ export default function StackLayout() {
           headerTitle: "Create Account",
         }}
       />
-      <Stack.Screen name="loginProxy" options={{ headerShown: false }} />
+      <Stack.Screen name="Login" options={{ headerShown: false }} />
     </Stack>
   );
 }

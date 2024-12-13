@@ -9,12 +9,10 @@ import {
   Image,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import db from "@/database/db";
 import Theme from "@/assets/theme";
 import { Link } from "expo-router";
-import Loading from "./Loading";
-
+import Loading from "@/components/Loading";
 export default function Login({ themeChoice = "Dark" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

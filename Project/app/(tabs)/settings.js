@@ -192,9 +192,37 @@ export default function Settings() {
             </Text>
           </TouchableOpacity>
         </View>
-        <Text style={[styles.text, { color: Theme[themeChoice].textPrimary }]}>
+        <Text
+          style={[
+            styles.text,
+            { paddingBottom: 8, color: Theme[themeChoice].textPrimary },
+          ]}
+        >
           {session.user.email}
         </Text>
+        {/* Change Password Row */}
+        <View
+          style={[
+            styles.settingView,
+            { borderBottomColor: Theme[themeChoice].textSecondary },
+          ]}
+        >
+          <Text
+            style={[
+              styles.text,
+              { padding: 12, color: Theme[themeChoice].textPrimary },
+            ]}
+          >
+            Change Password:
+          </Text>
+          <TouchableOpacity onPress={handleNewPassword}>
+            <Text
+              style={[styles.buttonText, { color: Theme[themeChoice].flair }]}
+            >
+              Change
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Inspection Time Setting */}
@@ -286,30 +314,6 @@ export default function Settings() {
         </View>
       </View>
 
-      {/* Change Password Row */}
-      <View
-        style={[
-          styles.settingView,
-          { borderBottomColor: Theme[themeChoice].textSecondary },
-        ]}
-      >
-        <Text
-          style={[
-            styles.text,
-            { padding: 12, color: Theme[themeChoice].textPrimary },
-          ]}
-        >
-          Change Password:
-        </Text>
-        <TouchableOpacity onPress={handleNewPassword}>
-          <Text
-            style={[styles.buttonText, { color: Theme[themeChoice].flair }]}
-          >
-            Change
-          </Text>
-        </TouchableOpacity>
-      </View>
-
       {/* Change Password Modal */}
       <ChangePasswordModal
         isVisible={isModalVisible}
@@ -327,7 +331,7 @@ const styles = StyleSheet.create({
   },
   userContainer: {
     width: "100%",
-    marginBottom: 24,
+    marginBottom: 36,
   },
   userTextContainer: {
     flexDirection: "row",

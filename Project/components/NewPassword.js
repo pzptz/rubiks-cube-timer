@@ -82,13 +82,13 @@ const ChangePasswordModal = ({ isVisible, onClose }) => {
       <View
         style={[
           styles.modalOverlay,
-          { backgroundColor: Theme[themeChoice].dropDownBackground },
+          { backgroundColor: Theme[themeChoice].backgroundPrimary },
         ]}
       >
         <View
           style={[
             styles.modalContainer,
-            { backgroundColor: Theme[themeChoice].backgroundPrimary },
+            { backgroundColor: Theme[themeChoice].dropDownBackground },
           ]}
         >
           <Text

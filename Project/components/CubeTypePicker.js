@@ -43,6 +43,6 @@ export default function CubeTypePicker({ themeChoice, handleChange }) {
 }
 const styles = StyleSheet.create({
   picker: {
-    width: "30%",
+    width: 110,
   },
 });

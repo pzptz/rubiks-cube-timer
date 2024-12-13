@@ -11,33 +11,14 @@ import { StatusBar } from "expo-status-bar";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import db from "@/database/db";
 import Theme from "@/assets/theme";
+import { router } from "expo-router";
+import Loading from "@/components/Loading";
 
-export default function Login({ themeChoice = "Dark" }) {
+export default function Signup({ themeChoice = "Dark" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const theme = Theme[themeChoice];
-  const signInWithEmail = async () => {
-    setLoading(true);
-    try {
-      const { data, error } = await db.auth.signInWithPassword({
-        email,
-        password,
-        options: {
-          shouldCreateUser: false,
-        },
-      });
-
-      if (error) {
-        Alert.alert(error.message);
-      }
-      setLoading(false);
-    } catch (err) {
-      console.error(err);
-      // Should not force here, because that could be an infinite loop with invalid shit
-      setLoading(false);
-    }
-  };
 
   const signUpWithEmail = async () => {
     setLoading(true);
@@ -51,18 +32,20 @@ export default function Login({ themeChoice = "Dark" }) {
         Alert.alert("Sign Up Failed", error.message);
       } else {
         Alert.alert("Success", "Account created successfully!");
+        router.back();
       }
       setLoading(false);
     } catch (err) {
-      console.error(err);
+      console.log(err);
       Alert.alert("Error", "Something went wrong during sign-up.");
       setLoading(false);
     }
   };
-
   const isSignInDisabled =
     loading || email.length === 0 || password.length === 0;
-
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <View
       style={[styles.container, { backgroundColor: theme.backgroundPrimary }]}
@@ -73,7 +56,7 @@ export default function Login({ themeChoice = "Dark" }) {
       </View>
       <View style={styles.splash}>
         <Text style={[styles.splashText, { color: theme.textPrimary }]}>
-          RubikTime
+          Sign Up
         </Text>
       </View>
       <TextInput
@@ -105,24 +88,18 @@ export default function Login({ themeChoice = "Dark" }) {
           },
         ]}
       />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={signInWithEmail} disabled={isSignInDisabled}>
+      <View style={{ width: "40%", alignItems: "center", padding: 16 }}>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: Theme[themeChoice].flair }]}
+          onPress={signUpWithEmail}
+        >
           <Text
             style={[
-              styles.button,
-              isSignInDisabled
-                ? { color: Theme[themeChoice].textSecondary }
-                : { color: Theme[themeChoice].flair },
+              styles.buttonText,
+              { color: Theme[themeChoice].textPrimary },
             ]}
           >
-            Sign in
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={signUpWithEmail}>
-          <Text style={[styles.button, { color: Theme[themeChoice].flair }]}>
-            Sign up
+            Submit
           </Text>
         </TouchableOpacity>
       </View>
@@ -135,6 +112,7 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     padding: 12,
     flex: 1,
+    alignItems: "center",
   },
   splash: {
     alignItems: "center",
@@ -143,7 +121,7 @@ const styles = StyleSheet.create({
   splashText: {
     fontWeight: "bold",
 
-    fontSize: 60,
+    fontSize: 36,
   },
   buttonContainer: {
     marginTop: 12,
@@ -155,8 +133,14 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   button: {
-    fontSize: 18,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 40,
+    width: "100%",
+  },
+  buttonText: {
     fontWeight: "bold",
-    padding: 8,
+    fontSize: Theme.text.textMedium,
   },
 });

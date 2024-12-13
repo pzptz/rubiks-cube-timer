@@ -148,18 +148,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   formGroup: {
-    padding: 24,
+    paddingHorizontal: 24,
+    paddingVertical: 16,
   },
   cubeGroup: {
     paddingHorizontal: 24,
-    paddingVertical: 12,
+    paddingTop: 24,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
   label: {
     fontSize: Theme.text.textMedium,
-    marginBottom: 8,
+    paddingVertical: 8,
   },
   input: {
     borderWidth: 1,

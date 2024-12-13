@@ -37,6 +37,12 @@ export default function Settings() {
       value: key,
     }));
   const [themeSelectorOpen, setThemeSelectorOpen] = useState(false);
+  const handleSignOut = async () => {
+    if (changedFlag.current) {
+      await pushSettings();
+    }
+    await signOut();
+  };
   const signOut = async () => {
     setLoading(true);
     try {
@@ -106,6 +112,8 @@ export default function Settings() {
           throw error;
         }
         setLoading(false);
+        // No need to push things after we've successfully pushed
+        changedFlag.current = false;
       }
     } catch (error) {
       console.log(error);
@@ -156,7 +164,7 @@ export default function Settings() {
           >
             Logged in as:{" "}
           </Text>
-          <TouchableOpacity onPress={() => signOut()}>
+          <TouchableOpacity onPress={() => handleSignOut()}>
             <Text
               style={[styles.buttonText, { color: Theme[themeChoice].flair }]}
             >

@@ -28,9 +28,7 @@ const Time = ({ solve, onPress, themeChoice }) => {
         <Text
           style={[styles.aoText, { color: Theme[themeChoice].textSecondary }]}
         >
-          {solve.ao5 !== null && solve.ao5 !== undefined
-            ? millisToTime(solve.ao5)
-            : "-"}
+          {millisToTime(solve.ao5)}
         </Text>
       </View>
 
@@ -39,9 +37,7 @@ const Time = ({ solve, onPress, themeChoice }) => {
         <Text
           style={[styles.aoText, { color: Theme[themeChoice].textSecondary }]}
         >
-          {solve.ao12 !== null && solve.ao12 !== undefined
-            ? millisToTime(solve.ao12)
-            : "-"}
+          {millisToTime(solve.ao12)}
         </Text>
       </View>
     </TouchableOpacity>

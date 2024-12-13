@@ -139,6 +139,9 @@ export default function Main() {
 
   // Format time into minutes, seconds, and milliseconds (mm:ss:ms)
   const formatTime = (time) => {
+    if (time == null || time == undefined) {
+      return "--:---";
+    }
     if (time < 0) {
       return "DNF";
     }

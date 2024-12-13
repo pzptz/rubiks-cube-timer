@@ -3,6 +3,13 @@ export default function millisToTime(
   penalty = 0,
   decimals = 3
 ) {
+  if (
+    time_with_penalty == undefined ||
+    time_with_penalty == null ||
+    Number.isNaN(time_with_penalty)
+  ) {
+    return "-";
+  }
   if (time_with_penalty < 0 || penalty == 2) {
     return "DNF";
   }

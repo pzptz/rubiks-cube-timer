@@ -81,12 +81,12 @@ export default function Details() {
 
   const fetchSolve = () => {
     const data = {
-      time: time,
-      ao5: ao5,
-      ao12: ao12,
+      time: Number(time),
+      ao5: Number(ao5),
+      ao12: Number(ao12),
       scramble: scramble,
       created_at: created_at,
-      cube_type: cube_type,
+      cube_type: Number(cube_type),
     };
     setSolve(data);
   };
@@ -179,21 +179,13 @@ export default function Details() {
         <Text style={styles.label}>Scramble</Text>
         <Text style={styles.value}>{scramble}</Text>
         <Text style={styles.label}>Time (s)</Text>
-        <Text style={styles.value}>{millisToTime(time, penalty)}</Text>
+        <Text style={styles.value}>{millisToTime(solve.time, penalty)}</Text>
 
         <Text style={styles.label}>ao5 (s)</Text>
-        <Text style={styles.value}>
-          {solve.ao5 !== null && solve.ao5 !== undefined
-            ? millisToTime(ao5)
-            : "-"}
-        </Text>
+        <Text style={styles.value}>{millisToTime(solve.ao5)}</Text>
 
         <Text style={styles.label}>ao12 (s)</Text>
-        <Text style={styles.value}>
-          {solve.ao12 !== null && solve.ao12 !== undefined
-            ? millisToTime(ao12)
-            : "-"}
-        </Text>
+        <Text style={styles.value}>{millisToTime(solve.ao12)}</Text>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => setPenalty(0)}>

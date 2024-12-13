@@ -37,7 +37,7 @@ export default function Login({ themeChoice = "Dark" }) {
     } catch (err) {
       console.log(err);
       Alert.alert("Error", "Failed to log in");
-      // Should not force here, because that could be an infinite loop with invalid shit
+      // Should not force here, because that could be an infinite loop with invalid stuff
       setLoading(false);
     }
   };
@@ -55,7 +55,11 @@ export default function Login({ themeChoice = "Dark" }) {
       >
         <StatusBar style="light" />
         <View style={styles.splash}>
-          <Image size={50} source={require("@/assets/cube.png")} />
+          <Image
+            source={require("@/assets/cube.png")}
+            style={styles.image}
+            resizeMode="contain"
+          />
         </View>
         <View style={styles.splash}>
           <Text style={[styles.splashText, { color: theme.textPrimary }]}>
@@ -148,5 +152,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     padding: 8,
+  },
+  image: {
+    width: 60,
+    height: 60,
   },
 });

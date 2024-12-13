@@ -6,6 +6,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -52,7 +53,11 @@ export default function Signup({ themeChoice = "Dark" }) {
     >
       <StatusBar style="light" />
       <View style={styles.splash}>
-        <FontAwesome size={50} name="cube" color={theme.flair} />
+        <Image
+          source={require("@/assets/cube.png")}
+          style={styles.image}
+          resizeMode="contain"
+        />
       </View>
       <View style={styles.splash}>
         <Text style={[styles.splashText, { color: theme.textPrimary }]}>
@@ -142,5 +147,9 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: "bold",
     fontSize: Theme.text.textMedium,
+  },
+  image: {
+    width: 60,
+    height: 60,
   },
 });

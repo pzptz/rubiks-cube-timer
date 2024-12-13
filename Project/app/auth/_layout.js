@@ -31,7 +31,7 @@ export default function StackLayout() {
           ),
         }}
       />
-      <Stack.Screen name="Login" options={{ headerShown: false }} />
+      <Stack.Screen name="login" options={{ headerShown: false }} />
     </Stack>
   );
 }

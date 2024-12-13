@@ -200,29 +200,36 @@ export default function Settings() {
         >
           {session.user.email}
         </Text>
-        {/* Change Password Row */}
-        <View
+      </View>
+
+      {/* Change Password Row */}
+      <View
+        style={[
+          styles.settingView,
+          { borderBottomColor: Theme[themeChoice].textSecondary },
+        ]}
+      >
+        <Text
           style={[
-            styles.settingView,
-            { borderBottomColor: Theme[themeChoice].textSecondary },
+            styles.text,
+            { padding: 12, color: Theme[themeChoice].textPrimary },
           ]}
+        >
+          Change Password:
+        </Text>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: Theme[themeChoice].flair }]}
+          onPress={handleNewPassword}
         >
           <Text
             style={[
-              styles.text,
-              { padding: 12, color: Theme[themeChoice].textPrimary },
+              styles.buttonText,
+              { color: Theme[themeChoice].textPrimary },
             ]}
           >
-            Change Password:
+            Change
           </Text>
-          <TouchableOpacity onPress={handleNewPassword}>
-            <Text
-              style={[styles.buttonText, { color: Theme[themeChoice].flair }]}
-            >
-              Change
-            </Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </View>
 
       {/* Inspection Time Setting */}
@@ -347,6 +354,14 @@ const styles = StyleSheet.create({
     fontSize: Theme.text.textMedium,
     paddingLeft: 8,
     fontWeight: "bold",
+  },
+  button: {
+    paddingVertical: 8,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    width: "30%",
   },
   buttonText: {
     fontWeight: "bold",

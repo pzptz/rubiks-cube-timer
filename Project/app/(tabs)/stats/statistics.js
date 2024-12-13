@@ -215,6 +215,16 @@ export default function Statistics() {
       setTimeout(() => confirmDeleteAll(), 500);
     }
   };
+  const needFetch = () => {
+    let lastSeen = 0;
+    for (let i = 0; i < tableBufferRef.current.length; i++) {
+      if (tableBufferRef.current[i].id == lastSeen) {
+        return true;
+      }
+      lastSeen = tableBufferRef.current[i].id;
+    }
+    return false;
+  };
   useEffect(() => {
     fetchData();
     if (session) {
@@ -273,8 +283,16 @@ export default function Statistics() {
   useFocusEffect(
     React.useCallback(() => {
       shouldRender.current = true;
-      setTableData([...tableBufferRef.current.reverse(), ...dataRef.current]);
-      tableBufferRef.current = [];
+      tableBufferRef.current = [
+        ...tableBufferRef.current.reverse(),
+        ...dataRef.current,
+      ];
+      if (needFetch()) {
+        fetchData(latestRequest);
+      } else {
+        setTableData(tableBufferRef.current);
+        tableBufferRef.current = [];
+      }
       return () => {
         shouldRender.current = false;
         // Do something when the screen is unfocused

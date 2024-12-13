@@ -42,6 +42,12 @@ export default function Settings() {
   // Modal visibility state
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  const handleSignOut = async () => {
+    if (changedFlag.current) {
+      await pushSettings();
+    }
+    signOut();
+  };
   const signOut = async () => {
     setLoading(true);
     try {
@@ -53,8 +59,7 @@ export default function Settings() {
         router.navigate("/");
         Alert.alert("Sign out successful.");
       }
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
       // Keep trying until sign out
       setTimeout(() => signOut(), 500);
     }
@@ -76,6 +81,7 @@ export default function Settings() {
   };
 
   const loadSettings = async () => {
+    setLoading(true);
     try {
       if (session) {
         // Fetch user settings from the database
@@ -87,11 +93,16 @@ export default function Settings() {
         if (error) {
           throw error;
         }
-
+        if (data[0]) {
+          setInspectionTime(data[0].inspection_time);
+          setThemeChoice(data[0].theme);
+          setCubeType(data[0].cube_type);
+        } else {
+          setInspectionTime(false);
+          setThemeChoice("Dark");
+          setCubeType(3);
+        }
         setLoading(false);
-        setInspectionTime(data[0].inspection_time);
-        setThemeChoice(data[0].theme);
-        setCubeType(data[0].cube_type);
       }
     } catch (error) {
       console.log(error);
@@ -113,6 +124,8 @@ export default function Settings() {
         }
 
         setLoading(false);
+        // No need to push things after we've successfully pushed
+        changedFlag.current = false;
       }
     } catch (error) {
       console.log(error);
@@ -172,7 +185,7 @@ export default function Settings() {
           >
             Logged in as:{" "}
           </Text>
-          <TouchableOpacity onPress={() => signOut()}>
+          <TouchableOpacity onPress={() => handleSignOut()}>
             <Text
               style={[styles.buttonText, { color: Theme[themeChoice].flair }]}
             >

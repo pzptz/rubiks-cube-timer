@@ -174,6 +174,10 @@ export default function Statistics() {
     }
   };
   const handleDeleteAll = () => {
+    if (tableData.length === 0) {
+      Alert.alert("No Records", "There are no records to delete.");
+      return;
+    }
     if (session) {
       Alert.alert(
         "Confirm Deletion",

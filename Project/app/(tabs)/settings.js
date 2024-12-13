@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import React from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { useRouter, useFocusEffect } from "expo-router";
 import { Switch } from "@rneui/themed";
 import Theme from "@/assets/theme";
@@ -15,8 +15,9 @@ import CubeTypePicker from "@/components/CubeTypePicker";
 import db from "@/database/db";
 import useSession from "@/utils/useSession";
 import { settings, loadingContext } from "@/assets/contexts";
-import { useContext, useEffect, useState, useRef } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
+import ChangePasswordModal from "@/components/NewPassword";
+
 export default function Settings() {
   const session = useSession();
   const themeChoice = useContext(settings).themeChoice;
@@ -37,6 +38,10 @@ export default function Settings() {
       value: key,
     }));
   const [themeSelectorOpen, setThemeSelectorOpen] = useState(false);
+
+  // Modal visibility state
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const signOut = async () => {
     setLoading(true);
     try {
@@ -54,29 +59,35 @@ export default function Settings() {
       setTimeout(() => signOut(), 500);
     }
   };
+
   const handleCubeTypeChange = (newCubeType) => {
     changedFlag.current = true;
     setCubeType(newCubeType);
   };
+
   const handleInspectionTimeChange = (shouldHaveIT) => {
     changedFlag.current = true;
     setInspectionTime(shouldHaveIT);
   };
+
   const setNewTheme = (newTheme) => {
     changedFlag.current = true;
     setThemeChoice(newTheme);
   };
+
   const loadSettings = async () => {
     try {
       if (session) {
-        // list of jsons, each with fields {id, created_at, user_id, cube_type, scramble, time, ao5, ao12}
+        // Fetch user settings from the database
         const { data, error } = await db
           .from("settings")
           .select()
           .eq("user_id", session.user.id);
+
         if (error) {
           throw error;
         }
+
         setLoading(false);
         setInspectionTime(data[0].inspection_time);
         setThemeChoice(data[0].theme);
@@ -84,31 +95,36 @@ export default function Settings() {
       }
     } catch (error) {
       console.log(error);
-      // This is to guarantee we get the data, eventually we'll remove this log but it's to avoid internet errors
+      // Retry fetching settings after a delay
       setTimeout(() => loadSettings(), 500);
     }
   };
+
   const pushSettings = async () => {
     try {
       if (session) {
-        // list of jsons, each with fields {id, created_at, user_id, cube_type, scramble, time, ao5, ao12}
+        // Upsert user settings into the database
         const { data, error } = await db
           .from("settings")
           .upsert(settingsRef.current, { onConflict: "user_id" });
+
         if (error) {
           throw error;
         }
+
         setLoading(false);
       }
     } catch (error) {
       console.log(error);
-      // This is to guarantee we get the data, eventually we'll remove this log but it's to avoid internet errors
+      // Retry pushing settings after a delay
       setTimeout(() => pushSettings(), 500);
     }
   };
+
   useEffect(() => {
     loadSettings();
   }, [session]);
+
   useEffect(() => {
     if (session) {
       settingsRef.current = {
@@ -119,6 +135,7 @@ export default function Settings() {
       };
     }
   }, [themeChoice, cubeType, inspectionTime]);
+
   useFocusEffect(
     React.useCallback(() => {
       if (session) {
@@ -131,9 +148,14 @@ export default function Settings() {
       }
     }, [session])
   );
+
   if (!session || loading) {
     return <Loading themeChoice={themeChoice} />;
   }
+
+  const handleNewPassword = () => {
+    router.push("/newpassword");
+  };
 
   return (
     <View
@@ -142,6 +164,7 @@ export default function Settings() {
         { backgroundColor: Theme[themeChoice].backgroundPrimary },
       ]}
     >
+      {/* User Information */}
       <View style={styles.userContainer}>
         <View style={styles.userTextContainer}>
           <Text
@@ -161,6 +184,8 @@ export default function Settings() {
           {session.user.email}
         </Text>
       </View>
+
+      {/* Inspection Time Setting */}
       <View
         style={[
           styles.settingView,
@@ -183,10 +208,11 @@ export default function Settings() {
           onValueChange={(value) => handleInspectionTimeChange(value)}
         />
       </View>
+
+      {/* Cube Type Setting */}
       <View
         style={[
           styles.settingView,
-          ,
           { zIndex: 5, borderBottomColor: Theme[themeChoice].textSecondary },
         ]}
       >
@@ -203,6 +229,8 @@ export default function Settings() {
           handleChange={handleCubeTypeChange}
         />
       </View>
+
+      {/* Theme Setting */}
       <View
         style={[
           styles.settingView,
@@ -245,6 +273,36 @@ export default function Settings() {
           />
         </View>
       </View>
+
+      {/* Change Password Row */}
+      <View
+        style={[
+          styles.settingView,
+          { borderBottomColor: Theme[themeChoice].textSecondary },
+        ]}
+      >
+        <Text
+          style={[
+            styles.text,
+            { padding: 12, color: Theme[themeChoice].textPrimary },
+          ]}
+        >
+          Change Password:
+        </Text>
+        <TouchableOpacity onPress={handleNewPassword}>
+          <Text
+            style={[styles.buttonText, { color: Theme[themeChoice].flair }]}
+          >
+            Change
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Change Password Modal */}
+      <ChangePasswordModal
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+      />
     </View>
   );
 }

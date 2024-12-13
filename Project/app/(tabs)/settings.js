@@ -67,6 +67,7 @@ export default function Settings() {
     setThemeChoice(newTheme);
   };
   const loadSettings = async () => {
+    setLoading(true);
     try {
       if (session) {
         // list of jsons, each with fields {id, created_at, user_id, cube_type, scramble, time, ao5, ao12}
@@ -77,10 +78,16 @@ export default function Settings() {
         if (error) {
           throw error;
         }
+        if (data[0]) {
+          setInspectionTime(data[0].inspection_time);
+          setThemeChoice(data[0].theme);
+          setCubeType(data[0].cube_type);
+        } else {
+          setInspectionTime(false);
+          setThemeChoice("Dark");
+          setCubeType(3);
+        }
         setLoading(false);
-        setInspectionTime(data[0].inspection_time);
-        setThemeChoice(data[0].theme);
-        setCubeType(data[0].cube_type);
       }
     } catch (error) {
       console.log(error);

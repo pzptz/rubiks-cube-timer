@@ -6,38 +6,38 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Image,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import db from "@/database/db";
 import Theme from "@/assets/theme";
-import { Link } from "expo-router";
-import Loading from "./Loading";
+import { router } from "expo-router";
+import Loading from "@/components/Loading";
 
-export default function Login({ themeChoice = "Dark" }) {
+export default function signup({ themeChoice = "Dark" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const theme = Theme[themeChoice];
-  const signInWithEmail = async () => {
+
+  const signUpWithEmail = async () => {
     setLoading(true);
     try {
-      const { data, error } = await db.auth.signInWithPassword({
+      const { data, error } = await db.auth.signUp({
         email,
         password,
-        options: {
-          shouldCreateUser: false,
-        },
       });
+
       if (error) {
-        Alert.alert(error.message);
+        Alert.alert("Sign Up Failed", error.message);
+      } else {
+        Alert.alert("Success", "Account created successfully!");
+        router.back();
       }
       setLoading(false);
     } catch (err) {
       console.log(err);
-      Alert.alert("Error", "Failed to log in");
-      // Should not force here, because that could be an infinite loop with invalid shit
+      Alert.alert("Error", "Something went wrong during sign-up.");
       setLoading(false);
     }
   };
@@ -52,11 +52,11 @@ export default function Login({ themeChoice = "Dark" }) {
     >
       <StatusBar style="light" />
       <View style={styles.splash}>
-        <Image size={50} source={require("@/assets/cube.png")} />
+        <FontAwesome size={50} name="cube" color={theme.flair} />
       </View>
       <View style={styles.splash}>
         <Text style={[styles.splashText, { color: theme.textPrimary }]}>
-          Rubik's Stopwatch
+          Sign Up
         </Text>
       </View>
       <TextInput
@@ -88,26 +88,20 @@ export default function Login({ themeChoice = "Dark" }) {
           },
         ]}
       />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={signInWithEmail} disabled={isSignInDisabled}>
+      <View style={{ width: "40%", alignItems: "center", padding: 16 }}>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: Theme[themeChoice].flair }]}
+          onPress={signUpWithEmail}
+        >
           <Text
             style={[
-              styles.button,
-              isSignInDisabled
-                ? { color: Theme[themeChoice].textSecondary }
-                : { color: Theme[themeChoice].flair },
+              styles.buttonText,
+              { color: Theme[themeChoice].textPrimary },
             ]}
           >
-            Sign in
+            Submit
           </Text>
         </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Link href="/auth/signup">
-          <Text style={[styles.button, { color: Theme[themeChoice].flair }]}>
-            Sign up
-          </Text>
-        </Link>
       </View>
     </View>
   );
@@ -118,6 +112,7 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     padding: 12,
     flex: 1,
+    alignItems: "center",
   },
   splash: {
     alignItems: "center",
@@ -138,8 +133,14 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   button: {
-    fontSize: 18,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 40,
+    width: "100%",
+  },
+  buttonText: {
     fontWeight: "bold",
-    padding: 8,
+    fontSize: Theme.text.textMedium,
   },
 });

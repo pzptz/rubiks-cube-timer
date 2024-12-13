@@ -38,7 +38,6 @@ export default function Statistics() {
     return b.id - a.id;
   };
   const fetchData = async (initialEnd = 100) => {
-    setLoading(true);
     try {
       if (session) {
         console.log("Fetching data");
@@ -53,7 +52,6 @@ export default function Statistics() {
         if (error) {
           throw error;
         }
-        setLoading(false);
         setTableData(data);
         if (data && data.length > 0) {
           setAverages({ ao5: data[0].ao5, ao12: data[0].ao12 });

@@ -5,7 +5,7 @@ import { View, Text, Alert, SafeAreaView } from "react-native";
 import Login from "@/components/Login";
 import db from "@/database/db";
 import Loading from "@/components/Loading";
-
+import loginProxy from "./auth/loginProxy";
 export default function App() {
   const [session, setSession] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Default to true for initial load
@@ -32,6 +32,6 @@ export default function App() {
   } else if (isLoading) {
     return <Loading />;
   } else {
-    return <Login />;
+    return <loginProxy />;
   }
 }

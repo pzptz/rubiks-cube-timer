@@ -34,7 +34,7 @@ export default function NewTime() {
       return;
     }
 
-    // Convert time to milliseconds (assuming time is in seconds)
+    // Convert time to milliseconds
     const timeMs = parseFloat(time) * 1000;
     setLoading(true);
     try {
@@ -44,7 +44,7 @@ export default function NewTime() {
           scramble: scramble != "" ? scramble.trim() : "Manually inserted time",
           time: timeMs,
           time_with_penalty: timeMs,
-          ao5: null, // You might want to recalculate averages after insertion
+          ao5: null,
           ao12: null,
           cube_type: cubeType,
         },
@@ -54,7 +54,6 @@ export default function NewTime() {
         throw error;
       }
 
-      // Optionally, refetch data or update averages here
       setLoading(false);
       Alert.alert("Success", "New solve time added.");
       router.back();
@@ -73,21 +72,13 @@ export default function NewTime() {
         { backgroundColor: Theme[themeChoice].backgroundPrimary },
       ]}
     >
-      <View style={{ paddingVertical: 24 }}>
+      <View style={styles.cubeGroup}>
         <Text
-          style={[
-            styles.label,
-            { paddingHorizontal: 24, color: Theme[themeChoice].textSecondary },
-          ]}
+          style={[styles.label, { color: Theme[themeChoice].textSecondary }]}
         >
           Cube Type:
         </Text>
-        <View style={styles.cubeType}>
-          <CubeTypePicker
-            themeChoice={themeChoice}
-            handleChange={setCubeType}
-          />
-        </View>
+        <CubeTypePicker themeChoice={themeChoice} handleChange={setCubeType} />
       </View>
 
       <View style={styles.formGroup}>
@@ -157,12 +148,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   formGroup: {
-    paddingVertical: 24,
     paddingHorizontal: 24,
+    paddingVertical: 16,
+  },
+  cubeGroup: {
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   label: {
     fontSize: Theme.text.textMedium,
-    marginBottom: 8,
+    paddingVertical: 8,
   },
   input: {
     borderWidth: 1,

@@ -41,7 +41,7 @@ export default function Settings() {
     if (changedFlag.current) {
       await pushSettings();
     }
-    await signOut();
+    signOut();
   };
   const signOut = async () => {
     setLoading(true);
@@ -54,8 +54,7 @@ export default function Settings() {
         router.navigate("/");
         Alert.alert("Sign out successful.");
       }
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
       // Keep trying until sign out
       setTimeout(() => signOut(), 500);
     }

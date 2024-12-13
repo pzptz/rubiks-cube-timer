@@ -38,6 +38,7 @@ export default function Statistics() {
     return b.id - a.id;
   };
   const fetchData = async (initialEnd = 100) => {
+    setLoading(true);
     try {
       if (session) {
         console.log("Fetching data");
@@ -52,6 +53,7 @@ export default function Statistics() {
         if (error) {
           throw error;
         }
+        setLoading(false);
         setTableData(data);
         if (data && data.length > 0) {
           setAverages({ ao5: data[0].ao5, ao12: data[0].ao12 });
@@ -209,6 +211,16 @@ export default function Statistics() {
       setTimeout(() => confirmDeleteAll(), 500);
     }
   };
+  const needFetch = () => {
+    let lastSeen = 0;
+    for (let i = 0; i < tableBufferRef.current.length; i++) {
+      if (tableBufferRef.current[i].id == lastSeen) {
+        return true;
+      }
+      lastSeen = tableBufferRef.current[i].id;
+    }
+    return false;
+  };
   useEffect(() => {
     fetchData();
     if (session) {
@@ -267,8 +279,16 @@ export default function Statistics() {
   useFocusEffect(
     React.useCallback(() => {
       shouldRender.current = true;
-      setTableData([...tableBufferRef.current.reverse(), ...dataRef.current]);
-      tableBufferRef.current = [];
+      tableBufferRef.current = [
+        ...tableBufferRef.current.reverse(),
+        ...dataRef.current,
+      ];
+      if (needFetch()) {
+        fetchData(latestRequest);
+      } else {
+        setTableData(tableBufferRef.current);
+        tableBufferRef.current = [];
+      }
       return () => {
         shouldRender.current = false;
         // Do something when the screen is unfocused

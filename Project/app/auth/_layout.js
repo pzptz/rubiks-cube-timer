@@ -1,6 +1,5 @@
 import { Stack } from "expo-router";
 import { StyleSheet, Button } from "react-native";
-import useSession from "@/utils/useSession";
 import { useRouter } from "expo-router";
 import Theme from "@/assets/theme";
 
@@ -12,21 +11,24 @@ export default function StackLayout() {
       <Stack.Screen
         name="signup"
         options={{
-          headerLeft: () => (
-            <Button
-              color={Theme[defaultTheme].flair}
-              title="Cancel"
-              onPress={() => router.back()}
-            />
-          ),
+          headerTitleAlign: "center",
+          presentation: "modal",
+          headerTitle: "Create Account",
+          headerTintColor: Theme[defaultTheme].flair,
           headerStyle: {
             backgroundColor: Theme[defaultTheme].backgroundPrimary,
           },
           headerTitleStyle: {
             color: Theme[defaultTheme].textPrimary,
+            fontWeight: "bold",
           },
-          headerTitle: "Create Account",
-          presentation: "modal",
+          headerLeft: () => (
+            <Button
+              title="Cancel"
+              onPress={() => router.back()}
+              color={Theme[defaultTheme].flair}
+            />
+          ),
         }}
       />
       <Stack.Screen name="Login" options={{ headerShown: false }} />

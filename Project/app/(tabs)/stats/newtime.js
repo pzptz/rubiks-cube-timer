@@ -73,9 +73,12 @@ export default function NewTime() {
         { backgroundColor: Theme[themeChoice].backgroundPrimary },
       ]}
     >
-      <View style={styles.formGroup}>
+      <View style={{ paddingVertical: 24 }}>
         <Text
-          style={[styles.label, { color: Theme[themeChoice].textSecondary }]}
+          style={[
+            styles.label,
+            { paddingHorizontal: 24, color: Theme[themeChoice].textSecondary },
+          ]}
         >
           Cube Type:
         </Text>
@@ -154,7 +157,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   formGroup: {
-    padding: 24,
+    paddingVertical: 24,
+    paddingHorizontal: 24,
   },
   label: {
     fontSize: Theme.text.textMedium,

@@ -11,13 +11,15 @@ import {
 import { StatusBar } from "expo-status-bar";
 import db from "@/database/db";
 import Theme from "@/assets/theme";
-import { router } from "expo-router";
+import { router, Redirect } from "expo-router";
 import Loading from "@/components/Loading";
+import useSession from "../../utils/useSession";
 export default function Login({ themeChoice = "Dark" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const theme = Theme[themeChoice];
+  const session = useSession();
   const signInWithEmail = async () => {
     setLoading(true);
     try {
@@ -44,71 +46,78 @@ export default function Login({ themeChoice = "Dark" }) {
   if (loading) {
     return <Loading />;
   }
-  return (
-    <View
-      style={[styles.container, { backgroundColor: theme.backgroundPrimary }]}
-    >
-      <StatusBar style="light" />
-      <View style={styles.splash}>
-        <Image size={50} source={require("@/assets/cube.png")} />
-      </View>
-      <View style={styles.splash}>
-        <Text style={[styles.splashText, { color: theme.textPrimary }]}>
-          Rubik's Stopwatch
-        </Text>
-      </View>
-      <TextInput
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        placeholder="email@address.com"
-        placeholderTextColor={theme.textSecondary}
-        autoCapitalize={"none"}
-        style={[
-          styles.input,
-          {
-            color: theme.textPrimary,
-            backgroundColor: theme.inputBackground,
-          },
-        ]}
-      />
-      <TextInput
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-        placeholder="Password"
-        placeholderTextColor={theme.textSecondary}
-        secureTextEntry={true}
-        autoCapitalize={"none"}
-        style={[
-          styles.input,
-          {
-            color: theme.textPrimary,
-            backgroundColor: theme.inputBackground,
-          },
-        ]}
-      />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={signInWithEmail} disabled={isSignInDisabled}>
-          <Text
-            style={[
-              styles.button,
-              isSignInDisabled
-                ? { color: Theme[themeChoice].textSecondary }
-                : { color: Theme[themeChoice].flair },
-            ]}
+  if (session) {
+    return <Redirect href="/" />;
+  } else {
+    return (
+      <View
+        style={[styles.container, { backgroundColor: theme.backgroundPrimary }]}
+      >
+        <StatusBar style="light" />
+        <View style={styles.splash}>
+          <Image size={50} source={require("@/assets/cube.png")} />
+        </View>
+        <View style={styles.splash}>
+          <Text style={[styles.splashText, { color: theme.textPrimary }]}>
+            Rubik's Stopwatch
+          </Text>
+        </View>
+        <TextInput
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+          placeholder="email@address.com"
+          placeholderTextColor={theme.textSecondary}
+          autoCapitalize={"none"}
+          style={[
+            styles.input,
+            {
+              color: theme.textPrimary,
+              backgroundColor: theme.inputBackground,
+            },
+          ]}
+        />
+        <TextInput
+          onChangeText={(text) => setPassword(text)}
+          value={password}
+          placeholder="Password"
+          placeholderTextColor={theme.textSecondary}
+          secureTextEntry={true}
+          autoCapitalize={"none"}
+          style={[
+            styles.input,
+            {
+              color: theme.textPrimary,
+              backgroundColor: theme.inputBackground,
+            },
+          ]}
+        />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={signInWithEmail}
+            disabled={isSignInDisabled}
           >
-            Sign in
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={[
+                styles.button,
+                isSignInDisabled
+                  ? { color: Theme[themeChoice].textSecondary }
+                  : { color: Theme[themeChoice].flair },
+              ]}
+            >
+              Sign in
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={() => router.push("/auth/signup")}>
+            <Text style={[styles.button, { color: Theme[themeChoice].flair }]}>
+              Sign up
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => router.push("/auth/signup")}>
-          <Text style={[styles.button, { color: Theme[themeChoice].flair }]}>
-            Sign up
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({

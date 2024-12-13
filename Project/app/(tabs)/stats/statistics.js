@@ -18,6 +18,7 @@ import { useRouter, useFocusEffect } from "expo-router";
 import Time from "@/components/Time";
 import Loading from "@/components/Loading";
 import CubeTypePicker from "@/components/CubeTypePicker";
+
 export default function Statistics() {
   const themeChoice = useContext(settings).themeChoice;
   const cubeType = useContext(settings).cubeType;

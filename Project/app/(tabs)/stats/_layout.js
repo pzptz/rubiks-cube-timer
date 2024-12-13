@@ -55,7 +55,6 @@ export default function StackLayout() {
       />
 
       {/* Insert Time Screen */}
-      {/*TODO: add headerRight and replace Add Solve Time button in newtime*/}
       <Stack.Screen
         name="newtime"
         options={{

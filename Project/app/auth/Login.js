@@ -14,6 +14,7 @@ import Theme from "@/assets/theme";
 import { router, Redirect } from "expo-router";
 import Loading from "@/components/Loading";
 import useSession from "../../utils/useSession";
+
 export default function Login({ themeChoice = "Dark" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

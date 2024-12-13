@@ -3,6 +3,7 @@ import Theme from "@/assets/theme";
 import { settings } from "@/assets/contexts";
 import { useContext } from "react";
 import { StyleSheet, SafeAreaView, Text, View } from "react-native";
+
 export default function StackLayout() {
   const themeChoice = useContext(settings).themeChoice;
   const MainHeader = ({ navigation, route, options }) => {

@@ -5,6 +5,7 @@ import { View, Text, Alert, SafeAreaView } from "react-native";
 import db from "@/database/db";
 import Loading from "@/components/Loading";
 import Login from "@/app/auth/Login";
+
 export default function App() {
   const [session, setSession] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Default to true for initial load

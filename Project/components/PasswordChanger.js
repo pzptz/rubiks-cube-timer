@@ -1,5 +1,3 @@
-// components/ChangePasswordModal.js
-
 import React, { useState, useContext } from "react";
 import {
   StyleSheet,
@@ -14,7 +12,7 @@ import Theme from "@/assets/theme";
 import db from "@/database/db";
 import { settings, loadingContext } from "@/assets/contexts";
 
-const ChangePasswordModal = ({ isVisible, onClose }) => {
+const PasswordChanger = ({ isVisible, onClose }) => {
   const themeChoice = useContext(settings).themeChoice;
   const setLoading = useContext(loadingContext).setLoading;
 
@@ -233,4 +231,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChangePasswordModal;
+export default PasswordChanger;

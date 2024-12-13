@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-
 import {
   View,
   Text,
@@ -17,6 +16,7 @@ import { useRouter } from "expo-router";
 import Theme from "@/assets/theme";
 import Loading from "@/components/Loading";
 import CubeTypePicker from "@/components/CubeTypePicker";
+
 export default function NewTime() {
   const themeChoice = useContext(settings).themeChoice;
   const [time, setTime] = useState("");

@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import Theme from "@/assets/theme";
 import { settings } from "@/assets/contexts";
 import { useContext } from "react";
+
 export default function Instructions() {
   const themeChoice = useContext(settings).themeChoice;
   return (

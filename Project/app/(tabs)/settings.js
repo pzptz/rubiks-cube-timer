@@ -16,7 +16,7 @@ import db from "@/database/db";
 import useSession from "@/utils/useSession";
 import { settings, loadingContext } from "@/assets/contexts";
 import DropDownPicker from "react-native-dropdown-picker";
-import ChangePasswordModal from "@/components/NewPassword";
+import PasswordChanger from "@/components/PasswordChanger";
 
 export default function Settings() {
   const session = useSession();
@@ -322,7 +322,7 @@ export default function Settings() {
       </View>
 
       {/* Change Password Modal */}
-      <ChangePasswordModal
+      <PasswordChanger
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
       />

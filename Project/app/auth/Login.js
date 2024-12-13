@@ -11,7 +11,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import db from "@/database/db";
 import Theme from "@/assets/theme";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import Loading from "@/components/Loading";
 export default function Login({ themeChoice = "Dark" }) {
   const [email, setEmail] = useState("");
@@ -101,11 +101,11 @@ export default function Login({ themeChoice = "Dark" }) {
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <Link href="/auth/signup">
+        <TouchableOpacity onPress={() => router.push("/auth/signup")}>
           <Text style={[styles.button, { color: Theme[themeChoice].flair }]}>
             Sign up
           </Text>
-        </Link>
+        </TouchableOpacity>
       </View>
     </View>
   );

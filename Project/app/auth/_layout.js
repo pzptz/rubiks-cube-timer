@@ -1,17 +1,5 @@
 import { Stack } from "expo-router";
-import React, { useState, useContext } from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-  Button,
-  Alert,
-  Pressable,
-} from "react-native";
-import db from "@/database/db";
-import { averagesContext, settings } from "@/assets/contexts";
+import { StyleSheet, Button } from "react-native";
 import useSession from "@/utils/useSession";
 import { useRouter } from "expo-router";
 import Theme from "@/assets/theme";
@@ -19,13 +7,11 @@ import Theme from "@/assets/theme";
 export default function StackLayout() {
   const defaultTheme = "Dark";
   const router = useRouter();
-  const session = useSession();
   return (
     <Stack>
       <Stack.Screen
         name="signup"
         options={{
-          presentation: "modal",
           headerLeft: () => (
             <Button
               color={Theme[defaultTheme].flair}
@@ -40,6 +26,7 @@ export default function StackLayout() {
             color: Theme[defaultTheme].textPrimary,
           },
           headerTitle: "Create Account",
+          presentation: "modal",
         }}
       />
       <Stack.Screen name="Login" options={{ headerShown: false }} />

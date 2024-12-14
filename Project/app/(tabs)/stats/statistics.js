@@ -72,7 +72,7 @@ export default function Statistics() {
     // This async function allows us to extend the list whenever we scroll out of bounds
     let currentOffset = 0;
     if (tableData.length > latestRequest) {
-      currentOffset = tableData.length;
+      let currentOffset = tableData.length;
       try {
         const { data, error } = await db
           .from("solve_times")

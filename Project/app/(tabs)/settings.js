@@ -83,7 +83,7 @@ export default function Settings() {
   const loadSettings = async () => {
     setLoading(true);
     try {
-      if (session) {
+      if (session?.user?.id) {
         // Fetch user settings from the database
         const { data, error } = await db
           .from("settings")
@@ -102,8 +102,8 @@ export default function Settings() {
           setThemeChoice("Dark");
           setCubeType(3);
         }
-        setLoading(false);
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
       // Retry fetching settings after a delay

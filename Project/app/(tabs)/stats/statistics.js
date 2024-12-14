@@ -41,9 +41,10 @@ export default function Statistics() {
     return b.id - a.id;
   };
   const fetchData = async (initialEnd = 100) => {
-    setLoading(true);
     try {
       if (session) {
+        setRequested(0);
+        setLoading(true);
         console.log("Fetching data");
         // list of jsons, each with fields {id, created_at, user_id, cube_type, scramble, time, ao5, ao12}
         const { data, error } = await db
@@ -294,7 +295,7 @@ export default function Statistics() {
         ...dataRef.current,
       ];
       if (needFetch()) {
-        fetchData(latestRequest);
+        fetchData();
       } else {
         setTableData(tableBufferRef.current);
         tableBufferRef.current = [];
@@ -304,7 +305,7 @@ export default function Statistics() {
         // Do something when the screen is unfocused
         // Useful for cleanup functions
       };
-    }, [])
+    }, [session])
   );
 
   const renderItem = ({ item }) => (

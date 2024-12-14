@@ -9,6 +9,7 @@ import {
   FlatList,
   Alert,
   SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
 import db from "@/database/db";
 import { averagesContext, settings, loadingContext } from "@/assets/contexts";
@@ -35,6 +36,7 @@ export default function Statistics() {
   const shouldRender = useRef(false);
   const loading = useContext(loadingContext).loading;
   const setLoading = useContext(loadingContext).setLoading;
+  const [scrollLoading, setScrollLoading] = useState(false);
   const idComparator = (a, b) => {
     return b.id - a.id;
   };
@@ -71,7 +73,8 @@ export default function Statistics() {
   const extendList = async () => {
     // This async function allows us to extend the list whenever we scroll out of bounds
     let currentOffset = 0;
-    if (tableData.length > latestRequest) {
+    if (tableData.length > latestRequest && !scrollLoading) {
+      setScrollLoading(true);
       let currentOffset = tableData.length;
       try {
         const { data, error } = await db
@@ -83,8 +86,10 @@ export default function Statistics() {
           .range(currentOffset, currentOffset + 100);
         if (error) throw error;
         setTableData([...tableData, ...data]);
+        setScrollLoading(false);
       } catch (error) {
         console.log(error);
+        setScrollLoading(false);
         // This is to guarantee we get the data, eventually we'll remove this log but it's to avoid internet errors
         setTimeout(() => extendList(), 500);
       }
@@ -301,6 +306,7 @@ export default function Statistics() {
       };
     }, [])
   );
+
   const renderItem = ({ item }) => (
     <Time
       solve={item}
@@ -312,104 +318,226 @@ export default function Statistics() {
       }
     />
   );
+
   if (loading) {
     return <Loading themeChoice={themeChoice} />;
   }
-  return (
-    <SafeAreaView
-      style={[
-        styles.container,
-        { backgroundColor: Theme[themeChoice].backgroundPrimary },
-      ]}
-    >
-      {/* Add time button */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: Theme[themeChoice].flair }]}
-          onPress={handleNewTime}
-        >
-          <Text
+  if (scrollLoading) {
+    return (
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor: Theme[themeChoice].backgroundPrimary },
+        ]}
+      >
+        {/* Add time button */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
             style={[
-              styles.buttonText,
-              { color: Theme[themeChoice].textPrimary },
+              styles.button,
+              { backgroundColor: Theme[themeChoice].flair },
             ]}
+            onPress={handleNewTime}
           >
-            Add Time
-          </Text>
-        </TouchableOpacity>
-        <CubeTypePicker themeChoice={themeChoice} handleChange={setCubeType} />
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: Theme[themeChoice].flair }]}
-          onPress={handleDeleteAll}
-        >
-          <Text
+            <Text
+              style={[
+                styles.buttonText,
+                { color: Theme[themeChoice].textPrimary },
+              ]}
+            >
+              Add Time
+            </Text>
+          </TouchableOpacity>
+          <CubeTypePicker
+            themeChoice={themeChoice}
+            handleChange={setCubeType}
+          />
+          <TouchableOpacity
             style={[
-              styles.buttonText,
-              { color: Theme[themeChoice].textPrimary },
+              styles.button,
+              { backgroundColor: Theme[themeChoice].flair },
             ]}
+            onPress={handleDeleteAll}
           >
-            Delete All
-          </Text>
-        </TouchableOpacity>
-      </View>
+            <Text
+              style={[
+                styles.buttonText,
+                { color: Theme[themeChoice].textPrimary },
+              ]}
+            >
+              Delete All
+            </Text>
+          </TouchableOpacity>
+        </View>
 
-      {/* FlatList with Header */}
-      <FlatList
-        data={shouldRender.current ? tableData : []}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={renderItem}
-        onEndReachedThreshold={0.5}
-        onEndReached={() => extendList()}
-        ListHeaderComponent={
-          <View
+        {/* FlatList with Header */}
+        <FlatList
+          data={shouldRender.current ? tableData : []}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderItem}
+          onEndReachedThreshold={0.5}
+          onEndReached={() => extendList()}
+          ListHeaderComponent={
+            <View
+              style={[
+                styles.headerRow,
+                {
+                  borderBottomColor: Theme[themeChoice].border,
+                  backgroundColor: Theme[themeChoice].headerBackground,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.headerText,
+                  { color: Theme[themeChoice].textPrimary },
+                ]}
+              >
+                Time
+              </Text>
+              <Text
+                style={[
+                  styles.headerText,
+                  { color: Theme[themeChoice].textPrimary },
+                ]}
+              >
+                ao5
+              </Text>
+              <Text
+                style={[
+                  styles.headerText,
+                  { color: Theme[themeChoice].textPrimary },
+                ]}
+              >
+                ao12
+              </Text>
+            </View>
+          }
+          ListEmptyComponent={
+            <Text
+              style={[
+                styles.emptyText,
+                { color: Theme[themeChoice].textSecondary },
+              ]}
+            >
+              No records found.
+            </Text>
+          }
+          contentContainerStyle={
+            tableData.length === 0 && styles.emptyContainer
+          }
+        />
+        <ActivityIndicator size="large" />
+      </SafeAreaView>
+    );
+  } else {
+    return (
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor: Theme[themeChoice].backgroundPrimary },
+        ]}
+      >
+        {/* Add time button */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
             style={[
-              styles.headerRow,
-              {
-                borderBottomColor: Theme[themeChoice].border,
-                backgroundColor: Theme[themeChoice].headerBackground,
-              },
+              styles.button,
+              { backgroundColor: Theme[themeChoice].flair },
             ]}
+            onPress={handleNewTime}
           >
             <Text
               style={[
-                styles.headerText,
+                styles.buttonText,
                 { color: Theme[themeChoice].textPrimary },
               ]}
             >
-              Time
+              Add Time
             </Text>
-            <Text
-              style={[
-                styles.headerText,
-                { color: Theme[themeChoice].textPrimary },
-              ]}
-            >
-              ao5
-            </Text>
-            <Text
-              style={[
-                styles.headerText,
-                { color: Theme[themeChoice].textPrimary },
-              ]}
-            >
-              ao12
-            </Text>
-          </View>
-        }
-        ListEmptyComponent={
-          <Text
+          </TouchableOpacity>
+          <CubeTypePicker
+            themeChoice={themeChoice}
+            handleChange={setCubeType}
+          />
+          <TouchableOpacity
             style={[
-              styles.emptyText,
-              { color: Theme[themeChoice].textSecondary },
+              styles.button,
+              { backgroundColor: Theme[themeChoice].flair },
             ]}
+            onPress={handleDeleteAll}
           >
-            No records found.
-          </Text>
-        }
-        contentContainerStyle={tableData.length === 0 && styles.emptyContainer}
-      />
-    </SafeAreaView>
-  );
+            <Text
+              style={[
+                styles.buttonText,
+                { color: Theme[themeChoice].textPrimary },
+              ]}
+            >
+              Delete All
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* FlatList with Header */}
+        <FlatList
+          data={shouldRender.current ? tableData : []}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderItem}
+          onEndReachedThreshold={0.5}
+          onEndReached={() => extendList()}
+          ListHeaderComponent={
+            <View
+              style={[
+                styles.headerRow,
+                {
+                  borderBottomColor: Theme[themeChoice].border,
+                  backgroundColor: Theme[themeChoice].headerBackground,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.headerText,
+                  { color: Theme[themeChoice].textPrimary },
+                ]}
+              >
+                Time
+              </Text>
+              <Text
+                style={[
+                  styles.headerText,
+                  { color: Theme[themeChoice].textPrimary },
+                ]}
+              >
+                ao5
+              </Text>
+              <Text
+                style={[
+                  styles.headerText,
+                  { color: Theme[themeChoice].textPrimary },
+                ]}
+              >
+                ao12
+              </Text>
+            </View>
+          }
+          ListEmptyComponent={
+            <Text
+              style={[
+                styles.emptyText,
+                { color: Theme[themeChoice].textSecondary },
+              ]}
+            >
+              No records found.
+            </Text>
+          }
+          contentContainerStyle={
+            tableData.length === 0 && styles.emptyContainer
+          }
+        />
+      </SafeAreaView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

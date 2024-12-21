@@ -296,6 +296,7 @@ export default function Statistics() {
       ];
       if (needFetch()) {
         fetchData();
+        tableBufferRef.current = [];
       } else {
         setTableData(tableBufferRef.current);
         tableBufferRef.current = [];

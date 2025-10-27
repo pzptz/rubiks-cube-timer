@@ -9,4 +9,4 @@ Note: ao5 and ao12 are not straight up averages - they look at the 5 or 12 times
 
 ## Demo Video
 
-You can view the video demo ![here](https://youtu.be/spt4maa89gY).
+[Click here](https://youtu.be/spt4maa89gY) to view our demo video.

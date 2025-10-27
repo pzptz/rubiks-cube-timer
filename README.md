@@ -1,2 +1,10 @@
-Rubik's Cube Timing app. Stores statistics in a database and pulls from there. 
-Note: ao5 and ao12 are not straight up averages - they look at the 5 or 12 times to aggregate over, removes the best and worst times, and then averages the middle 3 or 10. This is done for each row independently
+# Rubik's Cube Timer
+
+By Peter Li and Akshar Sarvesh
+
+A Rubik's Cube timing app. Stores statistics in a database and pulls from there. 
+Note: ao5 and ao12 are not straight up averages - they look at the 5 or 12 times to aggregate over, removes the best and worst times, and then averages the middle 3 or 10. This is done for each row independently.
+
+## Demo Video
+
+[![Video Title](https://img.youtube.com/vi/spt4maa89gY/maxresdefault.jpg)](https://youtu.be/spt4maa89gY)
